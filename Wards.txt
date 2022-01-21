@@ -1,4 +1,4 @@
-https://youtu.be/I9QUsAhbKhg?t=4029
+https://youtu.be/I9QUsAhbKhg?t=7194
 
 --
 cria uma pasta
@@ -11,4 +11,8 @@ ao clonar o projeto para um novo local, os "módulos" não estarão instalados. 
 extensões úteis para instalar:
 - Bracket pair colorizer 2
 - Material icon theme
+
+é necessário habilitar o Cors no backend
+adicione isso em Program.cs:
+builder.Services.AddCors();
 
