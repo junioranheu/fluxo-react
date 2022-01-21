@@ -1,0 +1,13 @@
+https://youtu.be/I9QUsAhbKhg?t=4029
+
+--
+cria uma pasta
+abre o cmd e vai até a pasta criada: cd {caminho}
+no cmd, npx create-react-app nome-da-aplicacao
+
+para rodar a aplicação: npm start
+
+extensões úteis para instalar:
+- Bracket pair colorizer 2
+- Material icon theme
+
