@@ -30,7 +30,7 @@ export default function App() {
         <div className='col d-flex flex-column justify-content-center align-items-center'>
           {showingCreateNewEstabelecimento === false && (
             <div>
-              <h1>Estabelecimentos do Fluxo</h1>
+              <h1 className='text-center'>Estabelecimentos do Fluxo</h1>
 
               <div className='mt-5'>
                 <button onClick={getEstabelecimentos} className='btn btn-dark btn-lg w-100'>Trazer estabelecimentos</button>

@@ -1,4 +1,5 @@
 https://youtu.be/I9QUsAhbKhg?t=7788
+JWT: https://blog.rocketseat.com.br/reactjs-autenticacao/
 
 --
 cria uma pasta

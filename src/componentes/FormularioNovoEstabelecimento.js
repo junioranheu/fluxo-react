@@ -22,12 +22,15 @@ export default function FormularioNovoEstabelecimento(props) {
         e.preventDefault();
 
         const estabelecimento_a_ser_criado = {
-            estabelecimentoId: 0,
+            // estabelecimentoId: 0,
             nome: formData.nome,
             descricao: formData.descricao
         }
 
         const url = CONSTANTS.API_URL_POST_CRIAR;
+
+        // console.log(estabelecimento_a_ser_criado);   
+        // console.log(url);
 
         // Post;
         fetch(url, {
@@ -52,7 +55,7 @@ export default function FormularioNovoEstabelecimento(props) {
 
     return (
         <form className='w-100 px-5'>
-            <h1 className='mt-5'>Criar novo estabelecimento</h1>
+            <h1 className='mt-5 text-center'>Criar novo estabelecimento</h1>
 
             <div className='mt-5'>
                 <label className='h3 form-label'>Nome do estabelecimento</label>
