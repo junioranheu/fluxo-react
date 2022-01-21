@@ -6,6 +6,7 @@ abre o cmd e vai até a pasta criada: cd {caminho}
 no cmd, npx create-react-app nome-da-aplicacao
 
 para rodar a aplicação: npm start
+ao clonar o projeto para um novo local, os "módulos" não estarão instalados. deve-se rodar: npm install
 
 extensões úteis para instalar:
 - Bracket pair colorizer 2
