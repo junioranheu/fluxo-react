@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import CONSTANTS from './utilidades/ConstEstabelecimentos';
+import FormularioNovoEstabelecimento from './componentes/FormularioNovoEstabelecimento';
 // import './App.css';
 
 export default function App() {
   const [estabelecimentos, setEstabelecimentos] = useState([]);
+  const [showingCreateNewEstabelecimento, setShowingCreateNewEstabelecimento] = useState(false);
 
   function getEstabelecimentos() {
     const url = CONSTANTS.API_URL_GET_TODOS;
@@ -26,16 +28,20 @@ export default function App() {
     <div className='container'>
       <div className='row min-vh-100'>
         <div className='col d-flex flex-column justify-content-center align-items-center'>
-          <div>
-            <h1>Estabelecimentos do Fluxo</h1>
+          {showingCreateNewEstabelecimento === false && (
+            <div>
+              <h1>Estabelecimentos do Fluxo</h1>
 
-            <div className='mt-5'>
-              <button onClick={getEstabelecimentos} className='btn btn-dark btn-lg w-100'>Trazer estabelecimentos</button>
-              <button onClick={() => { }} className='btn btn-secondary btn-lg w-100 mt-4'>Criar novo estabelecimento</button>
+              <div className='mt-5'>
+                <button onClick={getEstabelecimentos} className='btn btn-dark btn-lg w-100'>Trazer estabelecimentos</button>
+                <button onClick={() => setShowingCreateNewEstabelecimento(true)} className='btn btn-secondary btn-lg w-100 mt-4'>Criar novo estabelecimento</button>
+              </div>
             </div>
-          </div>
+          )}
 
-          {estabelecimentos.length > 0 && renderizarTabela()}
+          {(estabelecimentos.length > 0 && showingCreateNewEstabelecimento === false) && renderizarTabela()}
+
+          {showingCreateNewEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
         </div>
       </div>
     </div>
@@ -78,8 +84,15 @@ export default function App() {
     );
   }
 
-  function onEstabelecimentoCriado(){
-    
+  function onEstabelecimentoCriado(estabelecimentoCriado) {
+    setShowingCreateNewEstabelecimento(false);
+
+    if (estabelecimentoCriado === null) {
+      return;
+    }
+
+    alert(`Estabelecimento criado com sucesso. Após apertar ok, o estabelecimento "${estabelecimentoCriado.nome}" será exibido na lista`);
+    getEstabelecimentos();
   }
 }
 
