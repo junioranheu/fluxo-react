@@ -3,8 +3,15 @@ import CONSTANTS from '../utilidades/ConstEstabelecimentos';
 
 export default function FormularioNovoEstabelecimento(props) {
     const initialFormData = {
-        nome: 'Nome xxx',
-        descricao: 'Isso é apenas um teste'
+        nome: 'Nome teste',
+        descricao: 'Isso é apenas um teste',
+        thumbnail: 'Thumb teste',
+        rua: 'Rua teste',
+        numEndereco: 'Número de endereço teste',
+        cep: 'CEP teste',
+        bairro: 'Bairro teste',
+        cidadeId: '1',
+        estabelecimentoTipoId: '1'
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -24,12 +31,24 @@ export default function FormularioNovoEstabelecimento(props) {
         const estabelecimento_a_ser_criado = {
             // estabelecimentoId: 0,
             nome: formData.nome,
-            descricao: formData.descricao
+            descricao: formData.descricao,
+            thumbnail: formData.thumbnail,
+            rua: formData.rua,
+            numEndereco: formData.numEndereco,
+            cep: formData.cep,
+            bairro: formData.bairro,
+            cidadeId: formData.cidadeId,
+            estabelecimentoTipoId: formData.estabelecimentoTipoId,
+
+            //
+            isAtivo: 1,
+            usuarioId: 1,
+            // dataCriacao: Date.now()
         }
 
         const url = CONSTANTS.API_URL_POST_CRIAR;
 
-        // console.log(estabelecimento_a_ser_criado);   
+        console.log(estabelecimento_a_ser_criado);   
         // console.log(url);
 
         // Post;
@@ -65,6 +84,41 @@ export default function FormularioNovoEstabelecimento(props) {
             <div className='mt-4'>
                 <label className='h3 form-label'>Descrição</label>
                 <input value={formData.descricao} name='descricao' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>Thumbnail</label>
+                <input value={formData.thumbnail} name='thumbnail' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>Rua</label>
+                <input value={formData.rua} name='rua' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>Nº de endereço</label>
+                <input value={formData.numEndereco} name='numEndereco' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>CEP</label>
+                <input value={formData.cep} name='cep' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>Bairro</label>
+                <input value={formData.bairro} name='bairro' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>CidadeId</label>
+                <input value={formData.cidadeId} name='cidadeId' type='text' className='form-control' onChange={handleChange} />
+            </div>
+
+            <div className='mt-4'>
+                <label className='h3 form-label'>EstabelecimentoTipoId</label>
+                <input value={formData.estabelecimentoTipoId} name='estabelecimentoTipoId' type='text' className='form-control' onChange={handleChange} />
             </div>
 
             <button onClick={handleSubmit} className='btn btn-dark btn-lg w-100 mt-5'>Criar estabelecimento</button>
