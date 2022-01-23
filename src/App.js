@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import CONSTANTS from './utilidades/ConstEstabelecimentos';
 import FormularioNovoEstabelecimento from './componentes/FormularioNovoEstabelecimento';
+import FormularioAtualizarEstabelecimento from './componentes/FormularioAtualizarEstabelecimento';
 // import './App.css';
 
 export default function App() {
   const [estabelecimentos, setEstabelecimentos] = useState([]);
   const [showingCreateNewEstabelecimento, setShowingCreateNewEstabelecimento] = useState(false);
+  const [postCurrentlyBeingUpdated, setPostCurrentlyBeingUpdated] = useState(null);
 
   function getEstabelecimentos() {
     const url = CONSTANTS.API_URL_GET_TODOS;
@@ -28,7 +30,7 @@ export default function App() {
     <div className='container'>
       <div className='row min-vh-100'>
         <div className='col d-flex flex-column justify-content-center align-items-center'>
-          {showingCreateNewEstabelecimento === false && (
+          {(showingCreateNewEstabelecimento === false && postCurrentlyBeingUpdated === null) && (
             <div>
               <h1 className='text-center'>Estabelecimentos do Fluxo</h1>
 
@@ -39,9 +41,11 @@ export default function App() {
             </div>
           )}
 
-          {(estabelecimentos.length > 0 && showingCreateNewEstabelecimento === false) && renderizarTabela()}
+          {(estabelecimentos.length > 0 && showingCreateNewEstabelecimento === false && postCurrentlyBeingUpdated === null) && renderizarTabela()}
 
           {showingCreateNewEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
+
+          {postCurrentlyBeingUpdated !== null && <FormularioAtualizarEstabelecimento estabelecimento={postCurrentlyBeingUpdated} onPostUpdated={onPostUpdated} />}
         </div>
       </div>
     </div>
@@ -68,7 +72,7 @@ export default function App() {
                   <td>{e.nome}</td>
                   <td>{e.descricao}</td>
                   <td>
-                    <button className='btn btn-dark btn-sm mx-3 my-3'>Atualizar</button>
+                    <button onClick={() => setPostCurrentlyBeingUpdated(e)} className='btn btn-dark btn-sm mx-3 my-3'>Atualizar</button>
                     <button className='btn btn-secondary btn-sm'>Deletar</button>
                   </td>
                 </tr>
@@ -93,6 +97,31 @@ export default function App() {
 
     alert(`Estabelecimento criado com sucesso. Após apertar ok, o estabelecimento "${estabelecimentoCriado.nome}" será exibido na lista`);
     getEstabelecimentos();
+  }
+
+  function onPostUpdated(updatedPost) {
+    setPostCurrentlyBeingUpdated(null);
+
+    if (updatedPost === null) {
+      return;
+    }
+
+    let estabelecimentosCopy = [...estabelecimentos];
+
+    const index = estabelecimentosCopy.findIndex((estabelecimentosCopyEstabelecimento, currentIndex) => {
+      if (estabelecimentosCopyEstabelecimento.estabelecimentoId === updatedPost.estabelecimentoId) {
+        return true;
+      }
+    });
+
+    if (index !== -1) {
+      estabelecimentosCopy[index] = updatedPost;
+    }
+
+    setEstabelecimentos(estabelecimentosCopy);
+
+    alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento "${updatedPost.nome}" será exibido atualizado na lista`);
+    // getEstabelecimentos();
   }
 }
 
