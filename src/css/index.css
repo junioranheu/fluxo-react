@@ -1,3 +1,10 @@
-body {
-  background-color: whitesmoke;
-}
+:root {/* Cores */
+--cor-principal:#FEBA35;--cor-principal-mais-escuro:#B78C44;--cor-branco:#F6F5F5;--cor-cinza:#777;--cor-preto:#211F24;/* Sombra */
+--sombra:0px 8px 12px 0px rgba(0, 0, 0, 0.25);}
+
+body {background-color:#f5f5f5;}
+
+.box {padding:10px; box-shadow:var(--sombra); border-radius:10px;}
+
+.btn-primary {background-color:var(--cor-principal); border-color:var(--cor-principal);}
+.btn-primary:active,.btn-primary:focus,.btn-primary:hover,.btn-primary:visited {background-color:var(--cor-principal-mais-escuro); border-color:var(--cor-principal-mais-escuro);}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/formularioAtualizarEstabelecimento';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/formularioNovoEstabelecimento';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
-import CONSTANTS_OUTROS from '../../utilidades/constOutros';
+import CONSTANTS_USUARIOS from '../../utilidades/constUsuarios';
 // import './App.css';
 
 export default function Index() {
@@ -58,7 +58,7 @@ export default function Index() {
     function getTokenJWT() {
         const nomeUsuario = 'junioranheu';
         const senha = '123';
-        const url = `${CONSTANTS_OUTROS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+        const url = `${CONSTANTS_USUARIOS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
 
         fetch(url, {
             method: 'GET',
