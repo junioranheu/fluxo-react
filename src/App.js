@@ -6,8 +6,8 @@ import FormularioAtualizarEstabelecimento from './componentes/FormularioAtualiza
 
 export default function App() {
   const [estabelecimentos, setEstabelecimentos] = useState([]);
-  const [showingCreateNewEstabelecimento, setShowingCreateNewEstabelecimento] = useState(false);
-  const [postCurrentlyBeingUpdated, setPostCurrentlyBeingUpdated] = useState(null);
+  const [showFormularioNovoEstabelecimento, setShowFormularioNovoEstabelecimento] = useState(false);
+  const [estabelecimentoSendoAtualizado, setEstabelecimentoSendoAtualizado] = useState(null);
 
   function getEstabelecimentos() {
     const url = CONSTANTS.API_URL_GET_TODOS;
@@ -26,7 +26,7 @@ export default function App() {
       });
   }
 
-  function deletarEstabelecimento(props) {
+  function deleteEstabelecimento(props) {
     const estabelecimentoId = props.estabelecimentoId;
     const estabelecimentoNome = props.nome;
 
@@ -44,8 +44,8 @@ export default function App() {
     })
       .then(data => data.json())
       .then(data => {
-        console.log(data);
-        onPostDeleted(estabelecimentoId);
+        // console.log(data);
+        onEstabelecimentoDeleted(estabelecimentoId);
       })
       .catch((error) => {
         console.log(error);
@@ -57,22 +57,22 @@ export default function App() {
     <div className='container'>
       <div className='row min-vh-100'>
         <div className='col d-flex flex-column justify-content-center align-items-center'>
-          {(showingCreateNewEstabelecimento === false && postCurrentlyBeingUpdated === null) && (
+          {(showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && (
             <div>
               <h1 className='text-center'>Estabelecimentos do Fluxo</h1>
 
               <div className='mt-5'>
                 <button onClick={getEstabelecimentos} className='btn btn-dark btn-lg w-100'>Trazer estabelecimentos</button>
-                <button onClick={() => setShowingCreateNewEstabelecimento(true)} className='btn btn-secondary btn-lg w-100 mt-4'>Criar novo estabelecimento</button>
+                <button onClick={() => setShowFormularioNovoEstabelecimento(true)} className='btn btn-secondary btn-lg w-100 mt-4'>Criar novo estabelecimento</button>
               </div>
             </div>
           )}
 
-          {(estabelecimentos.length > 0 && showingCreateNewEstabelecimento === false && postCurrentlyBeingUpdated === null) && renderizarTabela()}
+          {(estabelecimentos.length > 0 && showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && renderizarTabela()}
 
-          {showingCreateNewEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
+          {showFormularioNovoEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
 
-          {postCurrentlyBeingUpdated !== null && <FormularioAtualizarEstabelecimento estabelecimento={postCurrentlyBeingUpdated} onPostUpdated={onPostUpdated} />}
+          {estabelecimentoSendoAtualizado !== null && <FormularioAtualizarEstabelecimento estabelecimento={estabelecimentoSendoAtualizado} onEstabelecimentoUpdated={onEstabelecimentoUpdated} />}
         </div>
       </div>
     </div>
@@ -99,8 +99,8 @@ export default function App() {
                   <td>{e.nome}</td>
                   <td>{e.descricao}</td>
                   <td>
-                    <button onClick={() => setPostCurrentlyBeingUpdated(e)} className='btn btn-dark btn-sm mx-3 my-3'>Atualizar</button>
-                    <button onClick={() => deletarEstabelecimento(e)} className='btn btn-secondary btn-sm'>Deletar</button>
+                    <button onClick={() => setEstabelecimentoSendoAtualizado(e)} className='btn btn-dark btn-sm mx-3 my-3'>Atualizar</button>
+                    <button onClick={() => deleteEstabelecimento(e)} className='btn btn-secondary btn-sm'>Deletar</button>
                   </td>
                 </tr>
               ))
@@ -116,7 +116,7 @@ export default function App() {
   }
 
   function onEstabelecimentoCriado(estabelecimentoCriado) {
-    setShowingCreateNewEstabelecimento(false);
+    setShowFormularioNovoEstabelecimento(false);
 
     if (estabelecimentoCriado === null) {
       return;
@@ -126,31 +126,31 @@ export default function App() {
     getEstabelecimentos();
   }
 
-  function onPostUpdated(updatedPost) {
-    setPostCurrentlyBeingUpdated(null);
+  function onEstabelecimentoUpdated(estabelecimentoAtualizado) {
+    setEstabelecimentoSendoAtualizado(null);
 
-    if (updatedPost === null) {
+    if (estabelecimentoAtualizado === null) {
       return;
     }
 
     let estabelecimentosCopy = [...estabelecimentos];
 
     const index = estabelecimentosCopy.findIndex((estabelecimentosCopyEstabelecimento, currentIndex) => {
-      if (estabelecimentosCopyEstabelecimento.estabelecimentoId === updatedPost.estabelecimentoId) {
+      if (estabelecimentosCopyEstabelecimento.estabelecimentoId === estabelecimentoAtualizado.estabelecimentoId) {
         return true;
       }
     });
 
     if (index !== -1) {
-      estabelecimentosCopy[index] = updatedPost;
+      estabelecimentosCopy[index] = estabelecimentoAtualizado;
     }
 
     setEstabelecimentos(estabelecimentosCopy);
 
-    alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento "${updatedPost.nome}" será exibido atualizado na lista`);
+    alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento "${estabelecimentoAtualizado.nome}" será exibido atualizado na lista`);
   }
 
-  function onPostDeleted(estabelecimentoId) {
+  function onEstabelecimentoDeleted(estabelecimentoId) {
     let estabelecimentosCopy = [...estabelecimentos];
 
     const index = estabelecimentosCopy.findIndex((estabelecimentosCopyEstabelecimento, currentIndex) => {

@@ -72,7 +72,7 @@ export default function FormularioAtualizarEstabelecimento(props) {
             });
 
         // Encerra o componente;
-        props.onPostUpdated(estabelecimento_a_ser_atualizado);
+        props.onEstabelecimentoUpdated(estabelecimento_a_ser_atualizado);
     };
 
     return (
@@ -125,7 +125,7 @@ export default function FormularioAtualizarEstabelecimento(props) {
             </div>
 
             <button onClick={handleSubmit} className='btn btn-dark btn-lg w-100 mt-5'>Atualizar estabelecimento</button>
-            <button onClick={() => props.onPostUpdated(null)} className='btn btn-secondary btn-lg w-100 mt-3'>Cancelar</button>
+            <button onClick={() => props.onEstabelecimentoUpdated(null)} className='btn btn-secondary btn-lg w-100 mt-3'>Cancelar</button>
         </form>
     )
 }
