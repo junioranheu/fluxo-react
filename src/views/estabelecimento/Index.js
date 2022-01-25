@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/formularioAtualizarEstabelecimento';
+import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/formularioNovoEstabelecimento';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
 import CONSTANTS_OUTROS from '../../utilidades/constOutros';
-import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/FormularioNovoEstabelecimento';
-import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/FormularioAtualizarEstabelecimento';
 // import './App.css';
 
 export default function Index() {
