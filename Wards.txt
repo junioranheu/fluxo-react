@@ -1,4 +1,4 @@
-https://youtu.be/I9QUsAhbKhg?t=8538
+https://youtu.be/I9QUsAhbKhg?t=9024
 JWT: https://blog.rocketseat.com.br/reactjs-autenticacao/
 
 --

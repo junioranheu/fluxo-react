@@ -26,6 +26,33 @@ export default function App() {
       });
   }
 
+  function deletarEstabelecimento(props) {
+    const estabelecimentoId = props.estabelecimentoId;
+    const estabelecimentoNome = props.nome;
+
+    let resposta = window.confirm(`Você tem certeza que deseja deletar o estabelecimento "${estabelecimentoNome}"?`);
+    if (!resposta) {
+      return false;
+    }
+
+    const url = `${CONSTANTS.API_URL_POST_DELETAR}?id=${estabelecimentoId}`;
+    console.log(url);
+
+    // Post;
+    fetch(url, {
+      method: 'POST'
+    })
+      .then(data => data.json())
+      .then(data => {
+        console.log(data);
+        onPostDeleted(estabelecimentoId);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('Erro, consulte F12');
+      });
+  }
+
   return (
     <div className='container'>
       <div className='row min-vh-100'>
@@ -73,7 +100,7 @@ export default function App() {
                   <td>{e.descricao}</td>
                   <td>
                     <button onClick={() => setPostCurrentlyBeingUpdated(e)} className='btn btn-dark btn-sm mx-3 my-3'>Atualizar</button>
-                    <button className='btn btn-secondary btn-sm'>Deletar</button>
+                    <button onClick={() => deletarEstabelecimento(e)} className='btn btn-secondary btn-sm'>Deletar</button>
                   </td>
                 </tr>
               ))
@@ -121,7 +148,26 @@ export default function App() {
     setEstabelecimentos(estabelecimentosCopy);
 
     alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento "${updatedPost.nome}" será exibido atualizado na lista`);
-    // getEstabelecimentos();
+  }
+
+  function onPostDeleted(estabelecimentoId) {
+    let estabelecimentosCopy = [...estabelecimentos];
+
+    const index = estabelecimentosCopy.findIndex((estabelecimentosCopyEstabelecimento, currentIndex) => {
+      if (estabelecimentosCopyEstabelecimento.estabelecimentoId === estabelecimentoId) {
+        return true;
+      }
+    });
+
+    if (index !== -1) {
+      estabelecimentosCopy.splice(index, 1);
+    }
+
+    setEstabelecimentos(estabelecimentosCopy);
+
+    alert(`Estabelecimento deletado com sucesso`);
   }
 }
+
+
 
