@@ -72,7 +72,7 @@ export default function App() {
 
           {showFormularioNovoEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
 
-          {estabelecimentoSendoAtualizado !== null && <FormularioAtualizarEstabelecimento estabelecimento={estabelecimentoSendoAtualizado} onEstabelecimentoUpdated={onEstabelecimentoUpdated} />}
+          {estabelecimentoSendoAtualizado !== null && <FormularioAtualizarEstabelecimento propsEstabelecimento={estabelecimentoSendoAtualizado} onEstabelecimentoUpdated={onEstabelecimentoUpdated} />}
         </div>
       </div>
     </div>

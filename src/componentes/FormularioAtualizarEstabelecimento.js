@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CONSTANTS from '../utilidades/ConstEstabelecimentos';
 
 export default function FormularioAtualizarEstabelecimento(props) {
-    var prop = props['estabelecimento'];
+    var prop = props['propsEstabelecimento'];
     // console.log(prop);
 
     const initialFormData = {
