@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CONSTANTS from './utilidades/ConstEstabelecimentos';
 import FormularioNovoEstabelecimento from './componentes/FormularioNovoEstabelecimento';
 import FormularioAtualizarEstabelecimento from './componentes/FormularioAtualizarEstabelecimento';
@@ -52,6 +52,12 @@ export default function App() {
         alert('Erro, consulte F12');
       });
   }
+
+  // Rodar algo em $(document).ready();
+  // useEffect(() => {
+  //   getEstabelecimentos();
+  //   alert('aea');
+  // }, [])
 
   return (
     <div className='container'>

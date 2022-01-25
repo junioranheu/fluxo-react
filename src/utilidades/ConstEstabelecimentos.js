@@ -1,5 +1,6 @@
-const API_BASE_URL_DEV = 'https://localhost:7131/api';
+// const API_BASE_URL_DEV = 'https://localhost:7131/api';
 const API_BASE_URL_PROD = 'https://fluxoapi.azurewebsites.net/api';
+const API_BASE_URL_DEV = 'https://fluxoapi.azurewebsites.net/api'; // PROD EM DEV;
 
 const ENDPOINTS = {
     GET_TODOS: 'estabelecimentosapi/todos',

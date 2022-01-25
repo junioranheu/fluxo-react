@@ -1,4 +1,5 @@
-https://youtu.be/I9QUsAhbKhg?t=9024
+Tutorial inicial: https://youtu.be/I9QUsAhbKhg?t=9024
+Route: https://www.youtube.com/watch?v=WfpmvgVZD1A&ab_channel=TheNetNinja
 JWT: https://blog.rocketseat.com.br/reactjs-autenticacao/
 
 --
