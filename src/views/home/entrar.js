@@ -21,7 +21,7 @@ export default function Index() {
             alert('O nome de usuário e/ou e-mail estão vazios!');
             return false;
         }
-        
+
         const url = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${formData.usuario}&senha=${formData.senha}`;
         // console.log(url);
 
@@ -35,6 +35,7 @@ export default function Index() {
             .then(data => data.json())
             .then(data => {
                 console.log(data);
+         // LOGIN
             })
             .catch((error) => {
                 console.log(error);
