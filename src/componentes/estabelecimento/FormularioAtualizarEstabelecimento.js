@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import CONSTANTS from '../utilidades/ConstEstabelecimentos';
+import CONSTANTS from '../../utilidades/ConstEstabelecimentos';
 
-export default function FormularioNovoEstabelecimento(props) {
+export default function FormularioAtualizarEstabelecimento(props) {
+    var prop = props['propsEstabelecimento'];
+    // console.log(prop);
+
     const initialFormData = {
-        nome: 'Nome teste',
-        descricao: 'Isso é apenas um teste',
-        thumbnail: 'Thumb teste',
-        rua: 'Rua teste',
-        numeroEndereco: 'Número de endereço teste',
-        cep: 'CEP teste',
-        bairro: 'Bairro teste',
-        cidadeId: '1',
-        estabelecimentoTipoId: '1'
+        nome: prop.nome,
+        descricao: prop.descricao,
+        thumbnail: prop.thumbnail,
+        rua: prop.rua,
+        numeroEndereco: prop.numeroEndereco,
+        cep: prop.cep,
+        bairro: prop.bairro,
+        cidadeId: prop.cidadeId,
+        estabelecimentoTipoId: prop.estabelecimentoTipoId
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -28,8 +31,8 @@ export default function FormularioNovoEstabelecimento(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const estabelecimento_a_ser_criado = {
-            // estabelecimentoId: 0,
+        const estabelecimento_a_ser_atualizado = {
+            estabelecimentoId: prop.estabelecimentoId,
             nome: formData.nome,
             descricao: formData.descricao,
             thumbnail: formData.thumbnail,
@@ -46,9 +49,9 @@ export default function FormularioNovoEstabelecimento(props) {
             // dataCriacao: Date.now()
         }
 
-        const url = CONSTANTS.API_URL_POST_CRIAR;
+        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
 
-        console.log(estabelecimento_a_ser_criado);   
+        console.log(estabelecimento_a_ser_atualizado);
         // console.log(url);
 
         // Post;
@@ -57,7 +60,7 @@ export default function FormularioNovoEstabelecimento(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(estabelecimento_a_ser_criado)
+            body: JSON.stringify(estabelecimento_a_ser_atualizado)
         })
             .then(data => data.json())
             .then(data => {
@@ -69,12 +72,12 @@ export default function FormularioNovoEstabelecimento(props) {
             });
 
         // Encerra o componente;
-        props.onEstabelecimentoCriado(estabelecimento_a_ser_criado);
+        props.onEstabelecimentoUpdated(estabelecimento_a_ser_atualizado);
     };
 
     return (
         <form className='w-100 px-5'>
-            <h1 className='mt-5 text-center'>Criar novo estabelecimento</h1>
+            <h1 className='mt-5 text-center'>Atualizar estabelecimento "{prop.nome}"</h1>
 
             <div className='mt-5'>
                 <label className='h3 form-label'>Nome do estabelecimento</label>
@@ -121,8 +124,8 @@ export default function FormularioNovoEstabelecimento(props) {
                 <input value={formData.estabelecimentoTipoId} name='estabelecimentoTipoId' type='text' className='form-control' onChange={handleChange} />
             </div>
 
-            <button onClick={handleSubmit} className='btn btn-dark btn-lg w-100 mt-5'>Criar estabelecimento</button>
-            <button onClick={() => props.onEstabelecimentoCriado(null)} className='btn btn-secondary btn-lg w-100 mt-3'>Cancelar</button>
+            <button onClick={handleSubmit} className='btn btn-dark btn-lg w-100 mt-5'>Atualizar estabelecimento</button>
+            <button onClick={() => props.onEstabelecimentoUpdated(null)} className='btn btn-secondary btn-lg w-100 mt-3'>Cancelar</button>
         </form>
     )
 }

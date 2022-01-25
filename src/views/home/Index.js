@@ -7,6 +7,7 @@ export default function Index() {
                 <div className='col d-flex flex-column justify-content-center align-items-center'>
                     <div>
                         <h1 className='text-center'>Dashboard</h1>
+                        <a href='/estabelecimentos'>Estabelecimentos</a>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Dashboard from './views/dashboard/Index';
+import Dashboard from './views/home/Index';
 import Estabelecimento from './views/estabelecimento/Index';
 // import './App.css';
 
