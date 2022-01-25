@@ -1,5 +1,6 @@
 Tutorial inicial: https://youtu.be/I9QUsAhbKhg?t=9024
-Route: https://www.youtube.com/watch?v=SbzKc3lwVQw&ab_channel=CodersCampus
+react-router-dom@6: https://www.youtube.com/watch?v=SbzKc3lwVQw&ab_channel=CodersCampus
+PROCURAR UM JEITO PRA MELHORAR O USO DO TOKEN!!!
 
 --
 cria uma pasta
