@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/ConstEstabelecimentos';
-import CONSTANTS_OUTROS from '../../utilidades/ConstOutros';
+import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
+import CONSTANTS_OUTROS from '../../utilidades/constOutros';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/FormularioNovoEstabelecimento';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/FormularioAtualizarEstabelecimento';
 // import './App.css';
