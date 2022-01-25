@@ -1,15 +1,14 @@
-// const API_BASE_URL_DEV = 'https://localhost:7131/api';
+const API_BASE_URL_DEV = 'https://localhost:7131/api';
 const API_BASE_URL_PROD = 'https://fluxoapi.azurewebsites.net/api';
-const API_BASE_URL_DEV = 'https://fluxoapi.azurewebsites.net/api'; // PROD EM DEV;
 
 const ENDPOINTS = {
-    GET_TODOS: 'estabelecimentosapi/todos',
-    GET_POR_ID: 'estabelecimentosapi/{id}',
-    POST_CRIAR: 'estabelecimentosapi/criar',
-    POST_ATUALIZAR: 'estabelecimentosapi/atualizar',
-    POST_DELETAR: 'estabelecimentosapi/deletar',
-    GET_POR_TIPO_CATEGORIAID_MAIS_SIGLA_ESTADO_USUARIO: 'estabelecimentosapi/getPorEstabelecimentoTipoIdMaisCidadeIdUsuarioLogado',
-    GET_POR_QUERY: 'estabelecimentosapi/getPorQuery'
+    GET_TODOS: 'EstabelecimentosApi/todos',
+    GET_POR_ID: 'EstabelecimentosApi/{id}',
+    POST_CRIAR: 'EstabelecimentosApi/criar',
+    POST_ATUALIZAR: 'EstabelecimentosApi/atualizar',
+    POST_DELETAR: 'EstabelecimentosApi/deletar',
+    GET_POR_TIPO_CATEGORIAID_MAIS_SIGLA_ESTADO_USUARIO: 'EstabelecimentosApi/getPorEstabelecimentoTipoIdMaisCidadeIdUsuarioLogado',
+    GET_POR_QUERY: 'EstabelecimentosApi/getPorQuery'
 };
 
 const DEV = {

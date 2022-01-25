@@ -1,6 +1,5 @@
 Tutorial inicial: https://youtu.be/I9QUsAhbKhg?t=9024
-Route: https://www.youtube.com/watch?v=WfpmvgVZD1A&ab_channel=TheNetNinja
-JWT: https://blog.rocketseat.com.br/reactjs-autenticacao/
+Route: https://www.youtube.com/watch?v=SbzKc3lwVQw&ab_channel=CodersCampus
 
 --
 cria uma pasta

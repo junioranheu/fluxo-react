@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import CONSTANTS from './utilidades/ConstEstabelecimentos';
+import CONSTANTS_ESTABELECIMENTOS from './utilidades/ConstEstabelecimentos';
+import CONSTANTS_OUTROS from './utilidades/ConstOutros';
 import FormularioNovoEstabelecimento from './componentes/FormularioNovoEstabelecimento';
 import FormularioAtualizarEstabelecimento from './componentes/FormularioAtualizarEstabelecimento';
 // import './App.css';
@@ -10,7 +11,7 @@ export default function App() {
   const [estabelecimentoSendoAtualizado, setEstabelecimentoSendoAtualizado] = useState(null);
 
   function getEstabelecimentos() {
-    const url = CONSTANTS.API_URL_GET_TODOS;
+    const url = CONSTANTS_ESTABELECIMENTOS.API_URL_GET_TODOS;
 
     fetch(url, {
       method: 'GET'
@@ -35,7 +36,7 @@ export default function App() {
       return false;
     }
 
-    const url = `${CONSTANTS.API_URL_POST_DELETAR}?id=${estabelecimentoId}`;
+    const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_POST_DELETAR}?id=${estabelecimentoId}`;
     console.log(url);
 
     // Post;
@@ -53,11 +54,33 @@ export default function App() {
       });
   }
 
+  function getTokenJWT() {
+    const nomeUsuario = 'junioranheu';
+    const senha = '123';
+    const url = `${CONSTANTS_OUTROS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(data => data.json())
+      .then(data => {
+        const tokenJWT = data;
+        console.log(tokenJWT);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
+      });
+  }
+
   // Rodar algo em $(document).ready();
-  // useEffect(() => {
-  //   getEstabelecimentos();
-  //   alert('aea');
-  // }, [])
+  useEffect(() => {
+    getTokenJWT();
+  }, [])
 
   return (
     <div className='container'>
