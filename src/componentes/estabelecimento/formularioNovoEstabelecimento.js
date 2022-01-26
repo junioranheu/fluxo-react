@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CONSTANTS from '../../utilidades/constEstabelecimentos';
+import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function FormularioNovoEstabelecimento(props) {
     const initialFormData = {
@@ -47,15 +48,18 @@ export default function FormularioNovoEstabelecimento(props) {
         }
 
         const url = CONSTANTS.API_URL_POST_CRIAR;
+        const token = Auth.getUsuarioLogado().token;
 
-        console.log(estabelecimento_a_ser_criado);   
+        // console.log(token);
+        // console.log(estabelecimento_a_ser_criado);
         // console.log(url);
 
         // Post;
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(estabelecimento_a_ser_criado)
         })
