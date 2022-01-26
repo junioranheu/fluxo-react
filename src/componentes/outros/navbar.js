@@ -1,4 +1,5 @@
 import React from 'react';
+import SemImagem from '../../static/outros/sem-imagem.webp';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
@@ -72,7 +73,7 @@ export default function Navbar() {
                             {/* Perfil  */
                             /* if (usuarioFotoPerfil == "-1" || usuarioFotoPerfil == null || usuarioFotoPerfil == "")
                     {
-                        usuarioFotoPerfil = "/static/outro/sem-imagem.webp";
+                        usuarioFotoPerfil = "/static/outros/sem-imagem.webp";
                     }
                     else
                     {
@@ -83,23 +84,23 @@ export default function Navbar() {
 
                     string caminhoPerfil = "/perfil/@" + @usuarioNomeDeUsuario; */}
 
-                            <div class="is-hidden-tablet-only is-hidden-mobile ml-1">
-                                <div class="ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable">
-                                    <img src="@usuarioFotoPerfil" class="ajustar-imagem-navbar pointer"
-                                        onclick="location.href='@caminhoPerfil';" onerror="this.src='/static/outro/sem-imagem.webp';" title="Meu perfil" />
+                            <div className="is-hidden-tablet-only is-hidden-mobile ml-1">
+                                <div className="ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable">
+                                    <img src="@usuarioFotoPerfil" className="ajustar-imagem-navbar pointer" alt='Erro...'
+                                        onClick="location.href='@caminhoPerfil';" onError={(event) => event.target.src=SemImagem} title="Meu perfil" />
                                 </div>
                             </div>
 
-                            <div class="is-hidden-desktop">
-                                <a class="navbar-item" href="@caminhoPerfil">
-                                    <i class="fas fa-user-alt"></i><span class="ml-2">Meu perfil</span>
+                            <div className="is-hidden-desktop">
+                                <a className="navbar-item" href="@caminhoPerfil">
+                                    <i className="fas fa-user-alt"></i><span className="ml-2">Meu perfil</span>
                                 </a>
                             </div>
 
                             {/* Logica para mostrar o "Sair" em botão ou em texto normal, dependendo se é mobile ou desktop  */}
-                            <a class="navbar-item is-hidden-desktop is-hidden-tablet" onClick={deslogar}>Sair</a>
-                            <div class="navbar-item is-hidden-mobile">
-                                <a class="button is-small is-white-bis is-rounded" onClick={deslogar}>Sair</a>
+                            <a className="navbar-item is-hidden-desktop is-hidden-tablet" onClick={deslogar} href={() => false}>Sair</a>
+                            <div className="navbar-item is-hidden-mobile">
+                                <a className="button is-small is-white-bis is-rounded" onClick={deslogar} href={() => false}>Sair</a>
                             </div>
                         </React.Fragment>
                     )}
