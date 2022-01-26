@@ -1,10 +1,124 @@
 import React from 'react';
+import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
+    function deslogar() {
+        Auth.deleteUsuarioLogado();
+    }
+
     return (
-        <div>
-            <h1><a href='/'>Fluxo</a></h1>
-        </div>
+        <nav className="navbar is-white has-centered-menu margem-desktop sem-highlight" role="navigation" aria-label="main navigation">
+            <div className="navbar-brand">
+                <a className="navbar-item" href="/">
+                    <span>Fluxo</span>
+                </a>
+
+                <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" href={() => false}>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div className="navbar-menu">
+                <div className="navbar-start">
+                    <a className="navbar-item efeito-texto" href="/">Início</a>
+
+                    <div className="navbar-item has-dropdown is-hoverable">
+                        <a className="navbar-link" href={() => false}>Mais</a>
+
+                        <div className="navbar-dropdown is-boxed">
+                            <a className="navbar-item" href="/">Política e termos de uso</a>
+                            <a className="navbar-item" href="/">Reportar um problema</a>
+                        </div>
+                    </div>
+
+                    {/* usuarioTipoId = 1 = adm  */}
+                    {(Auth.isAuth()) && (
+                        (Auth.getUsuarioLogado().usuarioTipoId === 1) && (
+                            <div>
+                                <div className="navbar-item has-dropdown is-hoverable">
+                                    <a className="navbar-link" href={() => false}>
+                                        Administrador
+                                    </a>
+
+                                    <div className="navbar-dropdown is-boxed">
+                                        <a className="navbar-item" href="/">
+                                            Gerenciar reports
+                                        </a>
+
+                                        <a className="navbar-item" href="/">
+                                            Gerenciar armazenamento
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    )}
+                </div>
+
+                <div className="navbar-end">
+                    <a className="navbar-item" title="Reportar um problema" href="/">
+                        <i className="fas fa-bug"></i><span className="is-hidden-desktop ml-2">Reportar problema</span>
+                    </a>
+
+                    <a className="navbar-item" title="xxx" href="/">
+                        <i className="fa fa-search"></i><span className="is-hidden-desktop ml-2">xxx</span>
+                    </a>
+
+                    {/* Usuário logado */}
+                    {Auth.isAuth() && (
+                        <React.Fragment>
+                            {/* Perfil  */
+                            /* if (usuarioFotoPerfil == "-1" || usuarioFotoPerfil == null || usuarioFotoPerfil == "")
+                    {
+                        usuarioFotoPerfil = "/static/outro/sem-imagem.webp";
+                    }
+                    else
+                    {
+                        usuarioFotoPerfil = "/upload/usuario/" + usuarioFotoPerfil;
+                        string numeroAleatorio = ProjetoGuia_Biblioteca.Biblioteca.NumeroAleatorio(4);
+                        usuarioFotoPerfil += String.Concat("?t=", numeroAleatorio); // Adicionar um número aleatório para "desbugar" o cache;
+                    }
+
+                    string caminhoPerfil = "/perfil/@" + @usuarioNomeDeUsuario; */}
+
+                            <div class="is-hidden-tablet-only is-hidden-mobile ml-1">
+                                <div class="ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable">
+                                    <img src="@usuarioFotoPerfil" class="ajustar-imagem-navbar pointer"
+                                        onclick="location.href='@caminhoPerfil';" onerror="this.src='/static/outro/sem-imagem.webp';" title="Meu perfil" />
+                                </div>
+                            </div>
+
+                            <div class="is-hidden-desktop">
+                                <a class="navbar-item" href="@caminhoPerfil">
+                                    <i class="fas fa-user-alt"></i><span class="ml-2">Meu perfil</span>
+                                </a>
+                            </div>
+
+                            {/* Logica para mostrar o "Sair" em botão ou em texto normal, dependendo se é mobile ou desktop  */}
+                            <a class="navbar-item is-hidden-desktop is-hidden-tablet" onClick={deslogar}>Sair</a>
+                            <div class="navbar-item is-hidden-mobile">
+                                <a class="button is-small is-white-bis is-rounded" onClick={deslogar}>Sair</a>
+                            </div>
+                        </React.Fragment>
+                    )}
+
+                    {/* Usuário deslogado */}
+                    {!Auth.isAuth() && (
+                        <React.Fragment>
+                            <a className="navbar-item" href="/">Criar conta</a>
+
+                            {/* Logica para mostrar o "Entrar" em botão ou em texto normal, dependendo se é mobile ou desktop; */}
+                            <a className="navbar-item is-hidden-desktop is-hidden-tablet" href="/entrar">Entrar</a>
+                            <div className="navbar-item is-hidden-mobile">
+                                <a className="button is-small is-primary is-rounded" href="/entrar">Entrar</a>
+                            </div>
+                        </React.Fragment>
+                    )}
+                </div>
+            </div>
+        </nav>
     );
 }
 
