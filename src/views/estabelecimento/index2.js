@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/formularioAtualizarEstabelecimento';
-import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/formularioNovoEstabelecimento';
-import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
+import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/formularioAtualizarEstabelecimento2';
+import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/formularioNovoEstabelecimento2';
+import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos2';
 // import './App.css';
 
 export default function Index() {
