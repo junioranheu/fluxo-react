@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/formularioAtualizarEstabelecimento';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/formularioNovoEstabelecimento';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
-import CONSTANTS_USUARIOS from '../../utilidades/constUsuarios';
 // import './App.css';
 
 export default function Index() {
-    const [jwt, setJwt] = useState([]);
     const [estabelecimentos, setEstabelecimentos] = useState([]);
     const [showFormularioNovoEstabelecimento, setShowFormularioNovoEstabelecimento] = useState(false);
     const [estabelecimentoSendoAtualizado, setEstabelecimentoSendoAtualizado] = useState(null);
@@ -54,35 +52,6 @@ export default function Index() {
                 alert('Erro, consulte F12');
             });
     }
-
-    function getTokenJWT() {
-        const nomeUsuario = 'junioranheu';
-        const senha = '123';
-        const url = `${CONSTANTS_USUARIOS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(data => data.json())
-            .then(data => {
-                const tokenJWT = data;
-                console.log(tokenJWT);
-                setJwt(tokenJWT);
-            })
-            .catch((error) => {
-                console.log(error);
-                alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
-            });
-    }
-
-    // Rodar algo em $(document).ready();
-    useEffect(() => {
-        getTokenJWT();
-    }, [])
 
     return (
         <div className='container'>

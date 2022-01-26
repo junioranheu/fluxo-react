@@ -1,4 +1,5 @@
 import React from 'react';
+import servicoAutenticacao from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
     return (
@@ -9,6 +10,15 @@ export default function Index() {
                         <h1 className='text-center'>Olá, mundo</h1>
                         <a href='/entrar'>Entrar</a><br />
                         <a href='/estabelecimentos'>Estabelecimentos</a>
+                    </div>
+
+                    <div>
+                        <br />
+                        {servicoAutenticacao.getUsuarioLogado().nome}
+                        <br />
+                        {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}
+                        <br />
+                        {servicoAutenticacao.getUsuarioLogado().token}
                     </div>
                 </div>
             </div>

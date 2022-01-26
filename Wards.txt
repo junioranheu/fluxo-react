@@ -1,6 +1,6 @@
 Tutorial inicial: https://youtu.be/I9QUsAhbKhg?t=9024
 react-router-dom@6: https://www.youtube.com/watch?v=SbzKc3lwVQw&ab_channel=CodersCampus
-Autenticar login:
+Autenticar login: https://kosmicke.medium.com/reactjs-servi%C3%A7os-b90037e5790f
 PROCURAR UM JEITO PRA MELHORAR O USO DO TOKEN!!!
 
 --

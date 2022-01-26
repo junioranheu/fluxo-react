@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../css/entrar.css';
 import CONSTANTS from '../../utilidades/constUsuarios';
+import servicoAutenticacao from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
     const [formData, setFormData] = useState(null);
+    const navigate = useNavigate();
 
     // Ao alterar os valores dos inputs, insira os valores nas variaveis do formData;
     const handleChange = (e) => {
@@ -25,6 +28,7 @@ export default function Index() {
         const url = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${formData.usuario}&senha=${formData.senha}`;
         // console.log(url);
 
+        // Verificar se o login e a senha estão corretos;
         fetch(url, {
             method: 'GET',
             headers: {
@@ -34,14 +38,41 @@ export default function Index() {
         })
             .then(data => data.json())
             .then(data => {
-                console.log(data);
-         // LOGIN
+                // Após ser verificado, se estiver ok, continue o processo de login e geração de token;
+                // console.log(data);
+                getToken(formData.usuario, formData.senha, data);
             })
             .catch((error) => {
                 console.log(error);
                 alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
             });
     };
+
+    function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {
+        const url = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+
+        // Gerar token;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(data => data.json())
+            .then(data => {
+                // Inserir o token no json final para gravar localmente a sessão do login;
+                dadosUsuarioVerificado.token = data;
+                servicoAutenticacao.setUsuarioLogado(dadosUsuarioVerificado);
+
+                // Voltar à tela principal;
+                navigate('/', { replace: true });
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
+            });
+    }
 
     return (
         <div className='container'>
