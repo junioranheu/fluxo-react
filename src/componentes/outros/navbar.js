@@ -4,7 +4,7 @@ import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-    
+
     function deslogar() {
         Auth.deleteUsuarioLogado();
     }
@@ -16,7 +16,7 @@ export default function Navbar() {
             setIsNavbarExpandido(true);
         }
     }
-    
+
     return (
         <nav className='navbar is-white has-centered-menu margem-desktop sem-highlight' role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
@@ -47,21 +47,23 @@ export default function Navbar() {
                     {/* usuarioTipoId = 1 = adm  */}
                     {(Auth.isAuth()) && (
                         (Auth.getUsuarioLogado().usuarioTipoId === 1) && (
-                            <div>
-                                <div className="navbar-item has-dropdown is-hoverable">
-                                    <a className="navbar-link" href={() => false}>
-                                        Administrador
+                            <div className="navbar-item has-dropdown is-hoverable">
+                                <a className="navbar-link" href={() => false}>
+                                    Administrador
+                                </a>
+
+                                <div className="navbar-dropdown is-boxed">
+                                    <a className="navbar-item" href="/">
+                                        Gerenciar reports
                                     </a>
 
-                                    <div className="navbar-dropdown is-boxed">
-                                        <a className="navbar-item" href="/">
-                                            Gerenciar reports
-                                        </a>
+                                    <a className="navbar-item" href="/">
+                                        Gerenciar armazenamento
+                                    </a>
 
-                                        <a className="navbar-item" href="/">
-                                            Gerenciar armazenamento
-                                        </a>
-                                    </div>
+                                    <a className="navbar-item" href="/estabelecimentos">
+                                        Estabelecimentos
+                                    </a>
                                 </div>
                             </div>
                         )
