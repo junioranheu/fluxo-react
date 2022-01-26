@@ -1,11 +1,12 @@
 
 const servicoAutenticacao = {
-
-    // Função para salar o usuário logado no local storage
+    // Função para salar o usuário logado (local storage);
     setUsuarioLogado(data) {
+        // console.log(data);
         const dadosUsuario = {
             nome: data.nomeCompleto,
             nomeUsuarioSistema: data.nomeUsuarioSistema,
+            usuarioTipoId: data.usuarioTipoId,
             token: data.token
         };
 
@@ -13,17 +14,34 @@ const servicoAutenticacao = {
         localStorage.setItem('usuarioAutenticado', parsedData);
     },
 
-    // Função responsável por recuperar o usuário logado do local storage
+    isUsuarioLogado() {
+        let data = localStorage.getItem('usuarioAutenticado');
+
+        if (!data) {
+            return false;
+        }
+
+        return true;
+    },
+
+    // Função responsável por recuperar os dados do usuário logado (local storage);
     getUsuarioLogado() {
         let data = localStorage.getItem('usuarioAutenticado');
 
         if (!data) {
-            return null
+            return null;
         }
 
         let dataJson = JSON.parse(data);
         // console.log(dataJson);
         return dataJson;
+    },
+
+    // "Deslogar" usuário;
+    deleteUsuarioLogado() {
+        localStorage.clear();
+        console.log('deslogado');
+        window.location.reload();
     }
 }
 

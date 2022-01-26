@@ -13,14 +13,17 @@ export default function Index() {
                     </div>
 
                     <div>
-                        {(servicoAutenticacao.getUsuarioLogado()) && (
+                        <span onClick={() => servicoAutenticacao.deleteUsuarioLogado()}>isLogado: {servicoAutenticacao.isUsuarioLogado().toString()}</span>
+
+                        {(servicoAutenticacao.isUsuarioLogado()) && (
                             <div>
+                                <span>Nome: {servicoAutenticacao.getUsuarioLogado().nome}</span>
                                 <br />
-                                {servicoAutenticacao.getUsuarioLogado().nome}
+                                <span>Usuário: {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}</span>
                                 <br />
-                                {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}
+                                <span>Tipo: {servicoAutenticacao.getUsuarioLogado().usuarioTipoId}</span>
                                 <br />
-                                {servicoAutenticacao.getUsuarioLogado().token}
+                                <span>Token: {servicoAutenticacao.getUsuarioLogado().token}</span>
                             </div>
                         )}
                     </div>
