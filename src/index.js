@@ -9,11 +9,13 @@ import './css/site.css';
 import './fonts/poppins.css';
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Navbar />
-        <App />
-        <Footer />
-    </BrowserRouter>,
+    <React.StrictMode>
+        <BrowserRouter>
+            <Navbar />
+            <App />
+            <Footer />
+        </BrowserRouter>
+    </React.StrictMode>,
     document.getElementById('root')
 );
 
