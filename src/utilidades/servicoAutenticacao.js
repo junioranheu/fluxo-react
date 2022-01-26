@@ -10,12 +10,12 @@ const servicoAutenticacao = {
         };
 
         let parsedData = JSON.stringify(dadosUsuario);
-        localStorage.setItem('user', parsedData);
+        localStorage.setItem('usuarioAutenticado', parsedData);
     },
 
     // Função responsável por recuperar o usuário logado do local storage
     getUsuarioLogado() {
-        let data = localStorage.getItem('user');
+        let data = localStorage.getItem('usuarioAutenticado');
 
         if (!data) {
             return null

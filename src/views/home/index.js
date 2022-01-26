@@ -13,10 +13,9 @@ export default function Index() {
                     </div>
 
                     <div>
-
-                    {(servicoAutenticacao.getUsuarioLogado()) && (
-                            <div> 
-                                <br /> 
+                        {(servicoAutenticacao.getUsuarioLogado()) && (
+                            <div>
+                                <br />
                                 {servicoAutenticacao.getUsuarioLogado().nome}
                                 <br />
                                 {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}
@@ -24,7 +23,6 @@ export default function Index() {
                                 {servicoAutenticacao.getUsuarioLogado().token}
                             </div>
                         )}
-
                     </div>
                 </div>
             </div>
