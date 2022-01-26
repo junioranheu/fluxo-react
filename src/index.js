@@ -15,9 +15,9 @@ ReactDOM.render(
         <BrowserRouter>
             <Navbar />
 
-            <div class='container'>
+            <div className='container'>
                 {/* animate__slow */}
-                <main role='main' class='conteudo animate__animated animate__fadeIn'>
+                <main role='main' className='conteudo animate__animated animate__fadeIn'>
                     <App />
                 </main>
             </div>
