@@ -14,7 +14,7 @@ const servicoAutenticacao = {
         localStorage.setItem('usuarioAutenticado', parsedData);
     },
 
-    isUsuarioLogado() {
+    isAuth() {
         let data = localStorage.getItem('usuarioAutenticado');
 
         if (!data) {
@@ -40,7 +40,7 @@ const servicoAutenticacao = {
     // "Deslogar" usuário;
     deleteUsuarioLogado() {
         localStorage.clear();
-        console.log('deslogado');
+        // console.log('deslogado');
         window.location.reload();
     }
 }

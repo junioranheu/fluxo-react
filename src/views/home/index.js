@@ -1,5 +1,5 @@
 import React from 'react';
-import servicoAutenticacao from '../../utilidades/servicoAutenticacao';
+import auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
     return (
@@ -13,17 +13,19 @@ export default function Index() {
                     </div>
 
                     <div>
-                        <span onClick={() => servicoAutenticacao.deleteUsuarioLogado()}>isLogado: {servicoAutenticacao.isUsuarioLogado().toString()}</span>
+                        <span onClick={() => auth.deleteUsuarioLogado()}>
+                            isLogado: {auth.isAuth().toString()}
+                        </span>
 
-                        {(servicoAutenticacao.isUsuarioLogado()) && (
+                        {(auth.isAuth()) && (
                             <div>
-                                <span>Nome: {servicoAutenticacao.getUsuarioLogado().nome}</span>
+                                <span>Nome: {auth.getUsuarioLogado().nome}</span>
                                 <br />
-                                <span>Usuário: {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}</span>
+                                <span>Usuário: {auth.getUsuarioLogado().nomeUsuarioSistema}</span>
                                 <br />
-                                <span>Tipo: {servicoAutenticacao.getUsuarioLogado().usuarioTipoId}</span>
+                                <span>Tipo: {auth.getUsuarioLogado().usuarioTipoId}</span>
                                 <br />
-                                <span>Token: {servicoAutenticacao.getUsuarioLogado().token}</span>
+                                <span>Token: {auth.getUsuarioLogado().token}</span>
                             </div>
                         )}
                     </div>
