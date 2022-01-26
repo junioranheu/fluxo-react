@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Navbar() {
+export default function Footer() {
     return (
         <div>
-            <h1><a href='/'>Fluxo</a></h1>
+            <h1>Fluxo</h1>
         </div>
     );
 }
