@@ -54,35 +54,31 @@ export default function Index() {
     }
 
     return (
-        <div className='container'>
-            <div className='row min-vh-100'>
-                <div className='col d-flex flex-column justify-content-center align-items-center'>
-                    {(showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && (
-                        <div>
-                            <h1 className='text-center'>Estabelecimentos do Fluxo</h1>
-                            {/* <h2>{jwt}</h2> */}
+        <div className='container mt-5'>
+            {(showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && (
+                <div className='has-text-centered'>
+                    <h2>Estabelecimentos</h2>
+                    {/* <h2>{jwt}</h2> */}
 
-                            <div className='mt-5'>
-                                <button onClick={getEstabelecimentos} className='btn btn-dark btn-lg w-100'>Trazer estabelecimentos</button>
-                                <button onClick={() => setShowFormularioNovoEstabelecimento(true)} className='btn btn-secondary btn-lg w-100 mt-4'>Criar novo estabelecimento</button>
-                            </div>
-                        </div>
-                    )}
-
-                    {(estabelecimentos.length > 0 && showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && renderizarTabela()}
-
-                    {showFormularioNovoEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
-
-                    {estabelecimentoSendoAtualizado !== null && <FormularioAtualizarEstabelecimento propsEstabelecimento={estabelecimentoSendoAtualizado} onEstabelecimentoUpdated={onEstabelecimentoUpdated} />}
+                    <div className='mt-5'>
+                        <a onClick={getEstabelecimentos} className="button is-primary">Trazer estabelecimentos</a>
+                        <a onClick={() => setShowFormularioNovoEstabelecimento(true)} className="button is-primary ml-4">Criar novo estabelecimento</a>
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {(estabelecimentos.length > 0 && showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && renderizarTabela()}
+
+            {showFormularioNovoEstabelecimento && <FormularioNovoEstabelecimento onEstabelecimentoCriado={onEstabelecimentoCriado} />}
+
+            {estabelecimentoSendoAtualizado !== null && <FormularioAtualizarEstabelecimento propsEstabelecimento={estabelecimentoSendoAtualizado} onEstabelecimentoUpdated={onEstabelecimentoUpdated} />}
         </div>
     );
 
     function renderizarTabela() {
         return (
-            <div className='table-responsive mt-5'>
-                <table className='table table-bordered border-dark'>
+            <div className='box mt-5'>
+                <table className='table is-striped is-hoverable is-fullwidth mt-5'>
                     <thead>
                         <tr>
                             <th scope='col'>ID</th>
@@ -109,9 +105,7 @@ export default function Index() {
                     </tbody>
                 </table>
 
-                <button onClick={() => { setEstabelecimentos([]) }} className='btn btn-secondary btn-lg w-100 mt-4'>
-                    Resetar informações
-                </button>
+                <a onClick={() => setEstabelecimentos([])} className="button is-primary is-fullwidth ml-3">Voltar</a>
             </div>
         );
     }
