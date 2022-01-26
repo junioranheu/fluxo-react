@@ -50,10 +50,7 @@ export default function Footer() {
                             <p className='copyright-text'>
                                 Copyright &copy; @DateTime.Now.Year —
 
-                                Feito com o 💛 por
-                                <a href='https://www.instagram.com/junioranheu/' target='_blank' rel='nofollow'>junioranheu</a>
-                                e
-                                <a href='https://www.instagram.com/marcello.salerno0/' target='_blank' rel='nofollow'>ateu</a>
+                                Feito com o 💛 por <a href='https://www.instagram.com/junioranheu/' target='_blank' rel='nofollow'>@junioranheu</a>
                             </p>
                         </div>
 

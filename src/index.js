@@ -1,3 +1,5 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'animate.css/animate.min.css';
 import 'bulma/css/bulma.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,6 +16,7 @@ ReactDOM.render(
             <Navbar />
 
             <div class='container'>
+                {/* animate__slow */}
                 <main role='main' class='conteudo animate__animated animate__fadeIn'>
                     <App />
                 </main>

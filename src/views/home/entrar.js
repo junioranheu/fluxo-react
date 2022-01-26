@@ -66,8 +66,8 @@ export default function Index() {
                 servicoAutenticacao.setUsuarioLogado(dadosUsuarioVerificado);
 
                 // Voltar à tela principal;
-                navigate('/', { replace: true });
-                window.location.reload();
+                navigate('/', { replace: true }); 
+                window.location.reload(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -76,38 +76,67 @@ export default function Index() {
     }
 
     return (
-        <div className='container'>
-            <div className='row min-vh-100'>
-                <div className='col d-flex flex-column justify-content-center align-items-center'>
-                    <div className='card login-form box'>
-                        <div className='card-body'>
-                            <h3 className='card-title text-center'>Entre no Fluxo (React)</h3>
+        <React.Fragment>
+            {/* Efeito */}
+            <div class="hero-zika">
+                <svg class="secao-diagonal" preserveAspectRatio="none" viewBox="0 0 1438 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 620V0h1438v240L0 620z" />
+                </svg>
+            </div>
 
-                            <div className='card-text'>
-                                <form>
-                                    <div className='form-group'>
-                                        <label>Nome de usuário ou e-mail</label>
-                                        <input type='email' name='usuario' className='form-control form-control-sm' onChange={handleChange} />
+            {/* Seção  */}
+            <section class="hero is-medium sem-highlight">
+                <div class="hero-body">
+                    <div class="container">
+                        <div class="columns is-centered">
+                            <div class="column is-12-mobile is-10-tablet is-8-desktop is-6-widescreen">
+                                <div class="box">
+                                    <div class="has-text-centered animate__animated animate__@(efeito) mb-6">
+                                        <div>
+                                            <img class="login-logo" src="~/static/outro/fluxo.webp" />
+                                        </div>
+
+                                        <h1 class="title">Entre no <span class="grifar">Fluxo</span></h1>
+                                        <h1 class="subtitle"><span class="efeito-texto">Feito com React</span></h1>
                                     </div>
 
-                                    <br />
-
-                                    <div className='form-group'>
-                                        <label>Senha</label>
-                                        <input type='password' name='senha' className='form-control form-control-sm' onChange={handleChange} />
+                                    <div class="field mt-5">
+                                        <label class="label">Nome de usuário ou e-mail</label>
+                                        <div class="control has-icons-right">
+                                            <input type='email' name='usuario' className='input' onChange={handleChange} />
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                        </div>
                                     </div>
 
-                                    <button onClick={handleSubmit} type='submit' className='btn btn-primary btn-block w-100 mt-4'>Entrar</button>
+                                    <div class="field">
+                                        <label class="label">Senha</label>
+                                        <div class="control has-icons-right">
+                                            <input type='password' name='senha' className='input' onChange={handleChange} />
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-key"></i>
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                    {/* <div className='sign-up'>
-                                        Don't have an account? <a href='#'>Create One</a>
-                                    </div> */}
-                                </form>
+                                    <div class="has-text-centered mt-5">
+                                        <input onClick={handleSubmit} type="button" class="button is-vcentered is-primary is-fullwidth" value="Entrar" />
+                                    </div>
+
+                                    <div class="has-text-centered mt-4">
+                                        <small>
+                                            <span>Ao entrar você automaticamente concorda com os <a asp-controller="Home" asp-action="TermosUso" class="cor-principal" target="_blank">termos de uso</a></span>
+                                            <br />
+                                            <a asp-controller="Home" asp-action="CriarConta" class="cor-principal">Não tem uma conta? Registre-se agora!</a>
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </React.Fragment>
     );
 }

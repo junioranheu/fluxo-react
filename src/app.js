@@ -11,7 +11,7 @@ export default function App() {
     <Routes>
       <Route path='/' element={<Inicio />} />
       <Route path='/sem-acesso' element={<SemAcesso />} />
-      <Route path='/entrar' element={<Entrar />} />
+      <Route path='/entrar' element={!Auth.isAuth() ? <Entrar /> : <Navigate to='/sem-acesso' />} />
       <Route path='/estabelecimentos' element={Auth.isAuth() ? <Estabelecimento /> : <Navigate to='/sem-acesso' />} />
     </Routes>
   );

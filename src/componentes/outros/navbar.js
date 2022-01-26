@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import SemImagem from '../../static/outros/sem-imagem.webp';
+import SemImagem from '../../static/outro/sem-imagem.webp';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-
+    
     function deslogar() {
         Auth.deleteUsuarioLogado();
     }
@@ -16,7 +16,7 @@ export default function Navbar() {
             setIsNavbarExpandido(true);
         }
     }
-
+    
     return (
         <nav className='navbar is-white has-centered-menu margem-desktop sem-highlight' role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
