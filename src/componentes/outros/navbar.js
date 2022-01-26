@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SemImagem from '../../static/outros/sem-imagem.webp';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
+    const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
+
     function deslogar() {
         Auth.deleteUsuarioLogado();
     }
 
+    function expandirNavbar() {
+        if (isNavbarExpandido) {
+            setIsNavbarExpandido(false);
+        } else {
+            setIsNavbarExpandido(true);
+        }
+    }
+
     return (
-        <nav className="navbar is-white has-centered-menu margem-desktop sem-highlight" role="navigation" aria-label="main navigation">
+        <nav className='navbar is-white has-centered-menu margem-desktop sem-highlight' role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <a className="navbar-item" href="/">
                     <span>Fluxo</span>
                 </a>
 
-                <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" href={() => false}>
+                <a onClick={expandirNavbar} role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" href={() => false}>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </a>
             </div>
 
-            <div className="navbar-menu">
+            <div className={`navbar-menu ` + (isNavbarExpandido ? 'is-active' : '')}>
                 <div className="navbar-start">
                     <a className="navbar-item efeito-texto" href="/">Início</a>
 
@@ -87,7 +97,7 @@ export default function Navbar() {
                             <div className="is-hidden-tablet-only is-hidden-mobile ml-1">
                                 <div className="ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable">
                                     <img src="@usuarioFotoPerfil" className="ajustar-imagem-navbar pointer" alt='Erro...'
-                                        onClick="location.href='@caminhoPerfil';" onError={(event) => event.target.src=SemImagem} title="Meu perfil" />
+                                        onClick="location.href='@caminhoPerfil';" onError={(event) => event.target.src = SemImagem} title="Meu perfil" />
                                 </div>
                             </div>
 
