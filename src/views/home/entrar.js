@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/entrar.css';
+import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/constUsuarios';
-import servicoAutenticacao from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
     const [formData, setFormData] = useState(null);
@@ -63,7 +64,7 @@ export default function Index() {
             .then(data => {
                 // Inserir o token no json final para gravar localmente a sessão do login;
                 dadosUsuarioVerificado.token = data;
-                servicoAutenticacao.setUsuarioLogado(dadosUsuarioVerificado);
+                Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
                 // Voltar à tela principal;
                 navigate('/', { replace: true }); 
@@ -93,7 +94,7 @@ export default function Index() {
                                 <div class="box">
                                     <div class="has-text-centered animate__animated animate__@(efeito) mb-6">
                                         <div>
-                                            <img class="login-logo" src="~/static/outro/fluxo.webp" />
+                                            <img class="login-logo" src={Logo} />
                                         </div>
 
                                         <h1 class="title">Entre no <span class="grifar">Fluxo</span></h1>
