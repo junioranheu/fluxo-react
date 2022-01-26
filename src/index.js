@@ -12,7 +12,13 @@ ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Navbar />
-            <App />
+
+            <div class='container'>
+                <main role='main' class='conteudo animate__animated animate__fadeIn'>
+                    <App />
+                </main>
+            </div>
+
             <Footer />
         </BrowserRouter>
     </React.StrictMode>,

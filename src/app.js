@@ -9,10 +9,10 @@ import SemAcesso from './views/home/semAcesso';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Inicio />} />
-      <Route path="/sem-acesso" element={<SemAcesso />} />
-      <Route path="/entrar" element={<Entrar />} />
-      <Route path="/estabelecimentos" element={Auth.isAuth() ? <Estabelecimento /> : <Navigate to="/sem-acesso" />} />
+      <Route path='/' element={<Inicio />} />
+      <Route path='/sem-acesso' element={<SemAcesso />} />
+      <Route path='/entrar' element={<Entrar />} />
+      <Route path='/estabelecimentos' element={Auth.isAuth() ? <Estabelecimento /> : <Navigate to='/sem-acesso' />} />
     </Routes>
   );
 }
