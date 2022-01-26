@@ -13,12 +13,19 @@ export default function Index() {
                     </div>
 
                     <div>
-                        <br />
-                        {servicoAutenticacao.getUsuarioLogado().nome}
-                        <br />
-                        {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}
-                        <br />
-                        {servicoAutenticacao.getUsuarioLogado().token}
+
+                    {(servicoAutenticacao.getUsuarioLogado()) && (
+                            <div> 
+                                <br /> 
+                                {servicoAutenticacao.getUsuarioLogado().nome}
+                                <br />
+                                {servicoAutenticacao.getUsuarioLogado().nomeUsuarioSistema}
+                                <br />
+                                {servicoAutenticacao.getUsuarioLogado().token}
+                            </div>
+                        )}
+
+
                     </div>
                 </div>
             </div>
