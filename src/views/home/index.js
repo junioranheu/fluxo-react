@@ -3,11 +3,10 @@ import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import '../../css/card.css';
 import '../../css/itens.css';
+import CONSTANTS_CATEGORIAS from '../../utilidades/constCategorias';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
-    const [nomeUsuario, setNomeUsuario] = useState(Auth.isAuth() ? Auth.getUsuarioLogado().nomeUsuarioSistema : 'mundo');
-
     const listaCards = [
         {
             'id': 1,
@@ -71,9 +70,9 @@ export default function Index() {
     ];
     const [cards, setCards] = useState(listaCards);
 
-    const [saudacao, setSaudacao] = useState('');
+    const [className, setclassNameName] = useState('');
 
-    useEffect(() => {
+    function ola() {
         var hoje = new Date();
         var hora = hoje.getHours();
         var msg = '';
@@ -86,14 +85,43 @@ export default function Index() {
             msg = 'Boa noite';
         }
 
-        if (Auth.isAuth()){
+        if (Auth.isAuth()) {
             msg += ', @' + Auth.getUsuarioLogado().nomeUsuarioSistema + '!';
         } else {
             msg += '!<br/>Bem-vindo ao Fluxo';
         }
-      
-        setSaudacao(msg);
+
+        return msg;
+    }
+
+    // Ao carregar página;
+    useEffect(() => {
+        // Olá;
+        setclassNameName(ola());
+
+        // Pegar todas as categorias;
+        getCategorias();
     }, [])
+
+    const [categorias, setCategorias] = useState([]);
+
+    function getCategorias() {
+        const url = CONSTANTS_CATEGORIAS.API_URL_GET_TODOS;
+        // console.log(url);
+
+        fetch(url, {
+            method: 'GET'
+        })
+            .then(data => data.json())
+            .then(data => {
+                // console.log(data);
+                setCategorias(data);
+            })
+            .catch((error) => {
+                console.log(error);
+                // alert('Erro, consulte F12');
+            });
+    }
 
     return (
         <React.Fragment>
@@ -109,7 +137,7 @@ export default function Index() {
             <section className='mt-6'>
                 {/* Olá */}
                 <section className='content-section mt-4'>
-                    <h1 className='titulo'><span dangerouslySetInnerHTML={{ __html: saudacao }}></span></h1>
+                    <h1 className='titulo'><span dangerouslySetInnerHTML={{ __html: className }}></span></h1>
                 </section>
 
                 {/* Campo de busca  */}
@@ -117,20 +145,45 @@ export default function Index() {
                     <div className='search-wrapper'>
                         <input className='search-input' type='text' placeholder='Filtre os tipos de estabelecimentos aqui também...' />
 
-                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' className='feather feather-search' viewBox='0 0 24 24'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' className='feather feather-search' viewBox='0 0 24 24'>
                             <defs />
                             <circle cx='11' cy='11' r='8' />
                             <path d='M21 21l-4.35-4.35' />
                         </svg>
                     </div>
                 </div>
+
+                {/* Categorias  */}
+                <section className='content-section mt-6' id='divCategorias'>
+                    <h1 className='titulo' style={{ marginTop: '8px !important', marginBottom: '8px !important' }}>
+                        Categorias
+                    </h1>
+
+                    <div className='access-links'>
+                        <div className='categoria pointer' title='Mostrar todos' data-is-selecionado='1' id='opcaoMostrarTodasCategorias'>
+                            <div className='access-icon' style={{ backgroundColor: 'var(--cor-principal)' }}>
+                                <i className='fas fa-globe-americas'></i>
+                            </div>
+
+                            <span className='access-text'>Todas as categorias</span>
+                        </div>
+
+                        {categorias.length > 0 && (
+                            categorias.map((categoria) => (
+                                <div className='categoria pointer' title={`Filtrar por ${categoria.categoria.toLowerCase()}`} data-is-selecionado='0' key={categoria.estabelecimentoCategoriaId}>
+                                    <div className='access-icon'>
+                                        <i className={categoria.icone}></i>
+                                    </div>
+
+                                    <span className='access-text'>{categoria.categoria}</span>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </section>
             </section>
 
-            <div className='mt-6'>
-                <h1>Olá, {nomeUsuario}</h1>
-            </div>
-
             <InfoUsuario />
-        </React.Fragment>
+        </React.Fragment >
     );
 }
