@@ -54,7 +54,7 @@ export default function Index() {
     }
 
     return (
-        <div className='container mt-5'>
+        <div className='container mt-6'>
             {(showFormularioNovoEstabelecimento === false && estabelecimentoSendoAtualizado === null) && (
                 <div className='has-text-centered'>
                     <h2>Estabelecimentos</h2>

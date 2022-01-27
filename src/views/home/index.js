@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
+import '../../css/card.css';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
@@ -9,6 +10,7 @@ export default function Index() {
     const listaCards = [
         {
             'id': 1,
+            'mostrarApenasAutenticado': true,
             'usuarioTipoId': 2, // Normal;
             'imagem': 'static/cards/loja.webp',
             'titulo': 'Torne-se um parceiro',
@@ -20,6 +22,7 @@ export default function Index() {
 
         {
             'id': 2,
+            'mostrarApenasAutenticado': true,
             'usuarioTipoId': 3, // Estabelecimento;
             'imagem': 'static/cards/loja.webp',
             'titulo': 'aaaaa',
@@ -31,6 +34,7 @@ export default function Index() {
 
         {
             'id': 3,
+            'mostrarApenasAutenticado': true,
             'usuarioTipoId': null,
             'imagem': 'static/cards/sobre.webp',
             'titulo': 'Sobre',
@@ -42,6 +46,7 @@ export default function Index() {
 
         {
             'id': 4,
+            'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/entrar.webp',
             'titulo': 'Faça login',
@@ -53,6 +58,7 @@ export default function Index() {
 
         {
             'id': 5,
+            'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/comida.webp',
             'titulo': 'Fluxo',
@@ -65,20 +71,20 @@ export default function Index() {
     const [cards, setCards] = useState(listaCards);
 
     return (
-        <div className='container'>
-            <div className=''>
-                <div className=''>
-                    <div>
-                        <h1 className=''>Olá, {nomeUsuario}</h1>
-                    </div>
-
-                    <InfoUsuario />
-
+        <React.Fragment>
+            <section className='mt-6'>
+                <div className='card-ui-wrapper content-section'>
                     {cards.map((card) => (
                         <Card props={card} key={card.id} />
                     ))}
                 </div>
+            </section>
+
+            <div className='mt-6'>
+                <h1>Olá, {nomeUsuario}</h1>
             </div>
-        </div>
+
+            <InfoUsuario />
+        </React.Fragment>
     );
 }

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+// import ReactHtmlParser from 'react-html-parser';
 import '../../css/card.css';
+import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Card(props) {
+    const [usuarioTipoId, setUsuarioTipoId] = useState(Auth.isAuth() ? Auth.getUsuarioLogado().usuarioTipoId : null);
     const [prop, setProp] = useState(props['props']);
     // console.log(prop);
 
@@ -9,31 +12,37 @@ export default function Card(props) {
     const ImagemDinamica = require('../../' + (prop.imagem));
 
     return (
-        // style={{ backgroundImage: 'url(' + prop.imagem + ')' }}
-        <div className='card-ui pequeno' style={{ backgroundImage: `url(${ImagemDinamica})` }}>
-            <div className='card-ui__overlay'></div>
-            <span className='card-ui__icon'>
-                <i className={prop.icone}></i>
-            </span>
+        <React.Fragment>
+            {(
+                (usuarioTipoId && prop.usuarioTipoId === usuarioTipoId && prop.mostrarApenasAutenticado === Auth.isAuth()) || // Se o usuário está logado, se tem privilégio (perfil) para ver o tipo de card e se ele pode ver o card (prop.mostrarApenasAutenticado));
+                (prop.usuarioTipoId === null && prop.mostrarApenasAutenticado === Auth.isAuth()) // Se o usuário está deslogado e se o card pode ser visto por ele por questão de visualização do card (prop.mostrarApenasAutenticado);
+            ) && (
+                    <div className='card-ui pequeno' style={{ backgroundImage: `url(${ImagemDinamica})` }}>
+                        <div className='card-ui__overlay'></div>
+                        <span className='card-ui__icon'>
+                            <i className={prop.icone}></i>
+                        </span>
 
-            <div className='card-ui__content'>
-                <div>
-                    <h1 className='titulo cor-branco'>
-                        {prop.titulo}
-                    </h1>
-                </div>
+                        <div className='card-ui__content'>
+                            <div>
+                                <h1 className='titulo cor-branco'>
+                                    {prop.titulo}
+                                </h1>
+                            </div>
 
-                <div>
-                    <p className='card-ui__desc'>
-                        {prop.descricao}
-                    </p>
-                </div>
+                            <div>
+                                <p className='card-ui__desc'>
+                                    <span dangerouslySetInnerHTML={{ __html: prop.descricao }}></span>
+                                </p>
+                            </div>
 
-                <a className='button is-primary is-fullwidth' href={prop.url}>
-                    {prop.mensagemBotao}
-                </a>
-            </div>
-        </div>
+                            <a className='button is-primary is-fullwidth' href={prop.url}>
+                                {prop.mensagemBotao}
+                            </a>
+                        </div>
+                    </div>
+                )}
+        </React.Fragment>
     );
 }
 
