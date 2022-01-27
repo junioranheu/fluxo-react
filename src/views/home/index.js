@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import '../../css/card.css';
+import '../../css/itens.css';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
@@ -70,13 +71,58 @@ export default function Index() {
     ];
     const [cards, setCards] = useState(listaCards);
 
+    const [saudacao, setSaudacao] = useState('');
+
+    useEffect(() => {
+        var hoje = new Date();
+        var hora = hoje.getHours();
+        var msg = '';
+
+        if (hora < 12) {
+            msg = 'Bom dia';
+        } else if (hora < 18) {
+            msg = 'Boa tarde';
+        } else {
+            msg = 'Boa noite';
+        }
+
+        if (Auth.isAuth()){
+            msg += ', @' + Auth.getUsuarioLogado().nomeUsuarioSistema + '!';
+        } else {
+            msg += '!<br/>Bem-vindo ao Fluxo';
+        }
+      
+        setSaudacao(msg);
+    }, [])
+
     return (
         <React.Fragment>
+            {/* Cards */}
             <section className='mt-6'>
-                <div className='card-ui-wrapper content-section'>
+                <div className='card-ui-wrapper'>
                     {cards.map((card) => (
                         <Card props={card} key={card.id} />
                     ))}
+                </div>
+            </section>
+
+            <section className='mt-6'>
+                {/* Olá */}
+                <section className='content-section mt-4'>
+                    <h1 className='titulo'><span dangerouslySetInnerHTML={{ __html: saudacao }}></span></h1>
+                </section>
+
+                {/* Campo de busca  */}
+                <div className='main-area-header mt-3'>
+                    <div className='search-wrapper'>
+                        <input className='search-input' type='text' placeholder='Filtre os tipos de estabelecimentos aqui também...' />
+
+                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' className='feather feather-search' viewBox='0 0 24 24'>
+                            <defs />
+                            <circle cx='11' cy='11' r='8' />
+                            <path d='M21 21l-4.35-4.35' />
+                        </svg>
+                    </div>
                 </div>
             </section>
 

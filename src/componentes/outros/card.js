@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import ReactHtmlParser from 'react-html-parser';
 import '../../css/card.css';
 import Auth from '../../utilidades/servicoAutenticacao';
 
