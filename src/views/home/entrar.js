@@ -72,7 +72,8 @@ export default function Index() {
 
                 // Voltar à tela principal;
                 navigate('/', { replace: true });
-                window.location.reload(false);
+                setIsAuth(true);
+                // window.location.reload(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -89,14 +90,14 @@ export default function Index() {
                 </svg>
             </div>
 
-            {/* Seção  */}
+            {/* Seção */}
             <section className='hero is-medium sem-highlight'>
                 <div className='hero-body'>
                     <div className='container'>
                         <div className='columns is-centered'>
                             <div className='column is-12-mobile is-10-tablet is-8-desktop is-6-widescreen'>
                                 <div className='box'>
-                                    <div className='has-text-centered animate__animated animate__@(efeito) mb-6'>
+                                    <div className='has-text-centered mb-6'>
                                         <div>
                                             <img className='login-logo' src={Logo} alt='Erro...' />
                                         </div>

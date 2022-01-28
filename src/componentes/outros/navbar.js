@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import Auth from '../../utilidades/auth/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-    const [caminhoPerfil] = useState(Auth.isAuth() ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
+    const [isAuth, setIsAuth] = useState(Auth.isAuth());
+    const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
 
     function deslogar() {
         Auth.deleteUsuarioLogado();
@@ -17,6 +18,13 @@ export default function Navbar() {
             setIsNavbarExpandido(true);
         }
     }
+
+    // Verificar se o usuário está logado;
+    useEffect(() => {
+        // e.preventDefault();
+        console.log(isAuth);
+        // setIsAuth(isAuth);
+    }, [isAuth])
 
     return (
         <nav className='navbar is-white has-centered-menu margem-desktop sem-highlight' role='navigation' aria-label='main navigation'>
@@ -46,29 +54,28 @@ export default function Navbar() {
                     </div>
 
                     {/* usuarioTipoId = 1 = adm  */}
-                    {(Auth.isAuth()) && (
-                        (Auth.getUsuarioLogado().usuarioTipoId === 1) && (
-                            <div className='navbar-item has-dropdown is-hoverable'>
-                                <a className='navbar-link' href={() => false}>
-                                    Administrador
+                    {(isAuth) && (Auth.getUsuarioLogado().usuarioTipoId === 1) && (
+                        <div className='navbar-item has-dropdown is-hoverable'>
+                            <a className='navbar-link' href={() => false}>
+                                Administrador
+                            </a>
+
+                            <div className='navbar-dropdown is-boxed'>
+                                <a className='navbar-item' href='/'>
+                                    Gerenciar reports
                                 </a>
 
-                                <div className='navbar-dropdown is-boxed'>
-                                    <a className='navbar-item' href='/'>
-                                        Gerenciar reports
-                                    </a>
+                                <a className='navbar-item' href='/'>
+                                    Gerenciar armazenamento
+                                </a>
 
-                                    <a className='navbar-item' href='/'>
-                                        Gerenciar armazenamento
-                                    </a>
-
-                                    <a className='navbar-item' href='/estabelecimentos'>
-                                        Estabelecimentos
-                                    </a>
-                                </div>
+                                <a className='navbar-item' href='/estabelecimentos'>
+                                    Estabelecimentos
+                                </a>
                             </div>
-                        )
-                    )}
+                        </div>
+                    )
+                    }
                 </div>
 
                 <div className='navbar-end'>
@@ -81,7 +88,7 @@ export default function Navbar() {
                     </a>
 
                     {/* Usuário logado */}
-                    {Auth.isAuth() && (
+                    {isAuth && (
                         <React.Fragment>
                             {/* Perfil  */
                             /* if (usuarioFotoPerfil == '-1' || usuarioFotoPerfil == null || usuarioFotoPerfil == '')
@@ -119,7 +126,7 @@ export default function Navbar() {
                     )}
 
                     {/* Usuário deslogado */}
-                    {!Auth.isAuth() && (
+                    {!isAuth && (
                         <React.Fragment>
                             <a className='navbar-item' href='/'>Criar conta</a>
 
