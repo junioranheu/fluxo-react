@@ -13,7 +13,7 @@ export default function Footer() {
             <footer className='site-footer sem-highlight'>
                 <div className='container'>
                     <div className='columns'>
-                        <div className='column is-6-tablet is-6-desktop padding-right-50'> 
+                        <div className='column is-6-tablet is-6-desktop padding-right-50'>
                             <h6>SOBRE</h6>
                             <p className='text-justify'>
                                 Fluxo é uma plataforma para você conhecer sua cidade. Descubra todos os fluxos.
@@ -24,10 +24,10 @@ export default function Footer() {
                         <div className='column is-6-mobile is-3-desktop'>
                             <h6>RECURSOS</h6>
                             <ul className='footer-links'>
-                                <li><a href='#'>Isso é um teste</a></li>
-                                <li><a href='#'>xxx</a></li>
-                                <li><a href='#'>xxx</a></li>
-                                <li><a href='#'>xxx</a></li>
+                                <li><a href={() => false}>Isso é um teste</a></li>
+                                <li><a href={() => false}>xxx</a></li>
+                                <li><a href={() => false}>xxx</a></li>
+                                <li><a href={() => false}>xxx</a></li>
                             </ul>
                         </div>
 
@@ -48,18 +48,18 @@ export default function Footer() {
                     <div className='row columns'>
                         <div className='column'>
                             <p className='copyright-text'>
-                                Copyright &copy; @DateTime.Now.Year —
+                                Copyright &copy; {new Date().getFullYear()} —
 
-                                Feito com o 💛 por <a href='https://www.instagram.com/junioranheu/' target='_blank' rel='nofollow'>@junioranheu</a>
+                                Feito com o 💛 por <a href='https://www.instagram.com/junioranheu/' target='_blank' rel='noreferrer'>@junioranheu</a>
                             </p>
                         </div>
 
                         <div className='column'>
                             <ul className='social-icons'>
-                                <li><a className='twitter' href='#' target='_blank'><i className='fab fa-twitter'></i></a></li>
-                                <li><a className='instagram' href='#' target='_blank'><i className='fab fa-instagram'></i></a></li>
-                                <li><a className='facebook' href='#' target='_blank'><i className='fab fa-facebook'></i></a></li>
-                                <li><a className='youtube' href='#' target='_blank'><i className='fab fa-youtube'></i></a></li>
+                                <li><a className='twitter' href={() => false} target='_blank' rel='noreferrer'><i className='fab fa-twitter'></i></a></li>
+                                <li><a className='instagram' href={() => false} target='_blank' rel='noreferrer'><i className='fab fa-instagram'></i></a></li>
+                                <li><a className='facebook' href={() => false} target='_blank' rel='noreferrer'><i className='fab fa-facebook'></i></a></li>
+                                <li><a className='youtube' href={() => false} target='_blank' rel='noreferrer'><i className='fab fa-youtube'></i></a></li>
                             </ul>
                         </div>
                     </div>

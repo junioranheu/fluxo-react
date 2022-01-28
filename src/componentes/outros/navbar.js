@@ -4,6 +4,7 @@ import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
+    const [caminhoPerfil] = useState(Auth.isAuth ? '/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema : '');
 
     function deslogar() {
         Auth.deleteUsuarioLogado();
@@ -99,12 +100,12 @@ export default function Navbar() {
                             <div className="is-hidden-tablet-only is-hidden-mobile ml-1">
                                 <div className="ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable">
                                     <img src="@usuarioFotoPerfil" className="ajustar-imagem-navbar pointer" alt='Erro...'
-                                        onClick="location.href='@caminhoPerfil';" onError={(event) => event.target.src = SemImagem} title="Meu perfil" />
+                                        onClick={() => window.location.href = caminhoPerfil} onError={(event) => event.target.src = SemImagem} title="Meu perfil" />
                                 </div>
                             </div>
 
                             <div className="is-hidden-desktop">
-                                <a className="navbar-item" href="@caminhoPerfil">
+                                <a className="navbar-item" href={caminhoPerfil}>
                                     <i className="fas fa-user-alt"></i><span className="ml-2">Meu perfil</span>
                                 </a>
                             </div>
