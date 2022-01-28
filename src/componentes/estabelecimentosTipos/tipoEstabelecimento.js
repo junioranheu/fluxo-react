@@ -11,7 +11,7 @@ export default function TipoEstabelecimento(props) {
     const imagemDinamica = require('../../' + (thumbnail));
 
     return (
-        <a className='image-wrapper' href={caminhoEstabelecimento} data-categoria-id={prop.estabelecimentoCategorias.estabelecimentoCategoriaId} data-tipo={prop.tipo} data-desc={prop.descricao}>
+        <a className='image-wrapper' href={caminhoEstabelecimento}>
             <div className='image-overlay'>
                 <div className='image-info'>
                     <div className='image-info-text'>
@@ -20,8 +20,7 @@ export default function TipoEstabelecimento(props) {
                     </div>
                 </div>
             </div>
-
-            {/* onerror='this.src='/static/outro/imagem-indisponivel.webp';' */}
+            
             <img src={imagemDinamica} loading='lazy' width='1' height='1' onError={(event) => event.target.src = SemImagem} alt='Erro...' />
             <span className='image-icone'>
                 <i className={prop.estabelecimentoCategorias.icone} title={prop.estabelecimentoCategorias.categoria}></i>

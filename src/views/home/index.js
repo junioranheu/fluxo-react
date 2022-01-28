@@ -8,31 +8,7 @@ import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 
 export default function Index() {
-    const [categoriasSelecionadas, setCategoriasSelecionadas] = useState([]);
-    function handleAdicionarCategoria(prop) {
-        // console.log(prop);
-        setCategoriasSelecionadas(prop);
-    }
-
-    function handleRemoverCategoria(prop) {
-        const index = categoriasSelecionadas.findIndex((c, index) => {
-            if (c.categoriaId === prop[0].categoriaId) {
-                return true;
-            }
-
-            return false;
-        });
-
-        if (index !== -1) {
-            categoriasSelecionadas.splice(index, 1);
-        }
-    }
-
-    useEffect(() => {
-        console.log(categoriasSelecionadas);
-    }, [categoriasSelecionadas])
-    //
-
+    // Cards;
     const listaCards = [
         {
             'id': 1,
@@ -96,6 +72,7 @@ export default function Index() {
     ];
     const [cards] = useState(listaCards);
 
+    // Olá;
     function ola() {
         var hoje = new Date();
         var hora = hoje.getHours();
@@ -119,6 +96,7 @@ export default function Index() {
     }
     const [className] = useState(ola());
 
+    // Get categorias;
     const [categorias, setCategorias] = useState([]);
     function getCategorias() {
         const url = CONSTANTS_CATEGORIAS.API_URL_GET_TODOS;
@@ -138,6 +116,7 @@ export default function Index() {
             });
     }
 
+    // Get tipos de estabelecimentos;
     const [tiposEstabelecimentos, setTiposEstabelecimentos] = useState([]);
     function getTiposEstabelecimentos() {
         const url = CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_TODOS;
@@ -166,6 +145,49 @@ export default function Index() {
         getTiposEstabelecimentos();
     }, [])
 
+    // Lógica dos clicks das categorias;
+    const [categoriasSelecionadas, setCategoriasSelecionadas] = useState([]);
+    function handleAdicionarCategoria(prop) {
+        // console.log(prop);
+        setCategoriasSelecionadas(prop);
+    }
+
+    function handleRemoverCategoria(prop) {
+        const index = categoriasSelecionadas.findIndex((c, index) => {
+            if (c.categoriaId === prop[0].categoriaId) {
+                return true;
+            }
+
+            return false;
+        });
+
+        if (index !== -1) {
+            var categoriasCopy = [...categoriasSelecionadas];
+            categoriasCopy.splice(index, 1);
+            setCategoriasSelecionadas(categoriasCopy);
+        }
+    }
+
+    // Ao mudar o "categoriasSelecionadas";
+    const [isCategoriaSelecionaTodosSelecionado, setIsCategoriaSelecionaTodosSelecionado] = useState(true);
+    useEffect(() => {
+        if (categoriasSelecionadas.length > 0) {
+            setIsCategoriaSelecionaTodosSelecionado(false);
+        } else {
+            setIsCategoriaSelecionaTodosSelecionado(true);
+        }
+    }, [categoriasSelecionadas])
+
+    function handleClickTodasCategorias() {
+        setIsCategoriaSelecionaTodosSelecionado(true);
+        // setCategoriasSelecionadas([]);
+        setCategorias([])
+        getCategorias();
+        setTiposEstabelecimentos([]);
+        getTiposEstabelecimentos();
+        setCategoriasSelecionadas([]);
+    }
+
     return (
         <React.Fragment>
             {/* Cards */}
@@ -183,7 +205,7 @@ export default function Index() {
                     <h1 className='titulo'><span dangerouslySetInnerHTML={{ __html: className }}></span></h1>
                 </section>
 
-                {/* Campo de busca  */}
+                {/* Campo de busca */}
                 <div className='main-area-header mt-3'>
                     <div className='search-wrapper'>
                         <input className='search-input' type='text' placeholder='Filtre os tipos de estabelecimentos aqui também...' />
@@ -196,7 +218,7 @@ export default function Index() {
                     </div>
                 </div>
 
-                {/* Categorias  */}
+                {/* Categorias */}
                 <section className='content-section mt-6' id='divCategorias'>
                     <h1 className='titulo' style={{ marginTop: '8px !important', marginBottom: '8px !important' }}>
                         Categorias
@@ -204,7 +226,7 @@ export default function Index() {
 
                     <div className='access-links'>
                         <div className='categoria pointer' title='Mostrar todos'>
-                            <div className='access-icon' style={{ backgroundColor: 'var(--cor-principal)' }}>
+                            <div className='access-icon' onClick={() => handleClickTodasCategorias()} style={{ backgroundColor: (isCategoriaSelecionaTodosSelecionado ? 'var(--cor-principal)' : '') }}>
                                 <i className='fas fa-globe-americas'></i>
                             </div>
 
@@ -219,7 +241,7 @@ export default function Index() {
                     </div>
                 </section>
 
-                {/* Tipos de estabelecimentos  */}
+                {/* Tipos de estabelecimentos */}
                 <section className='content-section mt-6'>
                     <div className='titulo-wrapper'>
                         <h1 className='titulo'>
@@ -229,7 +251,17 @@ export default function Index() {
 
                     <div className='section-part mt-3'>
                         <div className='content-part-line'>
-                            {tiposEstabelecimentos.length > 0 && (
+                            {(!isCategoriaSelecionaTodosSelecionado) && (categoriasSelecionadas.length > 0) && (tiposEstabelecimentos.length > 0) && (
+                                tiposEstabelecimentos.map((tipo) => (
+                                    <React.Fragment key={tipo.estabelecimentoTipoId} >
+                                        {(categoriasSelecionadas.findIndex(c => c.categoriaId === tipo.estabelecimentoCategorias.estabelecimentoCategoriaId) > -1) && (
+                                            <TipoEstabelecimento props={tipo} />
+                                        )}
+                                    </React.Fragment>
+                                ))
+                            )}
+
+                            {(isCategoriaSelecionaTodosSelecionado) && (categoriasSelecionadas.length === 0) && (tiposEstabelecimentos.length > 0) && (
                                 tiposEstabelecimentos.map((tipo) => (
                                     <TipoEstabelecimento props={tipo} key={tipo.estabelecimentoTipoId} />
                                 ))

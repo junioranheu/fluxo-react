@@ -13,7 +13,7 @@ export default function Categoria(props) {
             setIsSelecionado(true);
         }
 
-        const selecionar = [{ 'categoriaId': prop.estabelecimentoCategoriaId, 'isSelecionado': !isSelecionado }];
+        const selecionar = [{ 'categoriaId': prop.estabelecimentoCategoriaId }];
         if (!isSelecionado) {
             props.onAdicionarCategoria((prevState) => [...prevState, ...selecionar]);
         } else {
