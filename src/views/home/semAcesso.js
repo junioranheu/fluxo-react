@@ -21,7 +21,7 @@ export default function SemAcesso() {
 
                                 <div className='column'>
                                     <figure className='image is-256x256 has-image-centered sem-highlight'>
-                                        <img src={ImagemErro} />
+                                        <img src={ImagemErro} alt='Erro' />
                                     </figure>
                                 </div>
                             </div>

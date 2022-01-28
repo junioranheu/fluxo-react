@@ -8,6 +8,31 @@ import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 
 export default function Index() {
+    const [categoriasSelecionadas, setCategoriasSelecionadas] = useState([]);
+    function handleAdicionarCategoria(prop) {
+        // console.log(prop);
+        setCategoriasSelecionadas(prop);
+    }
+
+    function handleRemoverCategoria(prop) {
+        const index = categoriasSelecionadas.findIndex((c, index) => {
+            if (c.categoriaId === prop[0].categoriaId) {
+                return true;
+            }
+
+            return false;
+        });
+
+        if (index !== -1) {
+            categoriasSelecionadas.splice(index, 1);
+        }
+    }
+
+    useEffect(() => {
+        console.log(categoriasSelecionadas);
+    }, [categoriasSelecionadas])
+    //
+
     const listaCards = [
         {
             'id': 1,
@@ -188,7 +213,7 @@ export default function Index() {
 
                         {categorias.length > 0 && (
                             categorias.map((categoria) => (
-                                <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId} />
+                                <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId} onAdicionarCategoria={handleAdicionarCategoria} onRemoverCategoria={handleRemoverCategoria} />
                             ))
                         )}
                     </div>
