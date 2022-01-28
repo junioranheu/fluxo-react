@@ -8,7 +8,7 @@ export default function Card(props) {
     // console.log(prop);
 
     // Import dinâmico;
-    const ImagemDinamica = require('../../' + (prop.imagem));
+    const imagemDinamica = require('../../' + (prop.imagem));
 
     return (
         <React.Fragment>
@@ -16,7 +16,7 @@ export default function Card(props) {
                 (usuarioTipoId && prop.usuarioTipoId === usuarioTipoId && prop.mostrarApenasAutenticado === Auth.isAuth()) || // Se o usuário está logado, se tem privilégio (perfil) para ver o tipo de card e se ele pode ver o card (prop.mostrarApenasAutenticado));
                 (prop.usuarioTipoId === null && prop.mostrarApenasAutenticado === Auth.isAuth()) // Se o usuário está deslogado e se o card pode ser visto por ele por questão de visualização do card (prop.mostrarApenasAutenticado);
             ) && (
-                    <div className='card-ui pequeno' style={{ backgroundImage: `url(${ImagemDinamica})` }}>
+                    <div className='card-ui pequeno' style={{ backgroundImage: `url(${imagemDinamica})` }}>
                         <div className='card-ui__overlay'></div>
                         <span className='card-ui__icon'>
                             <i className={prop.icone}></i>

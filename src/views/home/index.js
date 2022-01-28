@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import Categoria from '../../componentes/categorias/categoria';
+import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
-import '../../css/card.css';
-import '../../css/itens.css';
 import CONSTANTS_CATEGORIAS from '../../utilidades/constCategorias';
+import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/constTiposEstabelecimentos';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
@@ -70,8 +71,6 @@ export default function Index() {
     ];
     const [cards, setCards] = useState(listaCards);
 
-    const [className, setclassNameName] = useState('');
-
     function ola() {
         var hoje = new Date();
         var hora = hoje.getHours();
@@ -94,14 +93,7 @@ export default function Index() {
         return msg;
     }
 
-    // Ao carregar página;
-    useEffect(() => {
-        // Olá;
-        setclassNameName(ola());
-
-        // Pegar todas as categorias;
-        getCategorias();
-    }, [])
+    const [className, setclassNameName] = useState(ola());
 
     const [categorias, setCategorias] = useState([]);
 
@@ -123,10 +115,39 @@ export default function Index() {
             });
     }
 
+    const [tiposEstabelecimentos, setTiposEstabelecimentos] = useState([]);
+
+    function getTiposEstabelecimentos() {
+        const url = CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_TODOS;
+        // console.log(url);
+
+        fetch(url, {
+            method: 'GET'
+        })
+            .then(data => data.json())
+            .then(data => {
+                // console.log(data);
+                setTiposEstabelecimentos(data);
+            })
+            .catch((error) => {
+                console.log(error);
+                // alert('Erro, consulte F12');
+            });
+    }
+
+    // Ao carregar página;
+    useEffect(() => {
+        // Pegar todas as categorias;
+        getCategorias();
+
+        // Pegar todos os tipos de estabelecimentos;
+        getTiposEstabelecimentos()
+    }, [])
+
     return (
         <React.Fragment>
             {/* Cards */}
-            <section className='mt-6'>
+            <section className='content-section mt-6'>
                 <div className='card-ui-wrapper'>
                     {cards.map((card) => (
                         <Card props={card} key={card.id} />
@@ -170,19 +191,34 @@ export default function Index() {
 
                         {categorias.length > 0 && (
                             categorias.map((categoria) => (
-                                <div className='categoria pointer' title={`Filtrar por ${categoria.categoria.toLowerCase()}`} data-is-selecionado='0' key={categoria.estabelecimentoCategoriaId}>
-                                    <div className='access-icon'>
-                                        <i className={categoria.icone}></i>
-                                    </div>
-
-                                    <span className='access-text'>{categoria.categoria}</span>
-                                </div>
+                                <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId} />
                             ))
                         )}
                     </div>
                 </section>
+
+                {/* Tipos de estabelecimentos  */}
+                <section className='content-section mt-6'>
+                    <div className='titulo-wrapper'>
+                        <h1 className='titulo'>
+                            Tipos de estabelecimentos
+                        </h1>
+                    </div>
+
+                    {/* Tipos de estabelecimentos */}
+                    <div className='section-part mt-3'>
+                        <div className='content-part-line'>
+                            {tiposEstabelecimentos.length > 0 && (
+                                tiposEstabelecimentos.map((tipo) => (
+                                    <TipoEstabelecimento props={tipo} key={tipo.estabelecimentoTipoId} />
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </section>
             </section>
 
+            {/* Info usuário */}
             <InfoUsuario />
         </React.Fragment >
     );

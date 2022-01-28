@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimento/formularioAtualizarEstabelecimento';
-import FormularioNovoEstabelecimento from '../../componentes/estabelecimento/formularioNovoEstabelecimento';
+import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimentos/formularioAtualizarEstabelecimento';
+import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/formularioNovoEstabelecimento';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
 // import './App.css';
 
