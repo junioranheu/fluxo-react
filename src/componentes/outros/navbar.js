@@ -4,7 +4,7 @@ import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-    const [caminhoPerfil] = useState(Auth.isAuth ? '/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema : '');
+    const [caminhoPerfil] = useState(Auth.isAuth() ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
 
     function deslogar() {
         Auth.deleteUsuarioLogado();
