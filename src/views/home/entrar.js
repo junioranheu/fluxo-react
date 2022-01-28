@@ -67,7 +67,7 @@ export default function Index() {
                 Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
                 // Voltar à tela principal;
-                navigate('/', { replace: true }); 
+                navigate('/', { replace: true });
                 window.location.reload(false);
             })
             .catch((error) => {
@@ -94,7 +94,7 @@ export default function Index() {
                                 <div className='box'>
                                     <div className='has-text-centered animate__animated animate__@(efeito) mb-6'>
                                         <div>
-                                            <img className='login-logo' src={Logo} />
+                                            <img className='login-logo' src={Logo} alt='Erro...' />
                                         </div>
 
                                         <h1 className='title'>Entre no <span className='grifar'>Fluxo</span></h1>
