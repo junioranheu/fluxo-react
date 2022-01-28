@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../../css/tagCategoria.css';
 
 export default function Categoria(props) {
     const [prop] = useState(props['props']);
     // console.log(props);
     const [isSelecionado, setIsSelecionado] = useState(false);
+
+    // Scroll categorias;
+    const executeScroll = () => referenciaScroll.current.scrollIntoView({ behavior: 'smooth', });
+    const referenciaScroll = useRef(null);
 
     function selecionarCategoria(props) {
         if (isSelecionado) {
@@ -19,10 +23,13 @@ export default function Categoria(props) {
         } else {
             props.onRemoverCategoria(selecionar);
         }
+
+        // Scroll/
+        executeScroll();
     }
 
     return (
-        <div onClick={() => selecionarCategoria(props)} className='categoria pointer' title={`Filtrar por ${prop.categoria.toLowerCase()}`} >
+        <div ref={referenciaScroll} onClick={() => selecionarCategoria(props)} className='categoria pointer animate__animated animate__fadeIn' title={`Filtrar por ${prop.categoria.toLowerCase()}`} >
             <div className='access-icon' style={{ backgroundColor: (isSelecionado ? 'var(--cor-principal)' : 'var(--light-font)'), transition: 'background-color 0.5s ease' }}>
                 <i className={prop.icone}></i>
             </div>
