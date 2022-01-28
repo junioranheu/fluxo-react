@@ -177,7 +177,7 @@ export default function Index() {
                 {/* Categorias  */}
                 <section className='content-section mt-6' id='divCategorias'>
                     <h1 className='titulo' style={{ marginTop: '8px !important', marginBottom: '8px !important' }}>
-                        Categorias xxx
+                        Categorias
                     </h1>
 
                     <div className='access-links'>
