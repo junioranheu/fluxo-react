@@ -1,3 +1,4 @@
+import NProgress from 'nprogress';
 import React, { useEffect, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
@@ -123,6 +124,7 @@ export default function Index() {
     // Get tipos de estabelecimentos;
     const [tiposEstabelecimentos, setTiposEstabelecimentos] = useState([]);
     function getTiposEstabelecimentos() {
+        NProgress.start();
         setLoadingTiposEstabelecimentos(true);
         const url = CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_TODOS;
         // console.log(url);
@@ -135,6 +137,7 @@ export default function Index() {
                 // console.log(data);
                 setTiposEstabelecimentos(data);
                 setLoadingTiposEstabelecimentos(false);
+                NProgress.done();
             })
             .catch((error) => {
                 console.log(error);
@@ -259,10 +262,10 @@ export default function Index() {
                             {/* Loading */}
                             {loadingTiposEstabelecimentos && (
                                 <React.Fragment>
-                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
-                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
-                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
-                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
+                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
+                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
+                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
+                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
                                 </React.Fragment>
                             )}
 

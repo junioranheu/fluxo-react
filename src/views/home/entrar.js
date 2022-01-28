@@ -1,3 +1,4 @@
+import NProgress from 'nprogress';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/entrar.css';
@@ -19,9 +20,11 @@ export default function Index() {
 
     // Ao clicar no botão para entrar;
     const handleSubmit = (e) => {
+        NProgress.start();
         e.preventDefault();
 
         if (!formData || !formData.usuario || !formData.senha) {
+            NProgress.done();
             alert('O nome de usuário e/ou e-mail estão vazios!');
             return false;
         }
@@ -44,6 +47,7 @@ export default function Index() {
                 getToken(formData.usuario, formData.senha, data);
             })
             .catch((error) => {
+                NProgress.done();
                 console.log(error);
                 alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
             });

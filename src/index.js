@@ -1,6 +1,7 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'animate.css/animate.min.css';
 import 'bulma/css/bulma.min.css';
+import 'nprogress/nprogress.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
