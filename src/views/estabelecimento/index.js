@@ -30,7 +30,7 @@ export default function Index() {
         const estabelecimentoId = props.estabelecimentoId;
         const estabelecimentoNome = props.nome;
 
-        let resposta = window.confirm(`Você tem certeza que deseja deletar o estabelecimento "${estabelecimentoNome}"?`);
+        let resposta = window.confirm(`Você tem certeza que deseja deletar o estabelecimento '${estabelecimentoNome}'?`);
         if (!resposta) {
             return false;
         }
@@ -65,8 +65,8 @@ export default function Index() {
                     {/* <h2>{jwt}</h2> */}
 
                     <div className='mt-5'>
-                        <a onClick={getEstabelecimentos} className="button is-primary" href={() => false}>Trazer estabelecimentos</a>
-                        <a onClick={() => setShowFormularioNovoEstabelecimento(true)} className="button is-primary ml-4" href={() => false}>Criar novo estabelecimento</a>
+                        <a onClick={getEstabelecimentos} className='button is-primary' href={() => false}>Trazer estabelecimentos</a>
+                        <a onClick={() => setShowFormularioNovoEstabelecimento(true)} className='button is-primary ml-4' href={() => false}>Criar novo estabelecimento</a>
                     </div>
                 </div>
             )}
@@ -100,8 +100,8 @@ export default function Index() {
                                     <td>{e.nome}</td>
                                     <td>{e.descricao}</td>
                                     <td>
-                                        <a onClick={() => setEstabelecimentoSendoAtualizado(e)} className="button is-primary is-small" href={() => false}>Atualizar</a>
-                                        <a onClick={() => deleteEstabelecimento(e)} className="button is-secondary ml-4 is-small" href={() => false}>Deletar</a>
+                                        <a onClick={() => setEstabelecimentoSendoAtualizado(e)} className='button is-primary is-small' href={() => false}>Atualizar</a>
+                                        <a onClick={() => deleteEstabelecimento(e)} className='button is-secondary ml-4 is-small' href={() => false}>Deletar</a>
                                     </td>
                                 </tr>
                             ))
@@ -109,7 +109,7 @@ export default function Index() {
                     </tbody>
                 </table>
 
-                <a onClick={() => setEstabelecimentos([])} className="button is-primary is-fullwidth ml-3" href={() => false}>Voltar</a>
+                <a onClick={() => setEstabelecimentos([])} className='button is-primary is-fullwidth ml-3' href={() => false}>Voltar</a>
             </div>
         );
     }
@@ -121,7 +121,7 @@ export default function Index() {
             return;
         }
 
-        alert(`Estabelecimento criado com sucesso. Após apertar ok, o estabelecimento "${estabelecimentoCriado.nome}" será exibido na lista`);
+        alert(`Estabelecimento criado com sucesso. Após apertar ok, o estabelecimento '${estabelecimentoCriado.nome}' será exibido na lista`);
         getEstabelecimentos();
     }
 
@@ -148,7 +148,7 @@ export default function Index() {
 
         setEstabelecimentos(estabelecimentosCopy);
 
-        alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento "${estabelecimentoAtualizado.nome}" será exibido atualizado na lista`);
+        alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento '${estabelecimentoAtualizado.nome}' será exibido atualizado na lista`);
     }
 
     function onEstabelecimentoDeleted(estabelecimentoId) {
