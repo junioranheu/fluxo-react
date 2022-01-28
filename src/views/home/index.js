@@ -180,13 +180,15 @@ export default function Index() {
 
     function handleClickTodasCategorias() {
         setIsCategoriaSelecionaTodosSelecionado(true);
-        // setCategoriasSelecionadas([]);
         setCategorias([])
         getCategorias();
         setTiposEstabelecimentos([]);
         getTiposEstabelecimentos();
         setCategoriasSelecionadas([]);
     }
+
+    // Filtro de busca (input);
+    const [inputFiltro, setInputFiltro] = useState('');
 
     return (
         <React.Fragment>
@@ -208,7 +210,7 @@ export default function Index() {
                 {/* Campo de busca */}
                 <div className='main-area-header mt-3'>
                     <div className='search-wrapper'>
-                        <input className='search-input' type='text' placeholder='Filtre os tipos de estabelecimentos aqui também...' />
+                        <input onInput={e => setInputFiltro(e.target.value)} className='search-input' type='text' placeholder='Filtre os tipos de estabelecimentos aqui também...' />
 
                         <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' className='feather feather-search' viewBox='0 0 24 24'>
                             <defs />
@@ -251,19 +253,46 @@ export default function Index() {
 
                     <div className='section-part mt-3'>
                         <div className='content-part-line'>
+                            {/* Lista de tipos de estabelecimentos filtrados por categoria OU input filtro */}
                             {(!isCategoriaSelecionaTodosSelecionado) && (categoriasSelecionadas.length > 0) && (tiposEstabelecimentos.length > 0) && (
                                 tiposEstabelecimentos.map((tipo) => (
                                     <React.Fragment key={tipo.estabelecimentoTipoId} >
-                                        {(categoriasSelecionadas.findIndex(c => c.categoriaId === tipo.estabelecimentoCategorias.estabelecimentoCategoriaId) > -1) && (
-                                            <TipoEstabelecimento props={tipo} />
-                                        )}
+                                        {
+                                            (categoriasSelecionadas.findIndex(c => c.categoriaId === tipo.estabelecimentoCategorias.estabelecimentoCategoriaId) > -1)
+                                            && (
+                                                <React.Fragment>
+                                                    {/* Verificação do campo de filtro */}
+                                                    {
+                                                        (inputFiltro.length === 0) ? (
+                                                            <TipoEstabelecimento props={tipo} />
+                                                        ) : (
+                                                            ((tipo.tipo.toLowerCase().includes(inputFiltro.toLowerCase()) || tipo.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
+                                                                <TipoEstabelecimento props={tipo} />
+                                                            ))
+                                                        )
+                                                    }
+                                                </React.Fragment>
+                                            )
+                                        }
                                     </React.Fragment>
                                 ))
                             )}
 
-                            {(isCategoriaSelecionaTodosSelecionado) && (categoriasSelecionadas.length === 0) && (tiposEstabelecimentos.length > 0) && (
+                            {/* Lista de todos os tipos de estabelecimentos com a opção de todas as categorias ativas*/}
+                            {(isCategoriaSelecionaTodosSelecionado) && (tiposEstabelecimentos.length > 0) && (
                                 tiposEstabelecimentos.map((tipo) => (
-                                    <TipoEstabelecimento props={tipo} key={tipo.estabelecimentoTipoId} />
+                                    <React.Fragment key={tipo.estabelecimentoTipoId} >
+                                        {/* Verificação do campo de filtro */}
+                                        {
+                                            (inputFiltro.length === 0) ? (
+                                                <TipoEstabelecimento props={tipo} />
+                                            ) : (
+                                                ((tipo.tipo.toLowerCase().includes(inputFiltro.toLowerCase()) || tipo.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
+                                                    <TipoEstabelecimento props={tipo} />
+                                                ))
+                                            )
+                                        }
+                                    </React.Fragment>
                                 ))
                             )}
                         </div>
