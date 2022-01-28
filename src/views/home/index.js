@@ -213,6 +213,7 @@ export default function Index() {
                 </div>
             </section>
 
+            {/* Outros conteúdos */}
             <section className='mt-6'>
                 {/* Olá */}
                 <section className='content-section mt-4'>
@@ -242,7 +243,9 @@ export default function Index() {
                         {
                             categorias.length > 0 && (
                                 categorias.map((categoria) => (
-                                    <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId} onAdicionarCategoria={handleAdicionarCategoria} onRemoverCategoria={handleRemoverCategoria} />
+                                    <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId}
+                                        onAdicionarCategoria={handleAdicionarCategoria} onRemoverCategoria={handleRemoverCategoria}
+                                    />
                                 ))
                             )
                         }

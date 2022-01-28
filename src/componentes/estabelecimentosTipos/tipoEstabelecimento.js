@@ -11,7 +11,7 @@ export default function TipoEstabelecimento(props) {
     const imagemDinamica = require('../../' + (thumbnail));
 
     return (
-        <a className='image-wrapper' href={caminhoEstabelecimento}>
+        <a className='image-wrapper animate__animated animate__fadeIn' href={caminhoEstabelecimento}>
             <div className='image-overlay'>
                 <div className='image-info'>
                     <div className='image-info-text'>
