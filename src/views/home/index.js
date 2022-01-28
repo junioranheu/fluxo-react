@@ -92,7 +92,7 @@ export default function Index() {
         }
 
         if (Auth.isAuth()) {
-            msg += ', <span class="grifar">@' + Auth.getUsuarioLogado().nomeUsuarioSistema + '</span>!';
+            msg += ', <span class="grifar">' + Auth.getUsuarioLogado().nomeUsuarioSistema + '</span>!';
         } else {
             msg += '!<br/>Bem-vindo ao Fluxo';
         }
