@@ -19,5 +19,8 @@ extensões úteis para instalar:
 adicione isso em Program.cs:
 builder.Services.AddCors();
 
---
-Loading: https://reactjsexample.com/customizable-shimmer-effects-for-react/
+-- 
+Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effects-for-react/
+
+-- WARDS:
+ARRUMAR AQUELE RELOAD AO LOGAR
