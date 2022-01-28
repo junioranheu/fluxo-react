@@ -1,6 +1,6 @@
 import React from 'react';
 import ImagemErro from '../../static/svg/erro.svg';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
 
 export default function SemAcesso() {
     return (

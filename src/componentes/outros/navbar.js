@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SemImagem from '../../static/outro/sem-imagem.webp';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);

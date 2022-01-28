@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Auth from './utilidades/servicoAutenticacao';
+import Auth from './utilidades/auth/servicoAutenticacao';
 import Estabelecimento from './views/estabelecimento';
 import Entrar from './views/home/entrar';
 import Inicio from './views/home/index';

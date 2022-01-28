@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import CONSTANTS from '../../utilidades/constEstabelecimentos';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
+import CONSTANTS from '../../utilidades/const/constEstabelecimentos';
 
 export default function FormularioNovoEstabelecimento(props) {
     const initialFormData = {

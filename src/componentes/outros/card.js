@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../css/card.css';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
 
 export default function Card(props) {
     const [usuarioTipoId] = useState(Auth.isAuth() ? Auth.getUsuarioLogado().usuarioTipoId : null);

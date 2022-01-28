@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
-import CONSTANTS from '../../utilidades/constUsuarios';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
+import CONSTANTS from '../../utilidades/const/constUsuarios';
 
 export default function Index() {
     const [formData, setFormData] = useState(null);

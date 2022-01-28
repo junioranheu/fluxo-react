@@ -1,5 +1,5 @@
 import React from 'react';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
 
 export default function InfoUsuario() {
     return (

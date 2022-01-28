@@ -3,9 +3,9 @@ import Categoria from '../../componentes/categorias/categoria';
 import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
-import CONSTANTS_CATEGORIAS from '../../utilidades/constCategorias';
-import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/constTiposEstabelecimentos';
-import Auth from '../../utilidades/servicoAutenticacao';
+import Auth from '../../utilidades/auth/servicoAutenticacao';
+import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
+import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 
 export default function Index() {
     const listaCards = [
