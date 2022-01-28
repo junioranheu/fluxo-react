@@ -92,14 +92,14 @@ export default function Index() {
         }
 
         if (Auth.isAuth()) {
-            msg += ', @' + Auth.getUsuarioLogado().nomeUsuarioSistema + '!';
+            msg += ', <span class="grifar">@' + Auth.getUsuarioLogado().nomeUsuarioSistema + '</span>!';
         } else {
             msg += '!<br/>Bem-vindo ao Fluxo';
         }
 
         return msg;
     }
-    const [className] = useState(ola());
+    const [msgOla] = useState(ola());
 
     // Get categorias;
     const [categorias, setCategorias] = useState([]);
@@ -216,7 +216,7 @@ export default function Index() {
             <section className='mt-6'>
                 {/* Olá */}
                 <section className='content-section mt-4'>
-                    <h1 className='titulo'><span dangerouslySetInnerHTML={{ __html: className }}></span></h1>
+                    <h1 className='titulo'><span dangerouslySetInnerHTML={{ __html: msgOla }}></span></h1>
                 </section>
 
                 {/* Campo de busca */}
