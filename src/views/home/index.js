@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
 import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
+import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
 import Auth from '../../utilidades/auth/servicoAutenticacao';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 
 export default function Index() {
+    const [loadingTiposEstabelecimentos, setLoadingTiposEstabelecimentos] = useState(false);
+
     // Cards;
     const listaCards = [
         {
@@ -119,6 +123,7 @@ export default function Index() {
     // Get tipos de estabelecimentos;
     const [tiposEstabelecimentos, setTiposEstabelecimentos] = useState([]);
     function getTiposEstabelecimentos() {
+        setLoadingTiposEstabelecimentos(true);
         const url = CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_TODOS;
         // console.log(url);
 
@@ -129,6 +134,7 @@ export default function Index() {
             .then(data => {
                 // console.log(data);
                 setTiposEstabelecimentos(data);
+                setLoadingTiposEstabelecimentos(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -168,7 +174,7 @@ export default function Index() {
         }
     }
 
-    // Ao mudar o "categoriasSelecionadas";
+    // Ao mudar o 'categoriasSelecionadas';
     const [isCategoriaSelecionaTodosSelecionado, setIsCategoriaSelecionaTodosSelecionado] = useState(true);
     useEffect(() => {
         if (categoriasSelecionadas.length > 0) {
@@ -189,6 +195,9 @@ export default function Index() {
 
     // Filtro de busca (input);
     const [inputFiltro, setInputFiltro] = useState('');
+    function handleInputFiltro(e) {
+        setInputFiltro(e);
+    }
 
     return (
         <React.Fragment>
@@ -209,15 +218,7 @@ export default function Index() {
 
                 {/* Campo de busca */}
                 <div className='main-area-header mt-3'>
-                    <div className='search-wrapper'>
-                        <input onInput={e => setInputFiltro(e.target.value)} className='search-input' type='text' placeholder='Filtre os tipos de estabelecimentos aqui também...' />
-
-                        <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' className='feather feather-search' viewBox='0 0 24 24'>
-                            <defs />
-                            <circle cx='11' cy='11' r='8' />
-                            <path d='M21 21l-4.35-4.35' />
-                        </svg>
-                    </div>
+                    <InputFiltroPrincipal onInput={handleInputFiltro} placeholder='Filtre os tipos de estabelecimentos aqui também...' />
                 </div>
 
                 {/* Categorias */}
@@ -235,11 +236,13 @@ export default function Index() {
                             <span className='access-text'>Todas as categorias</span>
                         </div>
 
-                        {categorias.length > 0 && (
-                            categorias.map((categoria) => (
-                                <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId} onAdicionarCategoria={handleAdicionarCategoria} onRemoverCategoria={handleRemoverCategoria} />
-                            ))
-                        )}
+                        {
+                            categorias.length > 0 && (
+                                categorias.map((categoria) => (
+                                    <Categoria props={categoria} key={categoria.estabelecimentoCategoriaId} onAdicionarCategoria={handleAdicionarCategoria} onRemoverCategoria={handleRemoverCategoria} />
+                                ))
+                            )
+                        }
                     </div>
                 </section>
 
@@ -253,6 +256,16 @@ export default function Index() {
 
                     <div className='section-part mt-3'>
                         <div className='content-part-line'>
+                            {/* Loading */}
+                            {loadingTiposEstabelecimentos && (
+                                <React.Fragment>
+                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
+                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
+                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
+                                    <ShimmerThumbnail height={300} width={300} className="m-0" rounded />
+                                </React.Fragment>
+                            )}
+
                             {/* Lista de tipos de estabelecimentos filtrados por categoria OU input filtro */}
                             {(!isCategoriaSelecionaTodosSelecionado) && (categoriasSelecionadas.length > 0) && (tiposEstabelecimentos.length > 0) && (
                                 tiposEstabelecimentos.map((tipo) => (

@@ -20,5 +20,4 @@ adicione isso em Program.cs:
 builder.Services.AddCors();
 
 --
-useReducer 
-https://www.youtube.com/results?search_query=useReducer
+Loading: https://reactjsexample.com/customizable-shimmer-effects-for-react/
