@@ -19,3 +19,6 @@ extensões úteis para instalar:
 adicione isso em Program.cs:
 builder.Services.AddCors();
 
+--
+useReducer 
+https://www.youtube.com/results?search_query=useReducer

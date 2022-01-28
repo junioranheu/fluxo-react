@@ -4,10 +4,19 @@ import '../../css/tagCategoria.css';
 export default function Categoria(props) {
     const [prop, setProp] = useState(props['props']);
     // console.log(prop);
+    const [isSelecionado, setIsSelecionado] = useState(false);
+
+    function selecionarCategoria() {
+        if (isSelecionado) {
+            setIsSelecionado(false);
+        } else {
+            setIsSelecionado(true);
+        }
+    }
 
     return (
-        <div className='categoria pointer' title={`Filtrar por ${prop.categoria.toLowerCase()}`} data-is-selecionado='0'>
-            <div className='access-icon'>
+        <div onClick={() => selecionarCategoria()} className='categoria pointer' title={`Filtrar por ${prop.categoria.toLowerCase()}`} data-is-selecionado={isSelecionado} >
+            <div className='access-icon' style={{ backgroundColor: (isSelecionado ? 'var(--cor-principal)' : 'var(--light-font)'), transition: 'background-color 0.5s ease' }}>
                 <i className={prop.icone}></i>
             </div>
 

@@ -181,7 +181,7 @@ export default function Index() {
                     </h1>
 
                     <div className='access-links'>
-                        <div className='categoria pointer' title='Mostrar todos' data-is-selecionado='1' id='opcaoMostrarTodasCategorias'>
+                        <div className='categoria pointer' title='Mostrar todos'>
                             <div className='access-icon' style={{ backgroundColor: 'var(--cor-principal)' }}>
                                 <i className='fas fa-globe-americas'></i>
                             </div>
@@ -205,7 +205,6 @@ export default function Index() {
                         </h1>
                     </div>
 
-                    {/* Tipos de estabelecimentos */}
                     <div className='section-part mt-3'>
                         <div className='content-part-line'>
                             {tiposEstabelecimentos.length > 0 && (
