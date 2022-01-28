@@ -79,56 +79,60 @@ export default function FormularioAtualizarEstabelecimento(props) {
     };
 
     return (
-        <form className='w-100 px-5'>
-            <h1 className='mt-5 text-center'>Atualizar estabelecimento "{prop.nome}"</h1>
+        <form className='is-fullwidth'>
+            <h2>Atualizar estabelecimento "{prop.nome}"</h2>
 
-            <div className='mt-5'>
-                <label className='h3 form-label'>Nome do estabelecimento</label>
-                <input value={formData.nome} name='nome' type='text' className='form-control' onChange={handleChange} />
+            <div className='box mt-4'>
+                <div>
+                    <label className='label'>Nome do estabelecimento</label>
+                    <input value={formData.nome} name='nome' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>Descrição</label>
+                    <input value={formData.descricao} name='descricao' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>Thumbnail</label>
+                    <input value={formData.thumbnail} name='thumbnail' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>Rua</label>
+                    <input value={formData.rua} name='rua' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>Nº de endereço</label>
+                    <input value={formData.numeroEndereco} name='numeroEndereco' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>CEP</label>
+                    <input value={formData.cep} name='cep' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>Bairro</label>
+                    <input value={formData.bairro} name='bairro' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>CidadeId</label>
+                    <input value={formData.cidadeId} name='cidadeId' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-4'>
+                    <label className='label'>EstabelecimentoTipoId</label>
+                    <input value={formData.estabelecimentoTipoId} name='estabelecimentoTipoId' type='text' className='input' onChange={handleChange} />
+                </div>
+
+                <div className='mt-5'>
+                    <a onClick={handleSubmit} className="button is-primary" href={() => false}>Atualizar estabelecimento</a>
+                    <a onClick={() => props.onEstabelecimentoUpdated(null)} className="button is-secondary ml-4" href={() => false}>Cancelar e voltar</a>
+                </div>
             </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>Descrição</label>
-                <input value={formData.descricao} name='descricao' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>Thumbnail</label>
-                <input value={formData.thumbnail} name='thumbnail' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>Rua</label>
-                <input value={formData.rua} name='rua' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>Nº de endereço</label>
-                <input value={formData.numeroEndereco} name='numeroEndereco' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>CEP</label>
-                <input value={formData.cep} name='cep' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>Bairro</label>
-                <input value={formData.bairro} name='bairro' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>CidadeId</label>
-                <input value={formData.cidadeId} name='cidadeId' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <div className='mt-4'>
-                <label className='h3 form-label'>EstabelecimentoTipoId</label>
-                <input value={formData.estabelecimentoTipoId} name='estabelecimentoTipoId' type='text' className='form-control' onChange={handleChange} />
-            </div>
-
-            <a onClick={handleSubmit} className="button is-primary" href={() => false}>Atualizar estabelecimento</a>
-            <a onClick={() => props.onEstabelecimentoUpdated(null)} className="button is-secondary ml-4" href={() => false}>Cancelar e voltar</a>
         </form>
     )
 }
