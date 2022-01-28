@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CONSTANTS from '../../utilidades/constEstabelecimentos';
+import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function FormularioAtualizarEstabelecimento(props) {
     var prop = props['propsEstabelecimento'];
@@ -50,6 +51,7 @@ export default function FormularioAtualizarEstabelecimento(props) {
         }
 
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
+        const token = Auth.getUsuarioLogado().token;
 
         console.log(estabelecimento_a_ser_atualizado);
         // console.log(url);
@@ -58,7 +60,8 @@ export default function FormularioAtualizarEstabelecimento(props) {
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(estabelecimento_a_ser_atualizado)
         })
@@ -124,8 +127,8 @@ export default function FormularioAtualizarEstabelecimento(props) {
                 <input value={formData.estabelecimentoTipoId} name='estabelecimentoTipoId' type='text' className='form-control' onChange={handleChange} />
             </div>
 
-            <button onClick={handleSubmit} className='btn btn-dark btn-lg w-100 mt-5'>Atualizar estabelecimento</button>
-            <button onClick={() => props.onEstabelecimentoUpdated(null)} className='btn btn-secondary btn-lg w-100 mt-3'>Cancelar</button>
+            <a onClick={handleSubmit} className="button is-primary" href={() => false}>Atualizar estabelecimento</a>
+            <a onClick={() => props.onEstabelecimentoUpdated(null)} className="button is-secondary ml-4" href={() => false}>Cancelar e voltar</a>
         </form>
     )
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimentos/formularioAtualizarEstabelecimento';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/formularioNovoEstabelecimento';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/constEstabelecimentos';
-// import './App.css';
+import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Index() {
     const [estabelecimentos, setEstabelecimentos] = useState([]);
@@ -36,11 +36,15 @@ export default function Index() {
         }
 
         const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_POST_DELETAR}?id=${estabelecimentoId}`;
-        console.log(url);
+        const token = Auth.getUsuarioLogado().token;
+        // console.log(url);
 
         // Post;
         fetch(url, {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
         })
             .then(data => data.json())
             .then(data => {
@@ -61,8 +65,8 @@ export default function Index() {
                     {/* <h2>{jwt}</h2> */}
 
                     <div className='mt-5'>
-                        <a onClick={getEstabelecimentos} className="button is-primary">Trazer estabelecimentos</a>
-                        <a onClick={() => setShowFormularioNovoEstabelecimento(true)} className="button is-primary ml-4">Criar novo estabelecimento</a>
+                        <a onClick={getEstabelecimentos} className="button is-primary" href={() => false}>Trazer estabelecimentos</a>
+                        <a onClick={() => setShowFormularioNovoEstabelecimento(true)} className="button is-primary ml-4" href={() => false}>Criar novo estabelecimento</a>
                     </div>
                 </div>
             )}
@@ -96,8 +100,8 @@ export default function Index() {
                                     <td>{e.nome}</td>
                                     <td>{e.descricao}</td>
                                     <td>
-                                        <button onClick={() => setEstabelecimentoSendoAtualizado(e)} className='btn btn-dark btn-sm mx-3 my-3'>Atualizar</button>
-                                        <button onClick={() => deleteEstabelecimento(e)} className='btn btn-secondary btn-sm'>Deletar</button>
+                                        <a onClick={() => setEstabelecimentoSendoAtualizado(e)} className="button is-primary is-small" href={() => false}>Atualizar</a>
+                                        <a onClick={() => deleteEstabelecimento(e)} className="button is-secondary ml-4 is-small" href={() => false}>Deletar</a>
                                     </td>
                                 </tr>
                             ))
@@ -105,7 +109,7 @@ export default function Index() {
                     </tbody>
                 </table>
 
-                <a onClick={() => setEstabelecimentos([])} className="button is-primary is-fullwidth ml-3">Voltar</a>
+                <a onClick={() => setEstabelecimentos([])} className="button is-primary is-fullwidth ml-3" href={() => false}>Voltar</a>
             </div>
         );
     }
@@ -134,6 +138,8 @@ export default function Index() {
             if (estabelecimentosCopyEstabelecimento.estabelecimentoId === estabelecimentoAtualizado.estabelecimentoId) {
                 return true;
             }
+
+            return false;
         });
 
         if (index !== -1) {
@@ -152,6 +158,8 @@ export default function Index() {
             if (estabelecimentosCopyEstabelecimento.estabelecimentoId === estabelecimentoId) {
                 return true;
             }
+
+            return false;
         });
 
         if (index !== -1) {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../css/tagCategoria.css';
 
 export default function Categoria(props) {
-    const [prop, setProp] = useState(props['props']);
+    const [prop] = useState(props['props']);
     // console.log(prop);
     const [isSelecionado, setIsSelecionado] = useState(false);
 

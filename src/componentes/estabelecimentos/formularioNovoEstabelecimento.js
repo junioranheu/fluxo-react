@@ -127,8 +127,8 @@ export default function FormularioNovoEstabelecimento(props) {
                 </div>
 
                 <div className='mt-5'>
-                    <a onClick={handleSubmit} className="button is-primary">Criar estabelecimento</a>
-                    <a onClick={() => props.onEstabelecimentoCriado(null)} className="button is-secondary ml-4">Cancelar e voltar</a>
+                    <a onClick={handleSubmit} className="button is-primary" href={() => false}>Criar estabelecimento</a>
+                    <a onClick={() => props.onEstabelecimentoCriado(null)} className="button is-secondary ml-4" href={() => false}>Cancelar e voltar</a>
                 </div>
             </div>
         </form>

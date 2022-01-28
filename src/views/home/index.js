@@ -69,7 +69,7 @@ export default function Index() {
             'icone': 'fas fa-smile-wink'
         }
     ];
-    const [cards, setCards] = useState(listaCards);
+    const [cards] = useState(listaCards);
 
     function ola() {
         var hoje = new Date();
@@ -92,11 +92,9 @@ export default function Index() {
 
         return msg;
     }
-
-    const [className, setclassNameName] = useState(ola());
+    const [className] = useState(ola());
 
     const [categorias, setCategorias] = useState([]);
-
     function getCategorias() {
         const url = CONSTANTS_CATEGORIAS.API_URL_GET_TODOS;
         // console.log(url);
@@ -116,7 +114,6 @@ export default function Index() {
     }
 
     const [tiposEstabelecimentos, setTiposEstabelecimentos] = useState([]);
-
     function getTiposEstabelecimentos() {
         const url = CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_TODOS;
         // console.log(url);
@@ -141,7 +138,7 @@ export default function Index() {
         getCategorias();
 
         // Pegar todos os tipos de estabelecimentos;
-        getTiposEstabelecimentos()
+        getTiposEstabelecimentos();
     }, [])
 
     return (

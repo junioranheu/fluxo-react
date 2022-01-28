@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-// import '../../css/card.css';
+import SemImagem from '../../static/outro/sem-imagem.webp';
 
 export default function TipoEstabelecimento(props) {
-    const [prop, setProp] = useState(props['props']);
+    const [prop] = useState(props['props']);
     // console.log(prop);
-    const [thumbnail, setThumbnail] = useState('static/' + prop.thumbnail);
-    const [caminhoEstabelecimento, setCaminhoEstabelecimento] = useState('/estabelecimento/tipo/' + prop.estabelecimentoTipoId);
+    const [thumbnail] = useState('static/' + prop.thumbnail);
+    const [caminhoEstabelecimento] = useState('/estabelecimento/tipo/' + prop.estabelecimentoTipoId);
 
     // Import dinâmico;
     const imagemDinamica = require('../../' + (thumbnail));
@@ -22,7 +22,7 @@ export default function TipoEstabelecimento(props) {
             </div>
 
             {/* onerror='this.src='/static/outro/imagem-indisponivel.webp';' */}
-            <img src={imagemDinamica} loading='lazy' width='1' height='1' />
+            <img src={imagemDinamica} loading='lazy' width='1' height='1' onError={(event) => event.target.src = SemImagem} alt='Erro...' />
             <span className='image-icone'>
                 <i className={prop.estabelecimentoCategorias.icone} title={prop.estabelecimentoCategorias.categoria}></i>
             </span>

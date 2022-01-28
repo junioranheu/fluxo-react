@@ -3,8 +3,8 @@ import '../../css/card.css';
 import Auth from '../../utilidades/servicoAutenticacao';
 
 export default function Card(props) {
-    const [usuarioTipoId, setUsuarioTipoId] = useState(Auth.isAuth() ? Auth.getUsuarioLogado().usuarioTipoId : null);
-    const [prop, setProp] = useState(props['props']);
+    const [usuarioTipoId] = useState(Auth.isAuth() ? Auth.getUsuarioLogado().usuarioTipoId : null);
+    const [prop] = useState(props['props']);
     // console.log(prop);
 
     // Import dinâmico;
