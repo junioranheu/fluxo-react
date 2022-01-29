@@ -17,7 +17,6 @@ ReactDOM.render(
             <Navbar />
 
             <div className='container'>
-                {/* animate__slow */}
                 <main role='main' className='conteudo animate__animated animate__fadeIn'>
                     <App />
                 </main>

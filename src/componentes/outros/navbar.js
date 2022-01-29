@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import Auth from '../../utilidades/auth/servicoAutenticacao';
 
 export default function Navbar() {
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-    const [isAuth, setIsAuth] = useState(Auth.isAuth());
+    const [isAuth] = useState(Auth.isAuth());
     const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
 
     function deslogar() {
@@ -18,13 +18,6 @@ export default function Navbar() {
             setIsNavbarExpandido(true);
         }
     }
-
-    // Verificar se o usuário está logado;
-    useEffect(() => {
-        // e.preventDefault();
-        console.log(isAuth);
-        // setIsAuth(isAuth);
-    }, [isAuth])
 
     return (
         <nav className='navbar is-white has-centered-menu margem-desktop sem-highlight' role='navigation' aria-label='main navigation'>

@@ -72,7 +72,7 @@ export default function Index() {
 
                 // Voltar à tela principal;
                 navigate('/', { replace: true });
-                // window.location.reload(false);
+                window.location.reload(false);
             })
             .catch((error) => {
                 console.log(error);
