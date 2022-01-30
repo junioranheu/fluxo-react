@@ -15,9 +15,9 @@ export default function Index() {
         // Verificar se o usuário está logado;
         // Se estiver, redirecione-o;
         if (isAuth) {
-            navigate('/sem-acesso', { replace: true });
+            navigate('/', { replace: true });
         }
-    }, [])
+    }, [isAuth, navigate])
 
     // Ao alterar os valores dos inputs, insira os valores nas variaveis do formData;
     const handleChange = (e) => {

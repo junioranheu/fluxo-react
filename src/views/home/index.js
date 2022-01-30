@@ -210,11 +210,11 @@ export default function Index() {
         // Pegar o width da div pai do loading dos tipos de estabelecimentos;
         const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
         const qtdDivsMostradas = 4;
-        const widthRespaldo = process.env.NODE_ENV === 'development' ? 15 : 30; // Tem algum bug ao exibir a lista... em DEV o espaço é menor;
+        const widthRespaldo = 15; 
         const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
         // console.log(widthLoading);
         setWidthLoadingTiposEstabelecimentos(widthLoading);
-    }, [divLoadingTiposEstabelecimentos.current]);
+    }, []);
 
     return (
         <React.Fragment>
