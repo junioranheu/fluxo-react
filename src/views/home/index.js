@@ -207,10 +207,10 @@ export default function Index() {
     const divLoadingTiposEstabelecimentos = useRef(null);
     const [widthLoadingTiposEstabelecimentos, setWidthLoadingTiposEstabelecimentos] = useState(0);
     useEffect(() => {
+        // Pegar o width da div pai do loading dos tipos de estabelecimentos;
         const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
         const qtdDivsMostradas = 4;
-        // const widthRespaldo = 15;
-        const widthRespaldo = 30;
+        const widthRespaldo = process.env.NODE_ENV === 'development' ? 15 : 30; // Tem algum bug ao exibir a lista... em DEV o espaço é menor;
         const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
         // console.log(widthLoading);
         setWidthLoadingTiposEstabelecimentos(widthLoading);
