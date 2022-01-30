@@ -43,7 +43,9 @@ justify-content:flex-start; flex-wrap:wrap;}
 
 .content-part-line {height:100%;/* Espaço dos lados */
 column-gap:2.5rem;/* Espaço de cima/baixo */
-grid-gap:1.2rem;}
+/* grid-gap:1.2rem; */
+grid-gap:20px;
+}
 
 .content-section-line {margin:0 -8px;}
 
