@@ -13,8 +13,8 @@ export default function App() {
     <Routes>
       <Route path='/' element={<Inicio />} />
       <Route path='/sem-acesso' element={<SemAcesso />} />
-      <Route path='/entrar' element={!isAuth ? <Entrar /> : <Navigate to='/sem-acesso' />} />
-      <Route path='/estabelecimentos' element={isAuth ? <Estabelecimento /> : <Navigate to='/sem-acesso' />} />
+      <Route path='/entrar' element={<Entrar />} />
+      <Route path='/estabelecimentos' element={isAuth ? <Estabelecimento /> : <Navigate to={'/sem-acesso'} />} />
     </Routes>
   );
 }

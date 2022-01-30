@@ -1,5 +1,5 @@
 import NProgress from 'nprogress';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
@@ -10,6 +10,14 @@ export default function Index() {
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Verificar se o usuário está logado;
+        // Se estiver, redirecione-o;
+        if (isAuth) {
+            navigate('/sem-acesso', { replace: true });
+        }
+    }, [])
 
     // Ao alterar os valores dos inputs, insira os valores nas variaveis do formData;
     const handleChange = (e) => {
@@ -71,11 +79,11 @@ export default function Index() {
                 dadosUsuarioVerificado.token = data;
                 Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
-                // Voltar à tela principal;
-                navigate('/', { replace: true });
-
                 // Atribuir autenticação ao contexto de usuário;
                 setIsAuth(true);
+
+                // Voltar à tela principal;
+                navigate('/', { replace: true });
             })
             .catch((error) => {
                 console.log(error);
