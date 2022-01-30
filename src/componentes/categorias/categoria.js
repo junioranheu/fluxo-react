@@ -29,7 +29,7 @@ export default function Categoria(props) {
     }
 
     return (
-        <div ref={referenciaScroll} onClick={() => selecionarCategoria(props)} className='categoria pointer animate__animated animate__fadeIn' title={`Filtrar por ${prop.categoria.toLowerCase()}`} >
+        <div ref={referenciaScroll} onClick={() => selecionarCategoria(props)} className='categoria pointer animate__animated animate__fadeIn sem-highlight' title={`Filtrar por ${prop.categoria.toLowerCase()}`} >
             <div className='access-icon' style={{ backgroundColor: (isSelecionado ? 'var(--cor-principal)' : 'var(--light-font)'), transition: 'background-color 0.5s ease' }}>
                 <i className={prop.icone}></i>
             </div>
