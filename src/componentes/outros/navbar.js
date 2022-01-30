@@ -1,3 +1,4 @@
+import NProgress from 'nprogress';
 import React, { useContext, useState } from 'react';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
@@ -8,11 +9,14 @@ export default function Navbar() {
     const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
 
     function deslogar() {
+        NProgress.start();
+
         // Desatribuir autenticação ao contexto de usuário;
         setIsAuth(false);
 
         // Deslogar;
         Auth.deleteUsuarioLogado();
+        NProgress.done();
     }
 
     function expandirNavbar() {
