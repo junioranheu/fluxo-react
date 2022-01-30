@@ -210,7 +210,7 @@ export default function Index() {
         const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
         const qtdDivsMostradas = 4;
         // const widthRespaldo = 15;
-        const widthRespaldo = 50;
+        const widthRespaldo = 30;
         const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
         // console.log(widthLoading);
         setWidthLoadingTiposEstabelecimentos(widthLoading);
