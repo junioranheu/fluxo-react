@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ImagemErro from '../../static/svg/erro.svg';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
+import { UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function SemAcesso() {
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+
     return (
         <section className='hero is-medium mt-6'>
             <div className='hero-body'>
@@ -29,7 +31,7 @@ export default function SemAcesso() {
                             <div className='buttons is-centered'>
                                 <a className='button is-text' href='/'>Início</a>
 
-                                {Auth.isAuth() && (
+                                {(isAuth) && (
                                     <React.Fragment>
                                         <a className='button is-text' href='/entrar'>Entre</a>
                                         <a className='button is-text' href='/'>Crie sua conta</a>

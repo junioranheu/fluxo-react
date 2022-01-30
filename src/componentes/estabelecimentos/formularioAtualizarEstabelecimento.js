@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
 import CONSTANTS from '../../utilidades/const/constEstabelecimentos';
+import { Auth } from '../../utilidades/context/usuarioContext';
 
 export default function FormularioAtualizarEstabelecimento(props) {
     var prop = props['propsEstabelecimento'];

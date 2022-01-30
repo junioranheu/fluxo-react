@@ -1,5 +1,21 @@
+import { createContext, useState } from "react";
 
-const servicoAutenticacao = {
+// Criar o contexto para usar no providar abaixo;
+export const UsuarioContext = createContext();
+
+// Provider: para "segurar" uma informação e passar para todos os componentes "child";
+export const UsuarioProvider = props => {
+    const [isAuth, setIsAuth] = useState(localStorage.getItem('usuarioAutenticado') !== null ? true : false);
+
+    return (
+        <UsuarioContext.Provider value={[isAuth, setIsAuth]}>
+            {props.children}
+        </UsuarioContext.Provider>
+    );
+}
+
+// Funções referentes à autenticação do usuário;
+export const Auth = {
     // Função para salar o usuário logado (local storage);
     setUsuarioLogado(data) {
         // console.log(data);
@@ -12,16 +28,6 @@ const servicoAutenticacao = {
 
         let parsedData = JSON.stringify(dadosUsuario);
         localStorage.setItem('usuarioAutenticado', parsedData);
-    },
-
-    isAuth() {
-        let data = localStorage.getItem('usuarioAutenticado');
-
-        if (!data) {
-            return false;
-        }
-
-        return true;
     },
 
     // Função responsável por recuperar os dados do usuário logado (local storage);
@@ -41,8 +47,6 @@ const servicoAutenticacao = {
     deleteUsuarioLogado() {
         localStorage.clear();
         // console.log('deslogado');
-        window.location.reload();
+        // window.location.reload();
     }
 }
-
-export default servicoAutenticacao;

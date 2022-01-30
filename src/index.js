@@ -10,20 +10,23 @@ import Footer from './componentes/outros/footer';
 import Navbar from './componentes/outros/navbar';
 import './css/site.css';
 import './fonts/poppins.css';
+import { UsuarioProvider } from './utilidades/context/usuarioContext';
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <Navbar />
+        <UsuarioProvider>
+            <BrowserRouter>
+                <Navbar />
 
-            <div className='container'>
-                <main role='main' className='conteudo animate__animated animate__fadeIn'>
-                    <App />
-                </main>
-            </div>
+                <div className='container'>
+                    <main role='main' className='conteudo animate__animated animate__fadeIn'>
+                        <App />
+                    </main>
+                </div>
 
-            <Footer />
-        </BrowserRouter>
+                <Footer />
+            </BrowserRouter>
+        </UsuarioProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

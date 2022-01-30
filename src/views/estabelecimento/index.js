@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimentos/formularioAtualizarEstabelecimento';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/formularioNovoEstabelecimento';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
+import { Auth } from '../../utilidades/context/usuarioContext';
 
 export default function Index() {
     const [estabelecimentos, setEstabelecimentos] = useState([]);

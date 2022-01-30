@@ -1,16 +1,17 @@
 import NProgress from 'nprogress';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
 import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Index() {
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [loadingTiposEstabelecimentos, setLoadingTiposEstabelecimentos] = useState(false);
 
     // Cards;
@@ -91,7 +92,7 @@ export default function Index() {
             msg = 'Boa noite';
         }
 
-        if (Auth.isAuth()) {
+        if (isAuth) {
             msg += ', <span class="grifar">' + Auth.getUsuarioLogado().nomeUsuarioSistema + '</span>!';
         } else {
             msg += '!<br/>Bem-vindo ao Fluxo';
@@ -204,6 +205,9 @@ export default function Index() {
 
     return (
         <React.Fragment>
+            {/* Info usuário */}
+            <InfoUsuario />
+
             {/* Cards */}
             <section className='content-section mt-6'>
                 <div className='card-ui-wrapper'>
@@ -318,9 +322,6 @@ export default function Index() {
                     </div>
                 </section>
             </section>
-
-            {/* Info usuário */}
-            <InfoUsuario />
         </React.Fragment >
     );
 }

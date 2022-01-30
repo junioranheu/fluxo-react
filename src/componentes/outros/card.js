@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import '../../css/card.css';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Card(props) {
-    const [usuarioTipoId] = useState(Auth.isAuth() ? Auth.getUsuarioLogado().usuarioTipoId : null);
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioTipoId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioTipoId : null);
     const [prop] = useState(props['props']);
     // console.log(prop);
 
@@ -13,8 +14,8 @@ export default function Card(props) {
     return (
         <React.Fragment>
             {(
-                (usuarioTipoId && prop.usuarioTipoId === usuarioTipoId && prop.mostrarApenasAutenticado === Auth.isAuth()) || // Se o usuário está logado, se tem privilégio (perfil) para ver o tipo de card e se ele pode ver o card (prop.mostrarApenasAutenticado));
-                (prop.usuarioTipoId === null && prop.mostrarApenasAutenticado === Auth.isAuth()) // Se o usuário está deslogado e se o card pode ser visto por ele por questão de visualização do card (prop.mostrarApenasAutenticado);
+                (usuarioTipoId && prop.usuarioTipoId === usuarioTipoId && prop.mostrarApenasAutenticado === isAuth) || // Se o usuário está logado, se tem privilégio (perfil) para ver o tipo de card e se ele pode ver o card (prop.mostrarApenasAutenticado));
+                (prop.usuarioTipoId === null && prop.mostrarApenasAutenticado === isAuth) // Se o usuário está deslogado e se o card pode ser visto por ele por questão de visualização do card (prop.mostrarApenasAutenticado);
             ) && (
                     <div className='card-ui pequeno' style={{ backgroundImage: `url(${imagemDinamica})` }}>
                         <div className='card-ui__overlay'></div>

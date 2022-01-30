@@ -1,12 +1,13 @@
 import NProgress from 'nprogress';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Index() {
+    const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
 
@@ -72,7 +73,9 @@ export default function Index() {
 
                 // Voltar à tela principal;
                 navigate('/', { replace: true });
-                window.location.reload(false);
+
+                // Atribuir autenticação ao contexto de usuário;
+                setIsAuth(true);
             })
             .catch((error) => {
                 console.log(error);

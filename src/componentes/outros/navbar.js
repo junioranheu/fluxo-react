@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SemImagem from '../../static/outro/sem-imagem.webp';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Navbar() {
+    const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-    const [isAuth] = useState(Auth.isAuth());
     const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
 
     function deslogar() {
+        // Desatribuir autenticação ao contexto de usuário;
+        setIsAuth(false);
+
+        // Deslogar;
         Auth.deleteUsuarioLogado();
     }
 

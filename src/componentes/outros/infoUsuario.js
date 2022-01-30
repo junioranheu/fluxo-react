@@ -1,14 +1,16 @@
-import React from 'react';
-import Auth from '../../utilidades/auth/servicoAutenticacao';
+import React, { useContext } from 'react';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function InfoUsuario() {
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+
     return (
-        <code className='mt-6' style={{borderRadius: 10, padding: 20}}>
+        <code className='mt-6' style={{ borderRadius: 10, padding: 20 }}>
             <span>
-                isLogado: {Auth.isAuth().toString()}
+                isLogado: {isAuth.toString()}
             </span>
 
-            {(Auth.isAuth()) && (
+            {(isAuth) && (
                 <div>
                     <span>Nome: {Auth.getUsuarioLogado().nome}</span>
                     <br />
