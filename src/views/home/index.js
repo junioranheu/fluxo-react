@@ -1,5 +1,5 @@
 import NProgress from 'nprogress';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
 import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
@@ -203,6 +203,18 @@ export default function Index() {
         setInputFiltro(e);
     }
 
+    // Pegar o width do #ref={divLoadingTiposEstabelecimentos} para saber o width dos ShimmerThumbnail;
+    const divLoadingTiposEstabelecimentos = useRef(null);
+    const [widthLoadingTiposEstabelecimentos, setWidthLoadingTiposEstabelecimentos] = useState(0);
+    useEffect(() => {
+      const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
+      const qtdDivsMostradas = 4;
+      const widthRespaldo = 15;
+      const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
+      // console.log(widthLoading);
+      setWidthLoadingTiposEstabelecimentos(widthLoading);
+    }, [divLoadingTiposEstabelecimentos.current]);
+
     return (
         <React.Fragment>
             {/* Info usuário */}
@@ -265,14 +277,14 @@ export default function Index() {
                     </div>
 
                     <div className='section-part mt-3'>
-                        <div className='content-part-line'>
+                        <div className='content-part-line' ref={divLoadingTiposEstabelecimentos}>
                             {/* Loading */}
                             {loadingTiposEstabelecimentos && (
-                                <React.Fragment>
-                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
-                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
-                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
-                                    <ShimmerThumbnail height={300} width={300} className='m-0' rounded />
+                                <React.Fragment> 
+                                    <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />
+                                    <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />
+                                    <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />
+                                    <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />
                                 </React.Fragment>
                             )}
 
