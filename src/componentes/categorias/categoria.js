@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import '../../css/tagCategoria.css';
 
 export default function Categoria(props) {
     const [prop] = useState(props['props']);

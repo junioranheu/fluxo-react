@@ -6,6 +6,7 @@ import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEst
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
+import '../../css/itens.css';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
