@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../../css/itens.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 
 export default function TipoEstabelecimento(props) {
@@ -20,7 +21,7 @@ export default function TipoEstabelecimento(props) {
                     </div>
                 </div>
             </div>
-            
+
             <img src={imagemDinamica} loading='lazy' width='1' height='1' onError={(event) => event.target.src = SemImagem} alt='Erro...' />
             <span className='image-icone'>
                 <i className={prop.estabelecimentoCategorias.icone} title={prop.estabelecimentoCategorias.categoria}></i>

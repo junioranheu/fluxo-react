@@ -6,7 +6,6 @@ import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEst
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
-import '../../css/itens.css';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
@@ -208,12 +207,13 @@ export default function Index() {
     const divLoadingTiposEstabelecimentos = useRef(null);
     const [widthLoadingTiposEstabelecimentos, setWidthLoadingTiposEstabelecimentos] = useState(0);
     useEffect(() => {
-      const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
-      const qtdDivsMostradas = 4;
-      const widthRespaldo = 15;
-      const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
-      // console.log(widthLoading);
-      setWidthLoadingTiposEstabelecimentos(widthLoading);
+        const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
+        const qtdDivsMostradas = 4;
+        // const widthRespaldo = 15;
+        const widthRespaldo = 50;
+        const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
+        // console.log(widthLoading);
+        setWidthLoadingTiposEstabelecimentos(widthLoading);
     }, [divLoadingTiposEstabelecimentos.current]);
 
     return (
@@ -281,7 +281,7 @@ export default function Index() {
                         <div className='content-part-line' ref={divLoadingTiposEstabelecimentos}>
                             {/* Loading */}
                             {loadingTiposEstabelecimentos && (
-                                <React.Fragment> 
+                                <React.Fragment>
                                     <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />
                                     <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />
                                     <ShimmerThumbnail height={widthLoadingTiposEstabelecimentos} width={widthLoadingTiposEstabelecimentos} className='m-0' rounded />

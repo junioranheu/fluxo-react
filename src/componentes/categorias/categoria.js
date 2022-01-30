@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import '../../css/itens.css';
 
 export default function Categoria(props) {
     const [prop] = useState(props['props']);
