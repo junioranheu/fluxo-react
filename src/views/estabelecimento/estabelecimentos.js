@@ -4,10 +4,45 @@ import { ShimmerThumbnail } from 'react-shimmer-effects';
 import { Aviso } from '../../componentes/outros/aviso';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
+import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
+import { Auth } from '../../utilidades/context/usuarioContext';
 
 export default function Estabelecimento() {
     // Import dinâmico;
     // const imagemDinamica = require('../../' + (prop.imagem));
+
+    const [urlPagina] = useState(window.location.pathname);
+    const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
+    const [cidadeNome] = useState(Auth.getUsuarioLogado().cidadeNome);
+    const [titulo, setTitulo] = useState(null);
+
+    function getDetalheTipoEstabelecimento() {
+        NProgress.start();
+
+        // Pegar o parâmetro da URL;
+        const url = `${CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
+        // console.log(url);
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(data => data.json())
+            .then(data => {
+                // console.log(data);
+                const titulo = `Encontre ${data.genero} ${data.tipo.toLowerCase()} perfeit${data.genero}`;
+                setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
+
+                NProgress.done();
+            })
+            .catch((error) => {
+                console.log(error);
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+            });
+    }
 
     // Get estabelecimentos por tipo de estabelecimento;
     const [estabelecimentos, setEstabelecimentos] = useState([]);
@@ -15,11 +50,7 @@ export default function Estabelecimento() {
         NProgress.start();
         setLoadingEstabelecimentos(true);
 
-        // Pegar o parâmetro da URL;
-        const urlPagina = window.location.pathname;
-        const parametroTipoEstabelecimentoId = urlPagina.substring(urlPagina.lastIndexOf('/') + 1);
-
-        const cidadeIdUsuarioLogado = 0;
+        const cidadeIdUsuarioLogado = Auth.getUsuarioLogado().cidadeId;
 
         const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_TIPO_ID_MAIS_SIGLA_ESTADO_USUARIO}?id=${parametroTipoEstabelecimentoId}&cidadeIdUsuarioLogado=${cidadeIdUsuarioLogado}`;
         // console.log(url);
@@ -34,6 +65,15 @@ export default function Estabelecimento() {
             .then(data => data.json())
             .then(data => {
                 // console.log(data);
+                // console.log(cidadeIdUsuarioLogado);
+                if (!data.length && cidadeIdUsuarioLogado > 0) {
+                    console.log('NÃO TEM ESTABELECIMENTO NA CIDADE ' + cidadeIdUsuarioLogado);
+                }
+
+                if (!data.length && cidadeIdUsuarioLogado === 0) {
+                    console.log('NÃO TEM ESTABELECIMENTO NO TIPO ' + parametroTipoEstabelecimentoId);
+                }
+
                 setEstabelecimentos(data);
                 setLoadingEstabelecimentos(false);
                 NProgress.done();
@@ -46,6 +86,9 @@ export default function Estabelecimento() {
 
     // Ao carregar página;
     useEffect(() => {
+        // Pegar os detalhes do tipo de estabelecimento buscado;
+        getDetalheTipoEstabelecimento();
+
         // Pegar todos os estabelecimentos;
         getEstabelecimentos();
     }, [])
@@ -74,22 +117,7 @@ export default function Estabelecimento() {
         <section className='mt-6'>
             {/* Título */}
             <section className='content-section mt-4'>
-                {/* @{
-                    string tituloFinal = titulo;
-
-                if (ViewData['CidadeNomeUsuarioLogado'] != null)
-                {
-                    string cidadeNomeUsuarioLogado = ViewData['CidadeNomeUsuarioLogado'].ToString();
-                if (!String.IsNullOrEmpty(cidadeNomeUsuarioLogado))
-                {
-                    tituloFinal += ' em <span className='grifar'>' + cidadeNomeUsuarioLogado + '</span>';
-                    }
-                }
-
-                tituloFinal += '!';
-            } */}
-
-                <h1 className='titulo'>@Html.Raw(tituloFinal)</h1>
+                <h1 className='titulo' dangerouslySetInnerHTML={{ __html: titulo }}></h1>
             </section>
 
             {/* Campo de busca */}

@@ -3,7 +3,7 @@ const API_BASE_URL_PROD = 'https://fluxoapi.azurewebsites.net/api';
 
 const ENDPOINTS = {
     GET_TODOS: 'EstabelecimentosApi/todos',
-    GET_POR_ID: 'EstabelecimentosApi/{id}',
+    GET_POR_ID: 'EstabelecimentosApi',
     POST_CRIAR: 'EstabelecimentosApi/criar',
     POST_ATUALIZAR: 'EstabelecimentosApi/atualizar',
     POST_DELETAR: 'EstabelecimentosApi/deletar',

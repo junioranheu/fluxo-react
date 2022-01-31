@@ -18,6 +18,10 @@ export default function InfoUsuario() {
                     <br />
                     <span>Tipo: {Auth.getUsuarioLogado().usuarioTipoId}</span>
                     <br />
+                    <span>CidadeId: {Auth.getUsuarioLogado().cidadeId}</span>
+                    <br />
+                    <span>Cidade: {Auth.getUsuarioLogado().cidadeNome}</span>
+                    <br />
                     <span>Token: {Auth.getUsuarioLogado().token.substring(0, 15)}...</span>
                 </div>
             )}

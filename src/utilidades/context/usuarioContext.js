@@ -23,8 +23,11 @@ export const Auth = {
             nome: data.nomeCompleto,
             nomeUsuarioSistema: data.nomeUsuarioSistema,
             usuarioTipoId: data.usuarioTipoId,
+            cidadeId: data.usuariosInformacoes.cidadeId,
+            cidadeNome: data.usuariosInformacoes.cidades.nome,
             token: data.token
         };
+        // console.log(dadosUsuario);
 
         let parsedData = JSON.stringify(dadosUsuario);
         localStorage.setItem('usuarioAutenticado', parsedData);
