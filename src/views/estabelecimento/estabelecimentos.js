@@ -2,6 +2,7 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import { Aviso } from '../../componentes/outros/aviso';
+import AvisoNenhumRegistro from '../../componentes/outros/avisoNenhumRegistro';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
 import Item from '../../componentes/outros/item';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
@@ -14,6 +15,9 @@ export default function Estabelecimento() {
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
     const [cidadeNome] = useState(isAuth ? Auth.getUsuarioLogado().cidadeNome : '');
     const [titulo, setTitulo] = useState(null);
+
+    // Refs;
+    const divLoadingEstabelecimentos = useRef(null);
 
     // Get estabelecimentos por tipo de estabelecimento;
     const [estabelecimentos, setEstabelecimentos] = useState([]);
@@ -102,7 +106,6 @@ export default function Estabelecimento() {
 
     // Pegar o width do #ref={divLoadingTiposEstabelecimentos} para saber o width dos ShimmerThumbnail;
     const [loadingEstabelecimentos, setLoadingEstabelecimentos] = useState(false);
-    const divLoadingEstabelecimentos = useRef(null);
     const [widthLoadingTiposEstabelecimentos, setWidthLoadingEstabelecimentos] = useState(0);
     useEffect(() => {
         // Pegar o width da div pai do loading dos tipos de estabelecimentos;
@@ -113,6 +116,24 @@ export default function Estabelecimento() {
         // console.log(widthLoading);
         setWidthLoadingEstabelecimentos(widthLoading);
     }, []);
+
+    // Verificar se a busca do usuário encontrou algo;
+    const [isMostrarNaoEncontrouResultados, setIsMostrarNaoEncontrouResultados] = useState(false);
+    useEffect(() => {
+        if (estabelecimentos.length > 0) {
+            const itens = divLoadingEstabelecimentos.current?.innerText;
+            // console.log(itens.length);
+
+            if (!itens) {
+                // console.log('NOPE');
+                setIsMostrarNaoEncontrouResultados(true);
+            }
+            else {
+                // console.log('YES');
+                setIsMostrarNaoEncontrouResultados(false);
+            }
+        }
+    });
 
     return (
         <section className='mt-6'>
@@ -161,6 +182,10 @@ export default function Estabelecimento() {
                             </React.Fragment>
                         ))}
                     </div>
+
+                    {isMostrarNaoEncontrouResultados && (
+                        <AvisoNenhumRegistro />
+                    )}
                 </div>
             </section>
         </section>
