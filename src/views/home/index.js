@@ -303,16 +303,20 @@ export default function Index() {
                                                     {/* Verificação do campo de filtro */}
                                                     {
                                                         (inputFiltro.length === 0) ? (
-                                                            <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                            <Item id={tipo.estabelecimentoTipoId}
+                                                                thumbnail={tipo.thumbnail}
                                                                 href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
-                                                                titulo={tipo.tipo} descricao={tipo.descricao}
+                                                                titulo={tipo.tipo}
+                                                                descricao={tipo.descricao}
                                                                 icone={tipo.estabelecimentoCategorias.icone}
                                                                 iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                                         ) : (
                                                             ((tipo.tipo.toLowerCase().includes(inputFiltro.toLowerCase()) || tipo.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
-                                                                <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                                <Item id={tipo.estabelecimentoTipoId}
+                                                                    thumbnail={tipo.thumbnail}
                                                                     href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
-                                                                    titulo={tipo.tipo} descricao={tipo.descricao}
+                                                                    titulo={tipo.tipo}
+                                                                    descricao={tipo.descricao}
                                                                     icone={tipo.estabelecimentoCategorias.icone}
                                                                     iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                                             ))
@@ -332,16 +336,20 @@ export default function Index() {
                                         {/* Verificação do campo de filtro */}
                                         {
                                             (inputFiltro.length === 0) ? (
-                                                <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                <Item id={tipo.estabelecimentoTipoId}
+                                                    thumbnail={tipo.thumbnail}
                                                     href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
-                                                    titulo={tipo.tipo} descricao={tipo.descricao}
+                                                    titulo={tipo.tipo}
+                                                    descricao={tipo.descricao}
                                                     icone={tipo.estabelecimentoCategorias.icone}
                                                     iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                             ) : (
                                                 ((tipo.tipo.toLowerCase().includes(inputFiltro.toLowerCase()) || tipo.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
-                                                    <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                    <Item id={tipo.estabelecimentoTipoId}
+                                                        thumbnail={tipo.thumbnail}
                                                         href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
-                                                        titulo={tipo.tipo} descricao={tipo.descricao}
+                                                        titulo={tipo.tipo}
+                                                        descricao={tipo.descricao}
                                                         icone={tipo.estabelecimentoCategorias.icone}
                                                         iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                                 ))
