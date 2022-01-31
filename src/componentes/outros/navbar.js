@@ -1,5 +1,6 @@
 import NProgress from 'nprogress';
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
@@ -7,6 +8,7 @@ export default function Navbar() {
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
     const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
+    const navigate = useNavigate();
 
     function deslogar() {
         NProgress.start();
@@ -17,6 +19,9 @@ export default function Navbar() {
         // Deslogar;
         Auth.deleteUsuarioLogado();
         NProgress.done();
+
+        // Voltar à tela principal;
+        navigate('/', { replace: true });
     }
 
     function expandirNavbar() {
