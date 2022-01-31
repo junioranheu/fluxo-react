@@ -9,92 +9,90 @@ import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposE
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Estabelecimento() {
-    // Import dinâmico;
-    // const imagemDinamica = require('../../' + (prop.imagem));
-
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
     const [cidadeNome] = useState(isAuth ? Auth.getUsuarioLogado().cidadeNome : '');
     const [titulo, setTitulo] = useState(null);
 
-    function getDetalheTipoEstabelecimento() {
-        NProgress.start();
-
-        // Pegar o parâmetro da URL;
-        const url = `${CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
-        // console.log(url);
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                const titulo = `Encontre ${data.genero} ${data.tipo.toLowerCase()} perfeit${data.genero}`;
-                setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
-                document.title = 'Fluxo — ' + data.tipo;
-
-                NProgress.done();
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-            });
-    }
-
     // Get estabelecimentos por tipo de estabelecimento;
     const [estabelecimentos, setEstabelecimentos] = useState([]);
-    function getEstabelecimentos() {
-        NProgress.start();
-        setLoadingEstabelecimentos(true);
-
-        const cidadeIdUsuarioLogado = (isAuth ? Auth.getUsuarioLogado().cidadeId : 0);
-
-        const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_TIPO_ID_MAIS_SIGLA_ESTADO_USUARIO}?id=${parametroTipoEstabelecimentoId}&cidadeIdUsuarioLogado=${cidadeIdUsuarioLogado}`;
-        // console.log(url);
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                // console.log(cidadeIdUsuarioLogado);
-                if (!data.length && cidadeIdUsuarioLogado > 0) {
-                    console.log('NÃO TEM ESTABELECIMENTO NA CIDADE ' + cidadeIdUsuarioLogado);
-                }
-
-                if (!data.length && cidadeIdUsuarioLogado === 0) {
-                    console.log('NÃO TEM ESTABELECIMENTO NO TIPO ' + parametroTipoEstabelecimentoId);
-                }
-
-                setEstabelecimentos(data);
-                setLoadingEstabelecimentos(false);
-                NProgress.done();
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-            });
-    }
 
     // Ao carregar página;
     useEffect(() => {
+        function getDetalheTipoEstabelecimento() {
+            NProgress.start();
+
+            // Pegar o parâmetro da URL;
+            const url = `${CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
+            // console.log(url);
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(data => data.json())
+                .then(data => {
+                    // console.log(data);
+                    const titulo = `Encontre ${data.genero} ${data.tipo.toLowerCase()} perfeit${data.genero}`;
+                    setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
+                    document.title = 'Fluxo — ' + data.tipo;
+
+                    NProgress.done();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+                });
+        }
+
+        function getEstabelecimentos() {
+            NProgress.start();
+            setLoadingEstabelecimentos(true);
+
+            const cidadeIdUsuarioLogado = (isAuth ? Auth.getUsuarioLogado().cidadeId : 0);
+
+            const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_TIPO_ID_MAIS_SIGLA_ESTADO_USUARIO}?id=${parametroTipoEstabelecimentoId}&cidadeIdUsuarioLogado=${cidadeIdUsuarioLogado}`;
+            // console.log(url);
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(data => data.json())
+                .then(data => {
+                    // console.log(data);
+                    // console.log(cidadeIdUsuarioLogado);
+                    if (!data.length && cidadeIdUsuarioLogado > 0) {
+                        console.log('NÃO TEM ESTABELECIMENTO NA CIDADE ' + cidadeIdUsuarioLogado);
+                    }
+
+                    if (!data.length && cidadeIdUsuarioLogado === 0) {
+                        console.log('NÃO TEM ESTABELECIMENTO NO TIPO ' + parametroTipoEstabelecimentoId);
+                    }
+
+                    setEstabelecimentos(data);
+                    setLoadingEstabelecimentos(false);
+                    NProgress.done();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+                });
+        }
+
         // Pegar os detalhes do tipo de estabelecimento buscado;
         getDetalheTipoEstabelecimento();
 
         // Pegar todos os estabelecimentos;
         getEstabelecimentos();
-    }, [])
+    }, [cidadeNome, isAuth, parametroTipoEstabelecimentoId])
 
     // Filtro de busca (input);
     const [inputFiltro, setInputFiltro] = useState('');

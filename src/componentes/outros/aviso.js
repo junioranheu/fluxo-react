@@ -2,13 +2,6 @@
 import { toast } from 'react-toastify';
 
 export const Aviso = {
-    info(texto, milisegundos) {
-        toast.info(<div dangerouslySetInnerHTML={{ __html: texto }}></div>, {
-            // position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: milisegundos
-        });
-    },
-
     success(texto, milisegundos) {
         toast.success(<div dangerouslySetInnerHTML={{ __html: texto }}></div>, {
             // position: toast.POSITION.BOTTOM_RIGHT,
