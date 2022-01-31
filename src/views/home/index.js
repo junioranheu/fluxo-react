@@ -14,6 +14,9 @@ import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
 
+    // Refs;
+    const divLoadingTiposEstabelecimentos = useRef(null);
+
     // Cards;
     const listaCards = [
         {
@@ -207,7 +210,6 @@ export default function Index() {
 
     // Pegar o width do #ref={divLoadingTiposEstabelecimentos} para saber o width dos ShimmerThumbnail;
     const [loadingTiposEstabelecimentos, setLoadingTiposEstabelecimentos] = useState(false);
-    const divLoadingTiposEstabelecimentos = useRef(null);
     const [widthLoadingTiposEstabelecimentos, setWidthLoadingTiposEstabelecimentos] = useState(0);
     useEffect(() => {
         // Pegar o width da div pai do loading dos tipos de estabelecimentos;
@@ -218,6 +220,23 @@ export default function Index() {
         // console.log(widthLoading);
         setWidthLoadingTiposEstabelecimentos(widthLoading);
     }, []);
+
+    // Verificar se a busca do usuário encontrou algo;
+    const [isMostrarNaoEncontrouResultados, setIsMostrarNaoEncontrouResultados] = useState(false);
+    useEffect(() => {
+        if (tiposEstabelecimentos.length > 0) {
+            const itens = divLoadingTiposEstabelecimentos.current?.innerText;
+            // console.log(itens);
+
+            if (!itens) {
+                console.log('NOPE');
+                setIsMostrarNaoEncontrouResultados(true);
+            } else {
+                console.log('YES');
+                setIsMostrarNaoEncontrouResultados(false); 
+            }
+        }
+    });
 
     return (
         <React.Fragment>
@@ -357,6 +376,10 @@ export default function Index() {
                                         }
                                     </React.Fragment>
                                 ))
+                            )}
+
+                            {isMostrarNaoEncontrouResultados && (
+                                <div>NADA FOI ENCONTRADO</div>
                             )}
                         </div>
                     </div>
