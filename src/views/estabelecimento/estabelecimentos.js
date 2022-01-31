@@ -142,41 +142,6 @@ export default function Estabelecimento() {
                             </React.Fragment>
                         )}
 
-                        {/* @{
-                        if (Model.Count() > 0)
-                        {
-                            foreach(var e in Model.Where(a => a.IsAtivo == 1))
-                        {
-                            string thumbnail = '/static/' + e.Thumbnail;
-                        string caminhoEstabelecimento = '/estabelecimento/' + e.EstabelecimentoId;
-
-                        <a className='image-wrapper' data-nome='@e.Nome' data-desc='@e.Descricao' href='@caminhoEstabelecimento'>
-                            <div className='image-overlay'>
-                                <div className='image-info'>
-                                    <div className='image-info-text'>
-                                        <h5 className='image-name medium cor-principal'>@e.Nome</h5>
-                                        <p className='image-subtext tiny'>@e.Descricao</p>
-                                    </div>
-                                    @* <button className='btn-play'></button>*@
-                                </div>
-                            </div>
-
-                            @{
-                                string avaliacao = (e.Avaliacao > 0) ? e.Avaliacao.ToString() : 'Sem avaliação';
-                                        string tituloAvaliacao = (e.Avaliacao > 0) ? 'Nota ' + e.Avaliacao + ' de 5' : 'Sem avaliação';
-                                    }
-
-                            <img src='@thumbnail' loading='lazy' width='1' height='1' onerror='this.src='/static/outro/sem-imagem.webp';' />
-                            <span className='image-icone'>
-                                <span title='@tituloAvaliacao'>
-                                    <i className='fas fa-star'></i>&nbsp;@avaliacao
-                                </span>
-                            </span>
-                        </a>
-                            }
-                        }
-                    } */}
-
                         {estabelecimentos.map((estabelecimento) => (
                             <React.Fragment key={estabelecimento.estabelecimentoId} >
                                 {
@@ -184,15 +149,14 @@ export default function Estabelecimento() {
                                         <Item id={estabelecimento.estabelecimentoId} thumbnail={estabelecimento.thumbnail}
                                             href={`/estabelecimento/${estabelecimento.estabelecimentoId}`}
                                             titulo={estabelecimento.nome} descricao={estabelecimento.descricao}
-                                            icone={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.icone}
-                                            iconeDesc={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.categoria} />
+                                            avaliacao={estabelecimento.avaliacao}
+                                        />
                                     ) : (
                                         ((estabelecimento.nome.toLowerCase().includes(inputFiltro.toLowerCase()) || estabelecimento.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
                                             <Item id={estabelecimento.estabelecimentoId} thumbnail={estabelecimento.thumbnail}
                                                 href={`/estabelecimento/${estabelecimento.estabelecimentoId}`}
                                                 titulo={estabelecimento.nome} descricao={estabelecimento.descricao}
-                                                icone={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.icone}
-                                                iconeDesc={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.categoria} />
+                                                avaliacao={estabelecimento.avaliacao} />
                                         ))
                                     )
                                 }

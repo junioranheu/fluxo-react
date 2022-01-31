@@ -22,7 +22,15 @@ export default function TipoEstabelecimento(props) {
 
             <img src={imagemDinamica} loading='lazy' width='1' height='1' onError={(event) => event.target.src = SemImagem} alt='Erro' />
             <span className='image-icone'>
-                <i className={props.icone} title={props.iconeDesc}></i>
+                {!props.avaliacao && (
+                    <i className={props.icone} title={props.iconeDesc}></i>
+                )}
+
+                {props.avaliacao && (
+                    <span>
+                        <i className='fas fa-star'></i>&nbsp;{props.avaliacao >= 0 ? props.avaliacao : 'Sem avaliação'}
+                    </span>
+                )}
             </span>
         </a>
     );
