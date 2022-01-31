@@ -13,12 +13,14 @@ export default function Index() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = '  Fluxo — Entrar'
+
         // Verificar se o usuário está logado;
         // Se estiver, redirecione-o;
         if (isAuth) {
             navigate('/', { replace: true });
         }
-    }, [isAuth, navigate])
+    }, [isAuth, navigate]);
 
     // Ao alterar os valores dos inputs, insira os valores nas variaveis do formData;
     const handleChange = (e) => {

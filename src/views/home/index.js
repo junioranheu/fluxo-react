@@ -148,6 +148,8 @@ export default function Index() {
 
     // Ao carregar página;
     useEffect(() => {
+        document.title = 'Fluxo — Início'
+
         // Pegar todas as categorias;
         getCategorias();
 
@@ -211,7 +213,7 @@ export default function Index() {
         // Pegar o width da div pai do loading dos tipos de estabelecimentos;
         const widthdivLoadingTiposEstabelecimentos = divLoadingTiposEstabelecimentos.current ? divLoadingTiposEstabelecimentos.current.offsetWidth : 0;
         const qtdDivsMostradas = 4;
-        const widthRespaldo = 15; 
+        const widthRespaldo = 15;
         const widthLoading = (widthdivLoadingTiposEstabelecimentos / qtdDivsMostradas) - widthRespaldo;
         // console.log(widthLoading);
         setWidthLoadingTiposEstabelecimentos(widthLoading);

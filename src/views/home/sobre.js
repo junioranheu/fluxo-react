@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Artigo from '../../componentes/outros/artigo';
 
 const nomeUsuarioPostador = '@adm';
@@ -34,6 +34,11 @@ const conteudo = [
 ];
 
 export default function Sobre() {
+    // Ao carregar página;
+    useEffect(() => {
+        document.title = 'Fluxo — Sobre'
+    }, []);
+
     return (
         <div>
             <Artigo

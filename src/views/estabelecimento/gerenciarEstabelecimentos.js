@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimentos/formularioAtualizarEstabelecimento';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/formularioNovoEstabelecimento';
 import { Aviso } from '../../componentes/outros/aviso';
@@ -57,6 +57,11 @@ export default function Index() {
                 Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
             });
     }
+
+    // Ao carregar página;
+    useEffect(() => {
+        document.title = 'Fluxo — Gerenciar estabelecimentos'
+    }, [])
 
     return (
         <div className='container mt-6'>

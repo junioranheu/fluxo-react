@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ImagemErro from '../../static/svg/erro.svg';
 import { UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function SemAcesso() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+
+    // Ao carregar página;
+    useEffect(() => {
+        document.title = 'Fluxo — Erro'
+    }, []);
 
     return (
         <section className='hero is-medium mt-6'>

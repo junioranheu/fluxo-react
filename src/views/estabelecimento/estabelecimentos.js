@@ -15,7 +15,7 @@ export default function Estabelecimento() {
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
     const [cidadeNome] = useState(Auth.getUsuarioLogado().cidadeNome);
     const [titulo, setTitulo] = useState(null);
-
+    
     function getDetalheTipoEstabelecimento() {
         NProgress.start();
 
@@ -35,6 +35,7 @@ export default function Estabelecimento() {
                 // console.log(data);
                 const titulo = `Encontre ${data.genero} ${data.tipo.toLowerCase()} perfeit${data.genero}`;
                 setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
+                document.title = 'Fluxo — ' + data.tipo;
 
                 NProgress.done();
             })
