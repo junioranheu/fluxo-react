@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FormularioAtualizarEstabelecimento from '../../componentes/estabelecimentos/formularioAtualizarEstabelecimento';
 import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/formularioNovoEstabelecimento';
+import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import { Auth } from '../../utilidades/context/usuarioContext';
 
@@ -22,7 +23,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                alert('Erro, consulte F12');
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
             });
     }
 
@@ -53,7 +54,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                alert('Erro, consulte F12');
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
             });
     }
 
@@ -121,7 +122,7 @@ export default function Index() {
             return;
         }
 
-        alert(`Estabelecimento criado com sucesso. Após apertar ok, o estabelecimento '${estabelecimentoCriado.nome}' será exibido na lista`);
+        Aviso.success(`Estabelecimento criado com sucesso<br/>Após apertar ok, o estabelecimento '${estabelecimentoCriado.nome}' será exibido na lista`, 5000);
         getEstabelecimentos();
     }
 
@@ -148,7 +149,7 @@ export default function Index() {
 
         setEstabelecimentos(estabelecimentosCopy);
 
-        alert(`Estabelecimento atualizado com sucesso. Após apertar ok, o estabelecimento '${estabelecimentoAtualizado.nome}' será exibido atualizado na lista`);
+        Aviso.success(`Estabelecimento atualizado com sucesso<br/>Após apertar ok, o estabelecimento '${estabelecimentoAtualizado.nome}' será exibido atualizado na lista`, 5000);
     }
 
     function onEstabelecimentoDeleted(estabelecimentoId) {
@@ -168,7 +169,7 @@ export default function Index() {
 
         setEstabelecimentos(estabelecimentosCopy);
 
-        alert(`Estabelecimento deletado com sucesso`);
+        Aviso.success('Estabelecimento deletado com sucesso', 5000);
     }
 }
 

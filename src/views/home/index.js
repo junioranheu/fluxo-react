@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
 import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
+import { Aviso } from '../../componentes/outros/aviso';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
@@ -118,7 +119,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                // alert('Erro, consulte F12');
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
             });
     }
 
@@ -142,7 +143,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                // alert('Erro, consulte F12');
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
             });
     }
 

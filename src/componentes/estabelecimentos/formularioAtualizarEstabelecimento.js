@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CONSTANTS from '../../utilidades/const/constEstabelecimentos';
 import { Auth } from '../../utilidades/context/usuarioContext';
+import { Aviso } from '../outros/aviso';
 
 export default function FormularioAtualizarEstabelecimento(props) {
     var prop = props['propsEstabelecimento'];
@@ -71,7 +72,7 @@ export default function FormularioAtualizarEstabelecimento(props) {
             })
             .catch((error) => {
                 console.log(error);
-                alert('Erro, consulte F12');
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
             });
 
         // Encerra o componente;

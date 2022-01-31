@@ -1,6 +1,7 @@
 import NProgress from 'nprogress';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
@@ -34,7 +35,7 @@ export default function Index() {
 
         if (!formData || !formData.usuario || !formData.senha) {
             NProgress.done();
-            alert('O nome de usuário e/ou e-mail estão vazios!');
+            Aviso.error('O nome de usuário e/ou e-mail estão vazios!', 5000);
             return false;
         }
 
@@ -58,7 +59,7 @@ export default function Index() {
             .catch((error) => {
                 NProgress.done();
                 console.log(error);
-                alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
+                Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
             });
     };
 
@@ -87,7 +88,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                alert('Algo deu errado. Provavelmente o usuário e/ou a senha estão errados');
+                Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
             });
     }
 

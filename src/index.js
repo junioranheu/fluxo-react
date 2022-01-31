@@ -5,6 +5,8 @@ import 'nprogress/nprogress.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './app';
 import Footer from './componentes/outros/footer';
 import Navbar from './componentes/outros/navbar';
@@ -12,8 +14,11 @@ import './css/site.css';
 import './fonts/poppins.css';
 import { UsuarioProvider } from './utilidades/context/usuarioContext';
 
+
 ReactDOM.render(
     <React.StrictMode>
+        <ToastContainer />
+
         <UsuarioProvider>
             <BrowserRouter>
                 <Navbar />
