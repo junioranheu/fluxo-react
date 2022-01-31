@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
 import { Aviso } from '../../componentes/outros/aviso';
+import AvisoNenhumRegistro from '../../componentes/outros/avisoNenhumRegistro';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
@@ -226,14 +227,15 @@ export default function Index() {
     useEffect(() => {
         if (tiposEstabelecimentos.length > 0) {
             const itens = divLoadingTiposEstabelecimentos.current?.innerText;
-            // console.log(itens);
+            // console.log(itens.length);
 
             if (!itens) {
-                console.log('NOPE');
+                // console.log('NOPE');
                 setIsMostrarNaoEncontrouResultados(true);
-            } else {
-                console.log('YES');
-                setIsMostrarNaoEncontrouResultados(false); 
+            }
+            else {
+                // console.log('YES');
+                setIsMostrarNaoEncontrouResultados(false);
             }
         }
     });
@@ -377,14 +379,18 @@ export default function Index() {
                                     </React.Fragment>
                                 ))
                             )}
-
-                            {isMostrarNaoEncontrouResultados && (
-                                <div>NADA FOI ENCONTRADO</div>
-                            )}
                         </div>
+
+                        {isMostrarNaoEncontrouResultados && (
+                            <AvisoNenhumRegistro />
+                        )}
                     </div>
                 </section>
             </section>
         </React.Fragment >
     );
 }
+
+
+
+
