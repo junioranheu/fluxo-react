@@ -2,11 +2,11 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import Categoria from '../../componentes/categorias/categoria';
-import TipoEstabelecimento from '../../componentes/estabelecimentosTipos/tipoEstabelecimento';
 import { Aviso } from '../../componentes/outros/aviso';
 import Card from '../../componentes/outros/card';
 import InfoUsuario from '../../componentes/outros/infoUsuario';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
+import Item from '../../componentes/outros/item';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
@@ -303,10 +303,18 @@ export default function Index() {
                                                     {/* Verificação do campo de filtro */}
                                                     {
                                                         (inputFiltro.length === 0) ? (
-                                                            <TipoEstabelecimento props={tipo} />
+                                                            <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                                href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
+                                                                titulo={tipo.tipo} descricao={tipo.descricao}
+                                                                icone={tipo.estabelecimentoCategorias.icone}
+                                                                iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                                         ) : (
                                                             ((tipo.tipo.toLowerCase().includes(inputFiltro.toLowerCase()) || tipo.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
-                                                                <TipoEstabelecimento props={tipo} />
+                                                                <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                                    href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
+                                                                    titulo={tipo.tipo} descricao={tipo.descricao}
+                                                                    icone={tipo.estabelecimentoCategorias.icone}
+                                                                    iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                                             ))
                                                         )
                                                     }
@@ -324,10 +332,18 @@ export default function Index() {
                                         {/* Verificação do campo de filtro */}
                                         {
                                             (inputFiltro.length === 0) ? (
-                                                <TipoEstabelecimento props={tipo} />
+                                                <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                    href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
+                                                    titulo={tipo.tipo} descricao={tipo.descricao}
+                                                    icone={tipo.estabelecimentoCategorias.icone}
+                                                    iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                             ) : (
                                                 ((tipo.tipo.toLowerCase().includes(inputFiltro.toLowerCase()) || tipo.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
-                                                    <TipoEstabelecimento props={tipo} />
+                                                    <Item id={tipo.estabelecimentoTipoId} thumbnail={tipo.thumbnail}
+                                                        href={`/estabelecimento/tipo/${tipo.estabelecimentoTipoId}`}
+                                                        titulo={tipo.tipo} descricao={tipo.descricao}
+                                                        icone={tipo.estabelecimentoCategorias.icone}
+                                                        iconeDesc={tipo.estabelecimentoCategorias.categoria} />
                                                 ))
                                             )
                                         }

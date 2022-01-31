@@ -1,21 +1,23 @@
 import NProgress from 'nprogress';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import { Aviso } from '../../componentes/outros/aviso';
 import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal';
+import Item from '../../componentes/outros/item';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
-import { Auth } from '../../utilidades/context/usuarioContext';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Estabelecimento() {
     // Import dinâmico;
     // const imagemDinamica = require('../../' + (prop.imagem));
 
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
-    const [cidadeNome] = useState(Auth.getUsuarioLogado().cidadeNome);
+    const [cidadeNome] = useState(isAuth ? Auth.getUsuarioLogado().cidadeNome : '');
     const [titulo, setTitulo] = useState(null);
-    
+
     function getDetalheTipoEstabelecimento() {
         NProgress.start();
 
@@ -51,7 +53,7 @@ export default function Estabelecimento() {
         NProgress.start();
         setLoadingEstabelecimentos(true);
 
-        const cidadeIdUsuarioLogado = Auth.getUsuarioLogado().cidadeId;
+        const cidadeIdUsuarioLogado = (isAuth ? Auth.getUsuarioLogado().cidadeId : 0);
 
         const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_TIPO_ID_MAIS_SIGLA_ESTADO_USUARIO}?id=${parametroTipoEstabelecimentoId}&cidadeIdUsuarioLogado=${cidadeIdUsuarioLogado}`;
         // console.log(url);
@@ -174,6 +176,28 @@ export default function Estabelecimento() {
                             }
                         }
                     } */}
+
+                        {estabelecimentos.map((estabelecimento) => (
+                            <React.Fragment key={estabelecimento.estabelecimentoId} >
+                                {
+                                    (inputFiltro.length === 0) ? (
+                                        <Item id={estabelecimento.estabelecimentoId} thumbnail={estabelecimento.thumbnail}
+                                            href={`/estabelecimento/${estabelecimento.estabelecimentoId}`}
+                                            titulo={estabelecimento.nome} descricao={estabelecimento.descricao}
+                                            icone={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.icone}
+                                            iconeDesc={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.categoria} />
+                                    ) : (
+                                        ((estabelecimento.nome.toLowerCase().includes(inputFiltro.toLowerCase()) || estabelecimento.descricao.toLowerCase().includes(inputFiltro.toLowerCase())) && (
+                                            <Item id={estabelecimento.estabelecimentoId} thumbnail={estabelecimento.thumbnail}
+                                                href={`/estabelecimento/${estabelecimento.estabelecimentoId}`}
+                                                titulo={estabelecimento.nome} descricao={estabelecimento.descricao}
+                                                icone={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.icone}
+                                                iconeDesc={estabelecimento.estabelecimentoTipos.estabelecimentoCategorias.categoria} />
+                                        ))
+                                    )
+                                }
+                            </React.Fragment>
+                        ))}
                     </div>
                 </div>
             </section>
