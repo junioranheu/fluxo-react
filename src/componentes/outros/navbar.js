@@ -75,7 +75,7 @@ export default function Navbar() {
                                     Gerenciar armazenamento
                                 </a>
 
-                                <a className='navbar-item' href='/estabelecimentos'>
+                                <a className='navbar-item' href='/gerenciar-estabelecimentos'>
                                     Estabelecimentos
                                 </a>
                             </div>

@@ -13,7 +13,6 @@ import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
-    const [loadingTiposEstabelecimentos, setLoadingTiposEstabelecimentos] = useState(false);
 
     // Cards;
     const listaCards = [
@@ -205,6 +204,7 @@ export default function Index() {
     }
 
     // Pegar o width do #ref={divLoadingTiposEstabelecimentos} para saber o width dos ShimmerThumbnail;
+    const [loadingTiposEstabelecimentos, setLoadingTiposEstabelecimentos] = useState(false);
     const divLoadingTiposEstabelecimentos = useRef(null);
     const [widthLoadingTiposEstabelecimentos, setWidthLoadingTiposEstabelecimentos] = useState(0);
     useEffect(() => {

@@ -48,7 +48,7 @@ export default function Index() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            },
+            }
         })
             .then(data => data.json())
             .then(data => {
