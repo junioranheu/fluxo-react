@@ -243,7 +243,9 @@ export default function Index() {
     return (
         <React.Fragment>
             {/* Info usuário */}
-            <InfoUsuario />
+            {process.env.NODE_ENV === 'development' && (
+                <InfoUsuario />
+            )}
 
             {/* Cards */}
             <section className='content-section mt-6'>
