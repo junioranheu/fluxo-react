@@ -10,6 +10,20 @@ export default function Navbar() {
     const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
     const navigate = useNavigate();
 
+    // Verificações da foto de perfil e import dinâmico;
+    let fotoPerfilDinamica = '';
+    if (isAuth) {
+        const foto = Auth.getUsuarioLogado().foto;
+
+        try {
+            fotoPerfilDinamica = require('../../upload/usuario/' + foto);
+            // console.log('Ok');
+        } catch (err) {
+            // console.log('Imagem não existe');        
+            // console.log(err);
+        }
+    }
+
     function deslogar() {
         NProgress.start();
 
@@ -99,7 +113,7 @@ export default function Navbar() {
                             {/* Perfil  */}
                             <div className='is-hidden-tablet-only is-hidden-mobile ml-1'>
                                 <div className='ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable'>
-                                    <img src='@usuarioFotoPerfil' className='ajustar-imagem-navbar pointer' alt=''
+                                    <img src={fotoPerfilDinamica} className='ajustar-imagem-navbar pointer' alt=''
                                         onClick={() => window.location.href = caminhoPerfil} onError={(event) => event.target.src = SemImagem} title='Meu perfil' />
                                 </div>
                             </div>

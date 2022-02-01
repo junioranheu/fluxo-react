@@ -18,6 +18,8 @@ export default function InfoUsuario() {
                     <br />
                     <span>Tipo: {Auth.getUsuarioLogado().usuarioTipoId}</span>
                     <br />
+                    <span>Foto de perfil: {Auth.getUsuarioLogado().foto}</span>
+                    <br />
                     <span>CidadeId: {Auth.getUsuarioLogado().cidadeId}</span>
                     <br />
                     <span>Cidade: {Auth.getUsuarioLogado().cidadeNome}</span>

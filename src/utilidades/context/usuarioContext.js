@@ -23,6 +23,7 @@ export const Auth = {
             nome: data.nomeCompleto,
             nomeUsuarioSistema: data.nomeUsuarioSistema,
             usuarioTipoId: data.usuarioTipoId,
+            foto: data.foto,
             cidadeId: data.usuariosInformacoes.cidadeId,
             cidadeNome: data.usuariosInformacoes.cidades.nome,
             token: data.token
