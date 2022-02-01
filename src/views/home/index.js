@@ -122,7 +122,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+                Aviso.error('Algo deu errado ao buscar as categorias<br/>Consulte o F12!', 5000);
             });
     }
 
@@ -146,7 +146,7 @@ export default function Index() {
             })
             .catch((error) => {
                 console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+                Aviso.error('Algo deu errado ao buscar os tipos de estabelecimentos<br/>Consulte o F12!', 5000);
             });
     }
 
