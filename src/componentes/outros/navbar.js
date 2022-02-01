@@ -54,7 +54,7 @@ export default function Navbar() {
                         <a className='navbar-link' href={() => false}>Mais</a>
 
                         <div className='navbar-dropdown is-boxed'>
-                            <a className='navbar-item' href='/'>Política e termos de uso</a>
+                            <a className='navbar-item' href='/politica-e-termos-de-uso'>Política e termos de uso</a>
                             <a className='navbar-item' href='/'>Reportar um problema</a>
                         </div>
                     </div>
