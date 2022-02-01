@@ -303,6 +303,10 @@ export default function Index() {
                         </h1>
                     </div>
 
+                    {isMostrarNaoEncontrouResultados && (
+                        <AvisoNenhumRegistro />
+                    )}
+
                     <div className='section-part mt-3'>
                         <div className='content-part-line' ref={divLoadingTiposEstabelecimentos}>
                             {/* Loading */}
@@ -382,10 +386,6 @@ export default function Index() {
                                 ))
                             )}
                         </div>
-
-                        {isMostrarNaoEncontrouResultados && (
-                            <AvisoNenhumRegistro />
-                        )}
                     </div>
                 </section>
             </section>

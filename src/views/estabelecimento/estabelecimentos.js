@@ -151,6 +151,10 @@ export default function Estabelecimento() {
 
             {/* Estabelecimentos */}
             <section className='content-section mt-6'>
+                {isMostrarNaoEncontrouResultados && (
+                    <AvisoNenhumRegistro />
+                )}
+
                 <div className='section-part mt-3'>
                     <div className='content-part-line' ref={divLoadingEstabelecimentos}>
                         {/* Loading */}
@@ -184,10 +188,6 @@ export default function Estabelecimento() {
                             </React.Fragment>
                         ))}
                     </div>
-
-                    {isMostrarNaoEncontrouResultados && (
-                        <AvisoNenhumRegistro />
-                    )}
                 </div>
             </section>
         </section>
