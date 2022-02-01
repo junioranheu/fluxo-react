@@ -35,7 +35,7 @@ export default function Footer() {
                             <h6>OUTROS</h6>
                             <ul className='footer-links'>
                                 <li><a href='/sobre'>Sobre</a></li>
-                                <li><a href={() => false}>Politica de privacidade</a></li>
+                                <li><a href='/politica-e-termos-de-uso'>Politica de privacidade</a></li>
                                 <li><a href={() => false}>Reportar um problema</a></li>
                             </ul>
                         </div>
