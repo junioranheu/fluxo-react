@@ -96,23 +96,10 @@ export default function Navbar() {
                     {/* Usuário logado */}
                     {isAuth && (
                         <React.Fragment>
-                            {/* Perfil  */
-                            /* if (usuarioFotoPerfil == '-1' || usuarioFotoPerfil == null || usuarioFotoPerfil == '')
-                    {
-                        usuarioFotoPerfil = '/static/outros/sem-imagem.webp';
-                    }
-                    else
-                    {
-                        usuarioFotoPerfil = '/upload/usuario/' + usuarioFotoPerfil;
-                        string numeroAleatorio = ProjetoGuia_Biblioteca.Biblioteca.NumeroAleatorio(4);
-                        usuarioFotoPerfil += String.Concat('?t=', numeroAleatorio); // Adicionar um número aleatório para 'desbugar' o cache;
-                    }
-
-                    string caminhoPerfil = '/perfil/@' + @usuarioNomeDeUsuario; */}
-
+                            {/* Perfil  */}
                             <div className='is-hidden-tablet-only is-hidden-mobile ml-1'>
                                 <div className='ajustar-div-imagem-navbar navbar-item has-dropdown is-hoverable'>
-                                    <img src='@usuarioFotoPerfil' className='ajustar-imagem-navbar pointer' alt='Erro...'
+                                    <img src='@usuarioFotoPerfil' className='ajustar-imagem-navbar pointer' alt=''
                                         onClick={() => window.location.href = caminhoPerfil} onError={(event) => event.target.src = SemImagem} title='Meu perfil' />
                                 </div>
                             </div>
