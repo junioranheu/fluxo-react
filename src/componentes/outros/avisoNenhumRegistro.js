@@ -2,8 +2,6 @@ import React from 'react';
 import ImagemErro from '../../static/svg/triste-1.svg';
 
 export default function AvisoNenhumRegistro() {
-    console.log('a');
-
     return (
         <div className='animate__animated animate__fadeIn'>
             <div className='has-text-centered'>

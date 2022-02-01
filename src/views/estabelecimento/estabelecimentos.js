@@ -22,6 +22,24 @@ export default function Estabelecimento() {
     // Get estabelecimentos por tipo de estabelecimento;
     const [estabelecimentos, setEstabelecimentos] = useState([]);
 
+    // Verificar se a busca do usuário encontrou algo;
+    const [isMostrarNaoEncontrouResultados, setIsMostrarNaoEncontrouResultados] = useState(false);
+    useEffect(() => {
+        if (estabelecimentos.length > 0) {
+            const itens = divLoadingEstabelecimentos.current?.innerText;
+            // console.log(itens.length);
+
+            if (!itens) {
+                // console.log('NOPE');
+                setIsMostrarNaoEncontrouResultados(true);
+            }
+            else {
+                // console.log('YES');
+                setIsMostrarNaoEncontrouResultados(false);
+            }
+        }
+    });
+
     // Ao carregar página;
     useEffect(() => {
         function getDetalheTipoEstabelecimento() {
@@ -74,11 +92,13 @@ export default function Estabelecimento() {
                     // console.log(data);
                     // console.log(cidadeIdUsuarioLogado);
                     if (!data.length && cidadeIdUsuarioLogado > 0) {
-                        console.log('NÃO TEM ESTABELECIMENTO NA CIDADE ' + cidadeIdUsuarioLogado);
+                        Aviso.error('Algo deu errado<br/>Não existe um estabelecimento desse tipo na sua cidade!', 8000);
+                        setIsMostrarNaoEncontrouResultados(true);
                     }
 
                     if (!data.length && cidadeIdUsuarioLogado === 0) {
-                        console.log('NÃO TEM ESTABELECIMENTO NO TIPO ' + parametroTipoEstabelecimentoId);
+                        Aviso.error('Algo deu errado<br/>Nenhum estabelecimento foi vinculado a esse tipo de estabelecimento ainda!', 8000);
+                        setIsMostrarNaoEncontrouResultados(true);
                     }
 
                     setEstabelecimentos(data);
@@ -116,24 +136,6 @@ export default function Estabelecimento() {
         // console.log(widthLoading);
         setWidthLoadingEstabelecimentos(widthLoading);
     }, []);
-
-    // Verificar se a busca do usuário encontrou algo;
-    const [isMostrarNaoEncontrouResultados, setIsMostrarNaoEncontrouResultados] = useState(false);
-    useEffect(() => {
-        if (estabelecimentos.length > 0) {
-            const itens = divLoadingEstabelecimentos.current?.innerText;
-            // console.log(itens.length);
-
-            if (!itens) {
-                // console.log('NOPE');
-                setIsMostrarNaoEncontrouResultados(true);
-            }
-            else {
-                // console.log('YES');
-                setIsMostrarNaoEncontrouResultados(false);
-            }
-        }
-    });
 
     return (
         <section className='mt-6'>
