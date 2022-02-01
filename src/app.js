@@ -6,6 +6,7 @@ import GerenciarEstabelecimento from './views/estabelecimento/gerenciarEstabelec
 import Entrar from './views/home/entrar';
 import Inicio from './views/home/index';
 import Politica from './views/home/politica';
+import Reportar from './views/home/reportar';
 import SemAcesso from './views/home/semAcesso';
 import Sobre from './views/home/sobre';
 
@@ -17,6 +18,7 @@ export default function App() {
       <Route path='/' element={<Inicio />} />
       <Route path='/sobre' element={<Sobre />} />
       <Route path='/politica-e-termos-de-uso' element={<Politica />} />
+      <Route path='/reportar-problema' element={<Reportar />} />
       <Route path='/sem-acesso' element={<SemAcesso />} />
       <Route path='/entrar' element={<Entrar />} />
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />

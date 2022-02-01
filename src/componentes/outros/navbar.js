@@ -69,7 +69,7 @@ export default function Navbar() {
 
                         <div className='navbar-dropdown is-boxed'>
                             <a className='navbar-item' href='/politica-e-termos-de-uso'>Política e termos de uso</a>
-                            <a className='navbar-item' href='/'>Reportar um problema</a>
+                            <a className='navbar-item' href='/reportar-problema'>Reportar um problema</a>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@ export default function Navbar() {
                 </div>
 
                 <div className='navbar-end'>
-                    <a className='navbar-item' title='Reportar um problema' href='/'>
+                    <a className='navbar-item' title='Reportar um problema' href='/reportar-problema'>
                         <i className='fas fa-bug'></i><span className='is-hidden-desktop ml-2'>Reportar problema</span>
                     </a>
 
