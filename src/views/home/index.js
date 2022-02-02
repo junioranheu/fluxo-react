@@ -140,6 +140,14 @@ export default function Index() {
             .then(data => data.json())
             .then(data => {
                 // console.log(data);
+
+                // Filtrar array;
+                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 1); // Traficante;
+                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 14); // Sex shop;
+                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 20); // Motel;
+                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 23); // Bar;
+                // console.log(data);
+
                 setTiposEstabelecimentos(data);
                 setLoadingTiposEstabelecimentos(false);
                 NProgress.done();
