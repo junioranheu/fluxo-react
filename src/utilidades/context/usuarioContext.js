@@ -20,6 +20,7 @@ export const Auth = {
     setUsuarioLogado(data) {
         // console.log(data);
         const dadosUsuario = {
+            usuarioId: data.usuarioId,
             nome: data.nomeCompleto,
             nomeUsuarioSistema: data.nomeUsuarioSistema,
             usuarioTipoId: data.usuarioTipoId,

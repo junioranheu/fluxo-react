@@ -1,5 +1,5 @@
 import NProgress from 'nprogress';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/entrar.css';
@@ -8,6 +8,9 @@ import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Index() {
+    const refTxtNomeUsuario = useRef();
+    const refTxtSenha = useRef();
+    
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
@@ -38,6 +41,8 @@ export default function Index() {
         if (!formData || !formData.usuario || !formData.senha) {
             NProgress.done();
             Aviso.error('O nome de usuário e/ou e-mail estão vazios!', 5000);
+            refTxtSenha.current.value = '';
+            refTxtNomeUsuario.current.select();
             return false;
         }
 
@@ -61,6 +66,8 @@ export default function Index() {
             .catch((error) => {
                 NProgress.done();
                 console.log(error);
+                refTxtSenha.current.value = '';
+                refTxtNomeUsuario.current.select();
                 Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
             });
     };
@@ -122,7 +129,7 @@ export default function Index() {
                                     <div className='field mt-5'>
                                         <label className='label'>Nome de usuário ou e-mail</label>
                                         <div className='control has-icons-right'>
-                                            <input type='email' name='usuario' className='input' onChange={handleChange} />
+                                            <input type='email' name='usuario' className='input' onChange={handleChange} ref={refTxtNomeUsuario} />
                                             <span className='icon is-small is-right'>
                                                 <i className='fa fa-user'></i>
                                             </span>
@@ -132,7 +139,7 @@ export default function Index() {
                                     <div className='field'>
                                         <label className='label'>Senha</label>
                                         <div className='control has-icons-right'>
-                                            <input type='password' name='senha' className='input' onChange={handleChange} />
+                                            <input type='password' name='senha' className='input' onChange={handleChange} ref={refTxtSenha} />
                                             <span className='icon is-small is-right'>
                                                 <i className='fa fa-key'></i>
                                             </span>

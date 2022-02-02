@@ -1,7 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Aviso } from '../../componentes/outros/aviso';
 import SemImagem from '../../static/outro/sem-imagem.webp';
+import CONSTANTS from '../../utilidades/const/constReports';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function Reportar() {
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+
+    const refTextArea = useRef();
+    const refBtnEnviarReclamacao = useRef();
+
+    const [isCheckChecado, setIsCheckChecado] = useState(false);
+    const [textProblema, setTextProblema] = useState('');
+
+    function handleOnChangeCheckBox() {
+        setIsCheckChecado(!isCheckChecado);
+    }
+
+    function handleOnChangeTextArea(e) {
+        setTextProblema(e.target.value);
+    }
+
+    function handleClickCancelar() {
+        setIsCheckChecado(false);
+        setTextProblema('');
+    }
+
+    function handleClickReclamacao() {
+        if (!isCheckChecado) {
+            Aviso.warn('Você esqueceu de concordar com os termos!', 5000);
+            return false;
+        }
+
+        if (!textProblema) {
+            Aviso.warn('Você esqueceu de preencher sua reclamação!', 5000);
+            refTextArea.current.select();
+            return false;
+        }
+
+        if (textProblema.length < 10) {
+            Aviso.warn('Sua reclamação está muito curta!', 5000);
+            refTextArea.current.select();
+            return false;
+        }
+
+        const usuarioId = isAuth ? Auth.getUsuarioLogado().usuarioId : null;
+        const data = new Date().toLocaleString();
+        const report = {
+            'reclamacao': textProblema,
+            'data': data,
+            'usuarioId': usuarioId
+        };
+
+        const url = CONSTANTS.API_URL_POST_CRIAR;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(report)
+        })
+            .then(data => data.json())
+            .then(data => {
+                // console.log(data);
+                Aviso.success('Reclamação enviada com sucesso', 5000);
+                refBtnEnviarReclamacao.current.disabled = true;
+                setTextProblema('');
+            })
+            .catch((error) => {
+                console.log(error);
+                Aviso.error('Algo deu errado ao enviar sua reclamação<br/>Consulte o F12!', 5000);
+            });
+    }
+
     // Ao carregar página;
     useEffect(() => {
         document.title = 'Fluxo — Reportar um problema'
@@ -23,7 +95,7 @@ export default function Reportar() {
                                 <div className='card-content'>
                                     <div className='media'>
                                         <div className='media-center'>
-                                            <img src='' className='author-image' onError={(event) => event.target.src = SemImagem} />
+                                            <img src='' className='author-image' onError={(event) => event.target.src = SemImagem} alt='' />
                                         </div>
 
                                         <div className='media-content has-text-centered'>
@@ -55,14 +127,14 @@ export default function Reportar() {
                                         <div className='mt-5'>
                                             <div className='field'>
                                                 <div className='control'>
-                                                    <textarea className='textarea' placeholder='Reporte seu problema aqui...' style={{ resize: 'none' }} ></textarea>
+                                                    <textarea ref={refTextArea} onChange={handleOnChangeTextArea} value={textProblema} className='textarea' placeholder='Reporte seu problema aqui...' style={{ resize: 'none' }} ></textarea>
                                                 </div>
                                             </div>
 
-                                            <div className='field'>
+                                            <div className='field sem-highlight'>
                                                 <div className='control'>
                                                     <label className='checkbox'>
-                                                        <input type='checkbox' />
+                                                        <input type='checkbox' onChange={handleOnChangeCheckBox} checked={isCheckChecado} />
                                                         <span> Eu concordo com os <a href='/politica' target='_blank' className='cor-principal'>termos e condições de uso</a></span>
                                                     </label>
                                                 </div>
@@ -70,11 +142,11 @@ export default function Reportar() {
 
                                             <div className='field is-grouped'>
                                                 <div className='control'>
-                                                    <button className='button'>Cancelar</button>
+                                                    <button onClick={handleClickCancelar} className='button'>Cancelar</button>
                                                 </div>
 
                                                 <div className='control'>
-                                                    <button className='button is-primary'>Enviar reclamação</button>
+                                                    <button ref={refBtnEnviarReclamacao} onClick={handleClickReclamacao} className='button is-primary'>Enviar reclamação</button>
                                                 </div>
                                             </div>
                                         </div>
