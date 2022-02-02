@@ -9,8 +9,10 @@ import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function CriarConta() {
-    const refTxtNomeUsuario = useRef();
-    const refTxtSenha = useRef();
+    const refNomeCompleto = useRef();
+    const refEmail = useRef();
+    const refNomeUsuario = useRef();
+    const refSenha = useRef();
 
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [formData, setFormData] = useState(null);
@@ -33,11 +35,35 @@ export default function CriarConta() {
         NProgress.start();
         e.preventDefault();
 
-        if (!formData || !formData.usuario || !formData.senha) {
+        if (!formData.nomeCompleto) {
             NProgress.done();
-            Aviso.error('O nome de usuário e/ou e-mail estão vazios!', 5000);
-            refTxtSenha.current.value = '';
-            refTxtNomeUsuario.current.select();
+            Aviso.error('Você deve preencher seu nome completo!', 5000);
+            refNomeCompleto.current.value = '';
+            refNomeCompleto.current.select();
+            return false;
+        }
+
+        if (!formData.email) {
+            NProgress.done();
+            Aviso.error('Você deve preencher seu e-mail!', 5000);
+            refEmail.current.value = '';
+            refEmail.current.select();
+            return false;
+        }
+
+        if (!formData.nomeUsuario) {
+            NProgress.done();
+            Aviso.error('Você deve preencher seu nome de usuário!', 5000);
+            refNomeUsuario.current.value = '';
+            refNomeUsuario.current.select();
+            return false;
+        }
+
+        if (!formData.senha) {
+            NProgress.done();
+            Aviso.error('Você deve preencher com uma senha', 5000);
+            refSenha.current.value = '';
+            refSenha.current.select();
             return false;
         }
 
@@ -61,9 +87,8 @@ export default function CriarConta() {
             .catch((error) => {
                 NProgress.done();
                 console.log(error);
-                refTxtSenha.current.value = '';
-                refTxtNomeUsuario.current.select();
-                Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
+                refSenha.current.value = '';
+                Aviso.error('Algo deu errado ao criar sua conta!', 5000);
             });
     };
 
@@ -110,7 +135,7 @@ export default function CriarConta() {
             <div className='field mt-5'>
                 <label className='label'>Nome completo</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='text' name='nomeCompleto' onChange={handleChange} />
+                    <input className='input' type='text' name='nomeCompleto' onChange={handleChange} ref={refNomeCompleto} />
                     <span className='icon is-small is-right'>
                         <i className='fas fa-signature'></i>
                     </span>
@@ -120,7 +145,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='email' name='email' onChange={handleChange} />
+                    <input className='input' type='email' name='email' onChange={handleChange} ref={refEmail}/>
                     <span className='icon is-small is-right'>
                         <i className='fas fa-envelope'></i>
                     </span>
@@ -133,7 +158,7 @@ export default function CriarConta() {
                     <span className='icon is-small is-left'>
                         <i className='fas fa-at'></i>
                     </span>
-                    <input className='input' type='text' name='nomeUsuario' onChange={handleChange} />
+                    <input className='input' type='text' name='nomeUsuario' onChange={handleChange} ref={refNomeUsuario} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-user'></i>
                     </span>
@@ -143,7 +168,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' name='senha' onChange={handleChange} />
+                    <input className='input' type='password' name='senha' onChange={handleChange} ref={refSenha} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>
