@@ -135,7 +135,7 @@ export default function Navbar() {
                     {/* Usuário deslogado */}
                     {!isAuth && (
                         <React.Fragment>
-                            <a className='navbar-item' href='/'>Criar conta</a>
+                            <a className='navbar-item' href='/criar-conta'>Criar conta</a>
 
                             {/* Logica para mostrar o 'Entrar' em botão ou em texto normal, dependendo se é mobile ou desktop; */}
                             <a className='navbar-item is-hidden-desktop is-hidden-tablet' href='/entrar'>Entrar</a>

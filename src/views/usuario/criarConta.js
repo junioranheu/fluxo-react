@@ -8,7 +8,7 @@ import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
-export default function Index() {
+export default function CriarConta() {
     const refTxtNomeUsuario = useRef();
     const refTxtSenha = useRef();
 
@@ -17,7 +17,7 @@ export default function Index() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = 'Fluxo — Entrar';
+        document.title = 'Fluxo — Criar conta';
 
         // Verificar se o usuário está logado;
         // Se estiver, redirecione-o;
@@ -109,7 +109,7 @@ export default function Index() {
                     <img className='login-logo' src={Logo} alt='Erro...' />
                 </div>
 
-                <h1 className='title'>Entre no <span className='grifar'>Fluxo</span></h1>
+                <h1 className='title'>Crie sua conta no <span className='grifar'>Fluxo</span></h1>
                 <h1 className='subtitle'><span className='efeito-texto'>Feito com React</span></h1>
             </div>
 
@@ -141,7 +141,7 @@ export default function Index() {
                 <small>
                     <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/'>termos de uso</a></span>
                     <br />
-                    <a className='cor-principal' href='/criar-conta'>Não tem uma conta? Registre-se agora!</a>
+                    <a className='cor-principal' href='/entrar'>Já tem uma conta? Entre aqui!</a>
                 </small>
             </div>
         </DivCentralizada>

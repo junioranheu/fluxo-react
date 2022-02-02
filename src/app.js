@@ -8,6 +8,7 @@ import Politica from './views/home/politica';
 import Reportar from './views/home/reportar';
 import SemAcesso from './views/home/semAcesso';
 import Sobre from './views/home/sobre';
+import CriarConta from './views/usuario/criarConta';
 import Entrar from './views/usuario/entrar';
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
       <Route path='/reportar-problema' element={<Reportar />} />
       <Route path='/sem-acesso' element={<SemAcesso />} />
       <Route path='/entrar' element={<Entrar />} />
+      <Route path='/criar-conta' element={<CriarConta />} />
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimento />} />
     </Routes>
