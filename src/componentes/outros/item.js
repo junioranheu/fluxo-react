@@ -1,13 +1,18 @@
-import { useState } from 'react';
 import '../../css/itens.css';
-import SemImagem from '../../static/outro/sem-imagem.webp';
+import SemImagem from '../../static/outro/cinza.webp';
 
 export default function TipoEstabelecimento(props) {
     // console.log(props);
-    const [thumbnailFinal] = useState('static/' + props.thumbnail);
 
     // Import dinâmico;
-    const imagemDinamica = require('../../' + (thumbnailFinal));
+    let imagemDinamica = '';
+    try {
+        imagemDinamica = require('../../static/' + props.thumbnail);
+        // console.log('Ok');
+    } catch (err) {
+        // console.log('Imagem não existe');        
+        // console.log(err);
+    }
 
     return (
         <a className='image-wrapper animate__animated animate__fadeIn sem-highlight' href={props.href}>
