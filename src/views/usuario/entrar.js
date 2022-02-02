@@ -139,7 +139,7 @@ export default function Index() {
 
             <div className='has-text-centered mt-4'>
                 <small>
-                    <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/'>termos de uso</a></span>
+                    <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/politica-e-termos-de-uso'>termos de uso</a></span>
                     <br />
                     <a className='cor-principal' href='/criar-conta'>Não tem uma conta? Registre-se agora!</a>
                 </small>

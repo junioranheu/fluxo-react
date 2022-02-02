@@ -18,12 +18,6 @@ export default function CriarConta() {
 
     useEffect(() => {
         document.title = 'Fluxo — Criar conta';
-
-        // Verificar se o usuário está logado;
-        // Se estiver, redirecione-o;
-        if (isAuth) {
-            navigate('/', { replace: true });
-        }
     }, [isAuth, navigate]);
 
     // Ao alterar os valores dos inputs, insira os valores nas variaveis do formData;
@@ -116,7 +110,7 @@ export default function CriarConta() {
             <div className='field mt-5'>
                 <label className='label'>Nome completo</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='text' />
+                    <input className='input' type='text' name='nomeCompleto' onChange={handleChange} />
                     <span className='icon is-small is-right'>
                         <i className='fas fa-signature'></i>
                     </span>
@@ -126,7 +120,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='email' />
+                    <input className='input' type='email' name='email' onChange={handleChange} />
                     <span className='icon is-small is-right'>
                         <i className='fas fa-envelope'></i>
                     </span>
@@ -139,7 +133,7 @@ export default function CriarConta() {
                     <span className='icon is-small is-left'>
                         <i className='fas fa-at'></i>
                     </span>
-                    <input className='input' type='text' />
+                    <input className='input' type='text' name='nomeUsuario' onChange={handleChange} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-user'></i>
                     </span>
@@ -149,7 +143,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' />
+                    <input className='input' type='password' name='senha' onChange={handleChange} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>
@@ -162,7 +156,7 @@ export default function CriarConta() {
 
             <div className='has-text-centered mt-4'>
                 <small>
-                    <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/'>termos de uso</a></span>
+                    <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/politica-e-termos-de-uso'>termos de uso</a></span>
                     <br />
                     <a className='cor-principal' href='/entrar'>Já tem uma conta? Entre aqui!</a>
                 </small>

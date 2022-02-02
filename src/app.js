@@ -22,7 +22,7 @@ export default function App() {
       <Route path='/reportar-problema' element={<Reportar />} />
       <Route path='/sem-acesso' element={<SemAcesso />} />
       <Route path='/entrar' element={<Entrar />} />
-      <Route path='/criar-conta' element={<CriarConta />} />
+      <Route path='/criar-conta' element={!isAuth ? <CriarConta /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimento />} />
     </Routes>
