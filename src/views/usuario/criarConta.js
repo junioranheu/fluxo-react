@@ -103,7 +103,7 @@ export default function CriarConta() {
     }
 
     return (
-        <DivCentralizada>
+        <DivCentralizada isCentralizar={false}>
             <div className='has-text-centered mb-6'>
                 <div>
                     <img className='login-logo' src={Logo} alt='Erro...' />
@@ -114,9 +114,32 @@ export default function CriarConta() {
             </div>
 
             <div className='field mt-5'>
-                <label className='label'>Nome de usuário ou e-mail</label>
+                <label className='label'>Nome completo</label>
                 <div className='control has-icons-right'>
-                    <input type='email' name='usuario' className='input' onChange={handleChange} ref={refTxtNomeUsuario} />
+                    <input className='input' type='text' />
+                    <span className='icon is-small is-right'>
+                        <i className='fas fa-signature'></i>
+                    </span>
+                </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>E-mail</label>
+                <div className='control has-icons-right'>
+                    <input className='input' type='email' />
+                    <span className='icon is-small is-right'>
+                        <i className='fas fa-envelope'></i>
+                    </span>
+                </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>Nome de usuário</label>
+                <div className='control has-icons-right has-icons-left'>
+                    <span className='icon is-small is-left'>
+                        <i className='fas fa-at'></i>
+                    </span>
+                    <input className='input' type='text' />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-user'></i>
                     </span>
@@ -126,7 +149,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input type='password' name='senha' className='input' onChange={handleChange} ref={refTxtSenha} />
+                    <input className='input' type='password' />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>

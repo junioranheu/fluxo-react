@@ -103,7 +103,7 @@ export default function Index() {
     }
 
     return (
-        <DivCentralizada>
+        <DivCentralizada isCentralizar={true}>
             <div className='has-text-centered mb-6'>
                 <div>
                     <img className='login-logo' src={Logo} alt='Erro...' />

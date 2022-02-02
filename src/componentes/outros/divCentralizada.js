@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function DivCentralizada(props) {
+    // console.log(props.isCentralizar);
+    const [classe] = useState(props.isCentralizar ? 'is-medium' : 'is-small mt-6');
+    // console.log(classe);
+
     return (
         <React.Fragment>
             {/* Efeito */}
@@ -11,7 +15,7 @@ export default function DivCentralizada(props) {
             </div>
 
             {/* Seção */}
-            <section className='hero is-medium sem-highlight'>
+            <section className={`hero sem-highlight ${classe}`}>
                 <div className='hero-body'>
                     <div className='container'>
                         <div className='columns is-centered'>
