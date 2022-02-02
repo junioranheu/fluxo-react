@@ -3,12 +3,12 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { UsuarioContext } from './utilidades/context/usuarioContext';
 import Estabelecimento from './views/estabelecimento/estabelecimentos';
 import GerenciarEstabelecimento from './views/estabelecimento/gerenciarEstabelecimentos';
-import Entrar from './views/home/entrar';
 import Inicio from './views/home/index';
 import Politica from './views/home/politica';
 import Reportar from './views/home/reportar';
 import SemAcesso from './views/home/semAcesso';
 import Sobre from './views/home/sobre';
+import Entrar from './views/usuario/entrar';
 
 export default function App() {
   const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
