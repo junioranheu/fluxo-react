@@ -18,10 +18,15 @@ export const Fetch = {
             respostaJson = await resposta.json();
             // console.log(respostaJson);
         } catch (erro) {
-            console.log(url);
-            console.log(token);
-            console.log(erro);
-            Aviso.error('Houve uma falha na requisição GET ao servidor!', 5000);
+            const e = {
+                'url': url,
+                'token': token,
+                'erro': erro,
+                'data': new Date().toLocaleString()
+            }
+
+            console.table(e);
+            // Aviso.error('Houve uma falha na requisição GET ao servidor!', 5000);
         }
 
         return respostaJson;
@@ -45,10 +50,15 @@ export const Fetch = {
             respostaJson = await resposta.json();
             // console.log(respostaJson);
         } catch (erro) {
-            console.log(url);
-            console.log(body);
-            console.log(token);
-            console.log(erro);
+            const e = {
+                'url': url,
+                'body': body,
+                'token': token,
+                'erro': erro,
+                'data': new Date().toLocaleString()
+            }
+
+            console.table(e);
             Aviso.error('Houve uma falha na requisição POST ao servidor!', 5000);
         }
 

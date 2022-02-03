@@ -143,6 +143,7 @@ export default function Index() {
             NProgress.done();
         } else {
             Aviso.error('Algo deu errado ao buscar os tipos de estabelecimentos<br/>Consulte o F12!', 5000);
+            NProgress.done();
         }
     }
 
