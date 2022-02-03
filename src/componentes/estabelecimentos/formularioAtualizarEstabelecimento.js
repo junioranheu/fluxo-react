@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CONSTANTS from '../../utilidades/const/constEstabelecimentos';
 import { Auth } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 import { Aviso } from '../outros/aviso';
 
 export default function FormularioAtualizarEstabelecimento(props) {
@@ -30,7 +31,7 @@ export default function FormularioAtualizarEstabelecimento(props) {
     };
 
     // Ao clicar no botão para criar;
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         const estabelecimento_a_ser_atualizado = {
@@ -54,26 +55,13 @@ export default function FormularioAtualizarEstabelecimento(props) {
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
 
-        console.log(estabelecimento_a_ser_atualizado);
-        // console.log(url);
-
         // Post;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(estabelecimento_a_ser_atualizado)
-        })
-            .then(data => data.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-            });
+        let resposta = await Fetch.postApi(url, estabelecimento_a_ser_atualizado, token);
+        if (resposta) {
+            // console.log('Ok: ' + resposta);
+        } else {
+            Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+        }
 
         // Encerra o componente;
         props.onEstabelecimentoUpdated(estabelecimento_a_ser_atualizado);

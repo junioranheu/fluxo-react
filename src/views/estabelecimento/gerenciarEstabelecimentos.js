@@ -22,35 +22,25 @@ export default function Index() {
         }
     }
 
-    function deleteEstabelecimento(props) {
+    async function deleteEstabelecimento(props) {
         const estabelecimentoId = props.estabelecimentoId;
         const estabelecimentoNome = props.nome;
 
-        let resposta = window.confirm(`Você tem certeza que deseja deletar o estabelecimento '${estabelecimentoNome}'?`);
-        if (!resposta) {
+        let respUsuario = window.confirm(`Você tem certeza que deseja deletar o estabelecimento '${estabelecimentoNome}'?`);
+        if (!respUsuario) {
             return false;
         }
 
         const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_POST_DELETAR}?id=${estabelecimentoId}`;
         const token = Auth.getUsuarioLogado().token;
-        // console.log(url);
 
-        // Post;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                onEstabelecimentoDeleted(estabelecimentoId);
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-            });
+        let resposta = await Fetch.postApi(url, '', token);
+        if (resposta) {
+            // console.log('Ok: ' + resposta);
+            onEstabelecimentoDeleted(estabelecimentoId);
+        } else {
+            Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+        }
     }
 
     // Ao carregar página;

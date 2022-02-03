@@ -3,6 +3,7 @@ import { Aviso } from '../../componentes/outros/aviso';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS from '../../utilidades/const/constReports';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 
 export default function Reportar() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -26,7 +27,7 @@ export default function Reportar() {
         setTextProblema('');
     }
 
-    function handleClickReclamacao() {
+    async function handleClickReclamacao() {
         if (!isCheckChecado) {
             Aviso.warn('Você esqueceu de concordar com os termos!', 5000);
             return false;
@@ -54,24 +55,15 @@ export default function Reportar() {
 
         const url = CONSTANTS.API_URL_POST_CRIAR;
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(report)
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                Aviso.success('Reclamação enviada com sucesso', 5000);
-                refBtnEnviarReclamacao.current.disabled = true;
-                setTextProblema('');
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado ao enviar sua reclamação<br/>Consulte o F12!', 5000);
-            });
+        let resposta = await Fetch.postApi(url, report);
+        if (resposta) {
+            // console.log('Ok: ' + resposta);
+            Aviso.success('Reclamação enviada com sucesso', 5000);
+            refBtnEnviarReclamacao.current.disabled = true;
+            setTextProblema('');
+        } else {
+            Aviso.error('Algo deu errado ao enviar sua reclamação<br/>Consulte o F12!', 5000);
+        }
     }
 
     // Ao carregar página;
@@ -135,7 +127,7 @@ export default function Reportar() {
                                                 <div className='control'>
                                                     <label className='checkbox'>
                                                         <input type='checkbox' onChange={handleOnChangeCheckBox} checked={isCheckChecado} />
-                                                        <span> Eu concordo com os <a href='/politica' target='_blank' className='cor-principal'>termos e condições de uso</a></span>
+                                                        <span> Eu concordo com os <a href='/politica-e-termos-de-uso' target='_blank' className='cor-principal'>termos e condições de uso</a></span>
                                                     </label>
                                                 </div>
                                             </div>

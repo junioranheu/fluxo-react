@@ -254,21 +254,12 @@ export default function CriarConta() {
             'isPremium': 0
         };
 
-        fetch(urlCriarConta, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(usuario_a_ser_criado)
-        })
-            .then(data => data.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-            });
+        let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
+        if (resposta) {
+            console.log('Ok: ' + resposta);
+        } else {
+            Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
+        }
     };
 
     function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {

@@ -18,14 +18,40 @@ export const Fetch = {
             respostaJson = await resposta.json();
             // console.log(respostaJson);
         } catch (erro) {
+            console.log(url);
+            console.log(token);
             console.log(erro);
-            Aviso.error('Houve uma falha na requisição ao servidor!', 5000);
+            Aviso.error('Houve uma falha na requisição GET ao servidor!', 5000);
         }
 
         return respostaJson;
     },
 
-    postApi(props) {
+    async postApi(url, body, token) {
+        let respostaJson = '';
+        let headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
 
+        try {
+            let resposta = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(body)
+            });
+
+            respostaJson = await resposta.json();
+            // console.log(respostaJson);
+        } catch (erro) {
+            console.log(url);
+            console.log(body);
+            console.log(token);
+            console.log(erro);
+            Aviso.error('Houve uma falha na requisição POST ao servidor!', 5000);
+        }
+
+        return respostaJson;
     }
 }
