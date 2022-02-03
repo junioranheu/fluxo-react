@@ -8,6 +8,7 @@ import Item from '../../componentes/outros/item';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 
 export default function Estabelecimento() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -42,36 +43,26 @@ export default function Estabelecimento() {
 
     // Ao carregar página;
     useEffect(() => {
-        function getDetalheTipoEstabelecimento() {
+        async function getDetalheTipoEstabelecimento() {
             NProgress.start();
 
             // Pegar o parâmetro da URL;
             const url = `${CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
             // console.log(url);
 
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(data => data.json())
-                .then(data => {
-                    // console.log(data);
-                    const titulo = `Encontre ${data.genero} ${data.tipo.toLowerCase()} perfeit${data.genero}`;
-                    setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
-                    document.title = 'Fluxo — ' + data.tipo;
+            let resposta = await Fetch.getApi(url);
+            if (resposta) {
+                const titulo = `Encontre ${resposta.genero} ${resposta.tipo.toLowerCase()} perfeit${resposta.genero}`;
+                setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
+                document.title = 'Fluxo — ' + resposta.tipo;
 
-                    NProgress.done();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-                });
+                NProgress.done();
+            } else {
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+            }
         }
 
-        function getEstabelecimentos() {
+        async function getEstabelecimentos() {
             NProgress.start();
             setLoadingEstabelecimentos(true);
 
@@ -80,35 +71,26 @@ export default function Estabelecimento() {
             const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_TIPO_ID_MAIS_SIGLA_ESTADO_USUARIO}?id=${parametroTipoEstabelecimentoId}&cidadeIdUsuarioLogado=${cidadeIdUsuarioLogado}`;
             // console.log(url);
 
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+            let resposta = await Fetch.getApi(url);
+            if (resposta) {
+                // console.log(resposta);
+                // console.log(cidadeIdUsuarioLogado);
+                if (!resposta.length && cidadeIdUsuarioLogado > 0) {
+                    Aviso.error('Algo deu errado<br/>Não existe um estabelecimento desse tipo na sua cidade!', 8000);
+                    setIsMostrarNaoEncontrouResultados(true);
                 }
-            })
-                .then(data => data.json())
-                .then(data => {
-                    // console.log(data);
-                    // console.log(cidadeIdUsuarioLogado);
-                    if (!data.length && cidadeIdUsuarioLogado > 0) {
-                        Aviso.error('Algo deu errado<br/>Não existe um estabelecimento desse tipo na sua cidade!', 8000);
-                        setIsMostrarNaoEncontrouResultados(true);
-                    }
 
-                    if (!data.length && cidadeIdUsuarioLogado === 0) {
-                        Aviso.error('Algo deu errado<br/>Nenhum estabelecimento foi vinculado a esse tipo de estabelecimento ainda!', 8000);
-                        setIsMostrarNaoEncontrouResultados(true);
-                    }
+                if (!resposta.length && cidadeIdUsuarioLogado === 0) {
+                    Aviso.error('Algo deu errado<br/>Nenhum estabelecimento foi vinculado a esse tipo de estabelecimento ainda!', 8000);
+                    setIsMostrarNaoEncontrouResultados(true);
+                }
 
-                    setEstabelecimentos(data);
-                    setLoadingEstabelecimentos(false);
-                    NProgress.done();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-                });
+                setEstabelecimentos(resposta);
+                setLoadingEstabelecimentos(false);
+                NProgress.done();
+            } else {
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+            }
         }
 
         // Pegar os detalhes do tipo de estabelecimento buscado;

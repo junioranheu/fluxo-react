@@ -4,27 +4,22 @@ import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/fo
 import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import { Auth } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 
 export default function Index() {
     const [estabelecimentos, setEstabelecimentos] = useState([]);
     const [showFormularioNovoEstabelecimento, setShowFormularioNovoEstabelecimento] = useState(false);
     const [estabelecimentoSendoAtualizado, setEstabelecimentoSendoAtualizado] = useState(null);
 
-    function getEstabelecimentos() {
+    async function getEstabelecimentos() {
         const url = CONSTANTS_ESTABELECIMENTOS.API_URL_GET_TODOS;
 
-        fetch(url, {
-            method: 'GET'
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                setEstabelecimentos(data);
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
-            });
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            setEstabelecimentos(resposta);
+        } else {
+            Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+        }
     }
 
     function deleteEstabelecimento(props) {

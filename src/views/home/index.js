@@ -11,6 +11,7 @@ import Item from '../../componentes/outros/item';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -108,54 +109,41 @@ export default function Index() {
 
     // Get categorias;
     const [categorias, setCategorias] = useState([]);
-    function getCategorias() {
+    async function getCategorias() {
         const url = CONSTANTS_CATEGORIAS.API_URL_GET_TODOS;
         // console.log(url);
 
-        fetch(url, {
-            method: 'GET'
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                setCategorias(data);
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado ao buscar as categorias<br/>Consulte o F12!', 5000);
-            });
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            setCategorias(resposta);
+        } else {
+            Aviso.error('Algo deu errado ao buscar as categorias<br/>Consulte o F12!', 5000);
+        }
     }
 
     // Get tipos de estabelecimentos;
     const [tiposEstabelecimentos, setTiposEstabelecimentos] = useState([]);
-    function getTiposEstabelecimentos() {
+    async function getTiposEstabelecimentos() {
         NProgress.start();
         setLoadingTiposEstabelecimentos(true);
         const url = CONSTANTS_TIPOS_ESTABELECIMENTOS.API_URL_GET_TODOS;
         // console.log(url);
 
-        fetch(url, {
-            method: 'GET'
-        })
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            // Filtrar array;
+            resposta = resposta.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 1); // Traficante;
+            resposta = resposta.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 14); // Sex shop;
+            resposta = resposta.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 20); // Motel;
+            resposta = resposta.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 23); // Bar;
+            // console.log(resposta);
 
-                // Filtrar array;
-                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 1); // Traficante;
-                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 14); // Sex shop;
-                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 20); // Motel;
-                data = data.filter(({ estabelecimentoTipoId }) => estabelecimentoTipoId !== 23); // Bar;
-                // console.log(data);
-
-                setTiposEstabelecimentos(data);
-                setLoadingTiposEstabelecimentos(false);
-                NProgress.done();
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado ao buscar os tipos de estabelecimentos<br/>Consulte o F12!', 5000);
-            });
+            setTiposEstabelecimentos(resposta);
+            setLoadingTiposEstabelecimentos(false);
+            NProgress.done();
+        } else {
+            Aviso.error('Algo deu errado ao buscar os tipos de estabelecimentos<br/>Consulte o F12!', 5000);
+        }
     }
 
     // Ao carregar página;

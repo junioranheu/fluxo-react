@@ -7,6 +7,7 @@ import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 
 export default function CriarConta() {
     const refNomeCompleto = useRef();
@@ -189,16 +190,7 @@ export default function CriarConta() {
         let isContinuar = true;
 
         // Verificar e-mail;
-        let response = await fetch(urlIsExisteEmail, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
-
-        let isJaExiste = await response.json();
-        // console.log(isContinuar);
+        let isJaExiste = await Fetch.getApi(urlIsExisteEmail);
 
         if (isJaExiste) {
             NProgress.done();
@@ -212,16 +204,7 @@ export default function CriarConta() {
 
         // Verificar nome de usuário;
         if (isContinuar) {
-            response = await fetch(urlIsExisteNomeUsuario, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            isJaExiste = await response.json();
-            // console.log(isContinuar);
+            isJaExiste = await Fetch.getApi(urlIsExisteNomeUsuario);
 
             if (isJaExiste) {
                 NProgress.done();
