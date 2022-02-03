@@ -1,4 +1,3 @@
-import { Aviso } from '../../componentes/outros/aviso';
 
 export const Fetch = {
     async getApi(url, token) {
@@ -21,7 +20,7 @@ export const Fetch = {
             const e = {
                 'url': url,
                 'token': token,
-                'erro': erro,
+                'erro': erro.message,
                 'data': new Date().toLocaleString()
             }
 
@@ -54,12 +53,12 @@ export const Fetch = {
                 'url': url,
                 'body': body,
                 'token': token,
-                'erro': erro,
+                'erro': erro.message,
                 'data': new Date().toLocaleString()
             }
 
             console.table(e);
-            Aviso.error('Houve uma falha na requisição POST ao servidor!', 5000);
+            // Aviso.error('Houve uma falha na requisição POST ao servidor!', 5000);
         }
 
         return respostaJson;
