@@ -1,12 +1,31 @@
+import { Aviso } from '../../componentes/outros/aviso';
 
-// Funções referentes à autenticação do usuário;
 export const Fetch = {
-    getApi(props) {
-        // console.log(props);
-       
+    async getApi(url, token) {
+        let respostaJson = '';
+        let headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+
+        try {
+            let resposta = await fetch(url, {
+                method: 'GET',
+                headers: headers
+            });
+
+            respostaJson = await resposta.json();
+            // console.log(respostaJson);
+        } catch (erro) {
+            console.log(erro);
+            Aviso.error('Houve uma falha na requisição ao servidor!', 5000);
+        }
+
+        return respostaJson;
     },
 
-    postApi(props){
+    postApi(props) {
 
     }
 }

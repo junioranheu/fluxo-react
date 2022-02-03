@@ -7,6 +7,7 @@ import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/fetch/fetch';
 
 export default function Index() {
     const refTxtNomeUsuario = useRef();
@@ -35,7 +36,7 @@ export default function Index() {
     };
 
     // Ao clicar no botão para entrar;
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         NProgress.start();
         e.preventDefault();
 
@@ -51,55 +52,36 @@ export default function Index() {
         // console.log(url);
 
         // Verificar se o login e a senha estão corretos;
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(data => data.json())
-            .then(data => {
-                // Após ser verificado, se estiver ok, continue o processo de login e geração de token;
-                // console.log(data);
-                getToken(formData.usuario, formData.senha, data);
-            })
-            .catch((error) => {
-                NProgress.done();
-                console.log(error);
-                refTxtSenha.current.value = '';
-                refTxtNomeUsuario.current.select();
-                Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
-            });
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            getToken(formData.usuario, formData.senha, resposta);
+        } else {
+            NProgress.done();
+            refTxtSenha.current.value = '';
+            formData.senha = '';
+            refTxtNomeUsuario.current.select();
+            Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
+        }
     };
 
-    function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {
+    async function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {
         const url = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
 
         // Gerar token;
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(data => data.json())
-            .then(data => {
-                // Inserir o token no json final para gravar localmente a sessão do login;
-                dadosUsuarioVerificado.token = data;
-                Auth.setUsuarioLogado(dadosUsuarioVerificado);
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            // Inserir o token no json final para gravar localmente a sessão do login;
+            dadosUsuarioVerificado.token = resposta;
+            Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
-                // Atribuir autenticação ao contexto de usuário;
-                setIsAuth(true);
+            // Atribuir autenticação ao contexto de usuário;
+            setIsAuth(true);
 
-                // Voltar à tela principal;
-                navigate('/', { replace: true });
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
-            });
+            // Voltar à tela principal;
+            navigate('/', { replace: true });
+        } else {
+            Aviso.error('Algo deu errado ao se autenticar!', 5000);
+        }
     }
 
     return (
