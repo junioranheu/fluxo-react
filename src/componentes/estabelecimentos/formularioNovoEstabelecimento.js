@@ -27,7 +27,7 @@ export default function FormularioNovoEstabelecimento(props) {
     };
 
     // Ao clicar no botão para criar;
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         e.preventDefault();
 
         const estabelecimento_a_ser_criado = {

@@ -35,7 +35,7 @@ export default function Index() {
     };
 
     // Ao clicar no botão para entrar;
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         NProgress.start();
         e.preventDefault();
 

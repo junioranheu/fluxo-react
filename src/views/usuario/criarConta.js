@@ -238,7 +238,7 @@ export default function CriarConta() {
     }
 
     // Ao clicar no botão para entrar;
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e) {
         NProgress.start();
         e.preventDefault();
 
