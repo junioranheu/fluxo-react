@@ -257,7 +257,35 @@ export default function CriarConta() {
             return false;
         }
 
-        console.log('criar conta aqui');
+        // Criar conta;
+        const urlCriarConta = CONSTANTS.API_URL_POST_CRIAR;
+        const usuario_a_ser_criado = {
+            'nomeCompleto': formData.nomeCompleto,
+            'email': formData.email,
+            'nomeUsuarioSistema': formData.nomeUsuario,
+            'senha': formData.senha,
+            'usuarioTipoId': 2, // Usuário comum;
+            'dataCriacao': new Date().toLocaleString(),
+            'foto': '',
+            'isAtivo': 1,
+            'isPremium': 0
+        };
+
+        fetch(urlCriarConta, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario_a_ser_criado)
+        })
+            .then(data => data.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+            });
     };
 
     function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {

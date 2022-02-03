@@ -11,6 +11,9 @@ no cmd, npx create-react-app nome-da-aplicacao
 para rodar a aplicação: npm start
 ao clonar o projeto para um novo local, os "módulos" não estarão instalados. deve-se rodar: npm install
 
+-- Router:
+npm install react-router-dom
+
 extensões úteis para instalar:
 - Bracket pair colorizer 2
 - Material icon theme
