@@ -30,66 +30,234 @@ export default function CriarConta() {
         });
     };
 
-    // Ao clicar no botão para entrar;
-    const handleSubmit = (e) => {
-        NProgress.start();
-        e.preventDefault();
+    function checarSenha(senha) {
+        var number = /([0-9])/;
+        var alphabets = /([a-zA-Z])/;
+        var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
 
-        if (!formData.nomeCompleto) {
+        if (senha.length < 6) {
+            Aviso.warn('Sua senha deve ter pelo menos 06 caracteres', 6000);
+            refSenha.current.select();
+            refSenha.current.value = '';
+            formData.senha = '';
+            return false;
+        } else {
+            if (senha.match(number) && senha.match(alphabets)) { // && senha.match(special_characters)
+                // Aviso.success('Sua senha é bem forte!', 6000);
+                return true;
+            } else {
+                Aviso.warn('Sua senha não é forte o suficiente<br/>Lembre-se de usar: letras e números!', 6000);
+                refSenha.current.select();
+                refSenha.current.value = '';
+                formData.senha = '';
+                return false;
+            }
+        }
+    }
+
+    function checarEmail(email) {
+        //var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var regex = /^([a-zA-Z0-9_.\-+])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (!regex.test(email)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function padronizarNomeCompletoUsuario(nome) {
+        // Trim o nome, já que o usuário pode colocar espaços a mais;
+        nome = nome.replace(/\s+/g, ' ').trim();
+
+        // Colocar letra maiúscula apenas nas primeiras letras, no nome;
+        nome = nome.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+            return letter.toUpperCase();
+        });
+
+        // Colocar todas as palavras do nome em um array;
+        var palavrasNome = nome.split(' ');
+
+        // Todas palavras que tiverem < 4 caracteres, faça toLowerCase();
+        // Por causa dos nomes "do, dos, da, das" e etc;
+        var nomeFormatado = '';
+        for (var i = 0; i < palavrasNome.length; i++) {
+            if (i === 0) {
+                if (palavrasNome[i].length < 4 && i > 0) {
+                    nomeFormatado = palavrasNome[i].toLowerCase();
+                } else {
+                    nomeFormatado = palavrasNome[i];
+                }
+            } else {
+                if (palavrasNome[i].length < 4 && i > 0) {
+                    nomeFormatado = nomeFormatado + ' ' + palavrasNome[i].toLowerCase();
+                } else {
+                    nomeFormatado = nomeFormatado + ' ' + palavrasNome[i];
+                }
+            }
+        }
+
+        nome = nomeFormatado;
+        return nome;
+    }
+
+    function verificarCampos() {
+        // Verificação 0;
+        if (!formData) {
             NProgress.done();
-            Aviso.error('Você deve preencher seu nome completo!', 5000);
-            refNomeCompleto.current.value = '';
+            Aviso.warn('Preencha os dados para criar sua conta', 5000);
             refNomeCompleto.current.select();
             return false;
         }
 
+        // Verificação do nome #1: nome preenchido?;
+        if (!formData.nomeCompleto) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar o seu nome', 5000);
+            refNomeCompleto.current.select();
+            return false;
+        }
+
+        // Verificação do nome #2: pelo menos 03 caracteres?;
+        if (formData.nomeCompleto.length < 3) {
+            NProgress.done();
+            Aviso.warn('Seu nome não pode ter menos de 03 caracteres!', 5000);
+            refNomeCompleto.current.select();
+            return false;
+        }
+
+        // Verificação do nome #3: se existe pelo menos um espaço (dois nomes), false = não;
+        var reg = new RegExp("(\\w+)(\\s+)(\\w+)");
+        if (reg.test(formData.nomeCompleto) === false) {
+            NProgress.done();
+            Aviso.warn(formData.nomeCompleto + ' é um belo nome, mas cadê seu sobrenome?', 5000);
+            refNomeCompleto.current.select();
+            return false;
+        }
+
+        // Verificação de e-mail #1: e-mail preenchido?;
         if (!formData.email) {
             NProgress.done();
-            Aviso.error('Você deve preencher seu e-mail!', 5000);
-            refEmail.current.value = '';
+            Aviso.warn('Parece que você esqueceu de colocar o seu e-mail', 5000);
             refEmail.current.select();
             return false;
         }
 
+        // Verificação de e-mail #2: e-mail válido?;
+        if (checarEmail(formData.email) === false) {
+            NProgress.done();
+            Aviso.warn('Parece que esse e-mail não é válido...', 5000);
+            refEmail.current.select();
+            return false;
+        }
+
+        // Verificação de nome de usuário #1: nome de usuário preenchido?;
         if (!formData.nomeUsuario) {
             NProgress.done();
-            Aviso.error('Você deve preencher seu nome de usuário!', 5000);
-            refNomeUsuario.current.value = '';
+            Aviso.warn('Parece que você esqueceu de colocar um nome de usuário (apelido que será utilizado no sistema)', 5000);
             refNomeUsuario.current.select();
             return false;
         }
 
+        // Verificação de nome de usuário #2: pelo menos 03 caracteres?;
+        if (formData.nomeUsuario.length > 20 || formData.nomeUsuario.length < 4) {
+            NProgress.done();
+            Aviso.warn('O nome de usuário não pode ter não pode ter menos de 4 e nem mais de 10 caracteres, e agora está com ' + formData.nomeUsuario.length + '!', 5000);
+            refNomeUsuario.current.select();
+            return false;
+        }
+
+        // Verificação de senha #1: senha preenchida?;
         if (!formData.senha) {
             NProgress.done();
-            Aviso.error('Você deve preencher com uma senha', 5000);
-            refSenha.current.value = '';
+            Aviso.warn('Parece que você esqueceu de colocar sua senha', 5000);
             refSenha.current.select();
             return false;
         }
 
-        const url = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${formData.usuario}&senha=${formData.senha}`;
-        // console.log(url);
+        // Verificação da senha #2: realizar uma série de verificações, se alguma retornar falso, aborte;
+        if (checarSenha(formData.senha) === false) {
+            return false;
+        }
 
-        // Verificar se o login e a senha estão corretos;
-        fetch(url, {
+        return true;
+    }
+
+    async function verificarEmailENomeUsuario(email, nomeUsuario) {
+        const urlIsExisteEmail = `${CONSTANTS.API_URL_GET_IS_EXISTE_EMAIL}?email=${email}`;
+        const urlIsExisteNomeUsuario = `${CONSTANTS.API_URL_GET_IS_EXISTE_NOME_USUARIO}?nomeUsuarioSistema=${nomeUsuario}`;
+        let isContinuar = true;
+
+        // Verificar e-mail;
+        let response = await fetch(urlIsExisteEmail, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             }
-        })
-            .then(data => data.json())
-            .then(data => {
-                // Após ser verificado, se estiver ok, continue o processo de login e geração de token;
-                // console.log(data);
-                getToken(formData.usuario, formData.senha, data);
-            })
-            .catch((error) => {
-                NProgress.done();
-                console.log(error);
-                refSenha.current.value = '';
-                Aviso.error('Algo deu errado ao criar sua conta!', 5000);
+        });
+
+        let isJaExiste = await response.json();
+        // console.log(isContinuar);
+
+        if (isJaExiste) {
+            NProgress.done();
+            Aviso.warn('Existe outro usuário que já está usando este e-mail!', 5000);
+            refEmail.current.select();
+            refSenha.current.value = '';
+            formData.senha = '';
+
+            isContinuar = false;
+        }
+
+        // Verificar nome de usuário;
+        if (isContinuar) {
+            response = await fetch(urlIsExisteNomeUsuario, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
             });
+
+            isJaExiste = await response.json();
+            // console.log(isContinuar);
+
+            if (isJaExiste) {
+                NProgress.done();
+                Aviso.warn('Existe outro usuário que já está usando este nome de usuário!', 5000);
+                refNomeUsuario.current.select();
+                refSenha.current.value = '';
+                formData.senha = '';
+
+                isContinuar = false;
+            }
+        }
+
+        return isContinuar;
+    }
+
+    // Ao clicar no botão para entrar;
+    const handleSubmit = async (e) => {
+        NProgress.start();
+        e.preventDefault();
+
+        // Verificações;
+        let isContinuarUm = verificarCampos();
+        if (!isContinuarUm) {
+            return false;
+        }
+
+        // Atribuir o nome formatado para a variavel nome, novamente;
+        formData.nomeCompleto = padronizarNomeCompletoUsuario(formData.nomeCompleto);
+
+        // Verificar se o processo deve continuar, caso e-mail e senha estejam disponíveis para uso;
+        let isContinuarDois = await verificarEmailENomeUsuario(formData.email, formData.nomeUsuario);
+        if (!isContinuarDois) {
+            return false;
+        }
+
+        console.log('criar conta aqui');
     };
 
     function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {
@@ -145,7 +313,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='email' name='email' onChange={handleChange} ref={refEmail}/>
+                    <input className='input' type='email' name='email' onChange={handleChange} ref={refEmail} />
                     <span className='icon is-small is-right'>
                         <i className='fas fa-envelope'></i>
                     </span>
