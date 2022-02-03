@@ -34,7 +34,7 @@ export default function CriarConta() {
     function checarSenha(senha) {
         var number = /([0-9])/;
         var alphabets = /([a-zA-Z])/;
-        var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+        // var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
 
         if (senha.length < 6) {
             Aviso.warn('Sua senha deve ter pelo menos 06 caracteres', 6000);
@@ -256,39 +256,34 @@ export default function CriarConta() {
 
         let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
         if (resposta) {
-            console.log('Ok: ' + resposta);
+            // console.log('Ok: ' + resposta);
+            await getToken(formData.nomeUsuario, formData.senha);
         } else {
             Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
         }
     };
 
-    function getToken(nomeUsuario, senha, dadosUsuarioVerificado) {
-        const url = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+    async function getToken(nomeUsuario, senha) {
+        const urlDados = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+        let dadosUsuarioVerificado = await Fetch.getApi(urlDados);
 
         // Gerar token;
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(data => data.json())
-            .then(data => {
-                // Inserir o token no json final para gravar localmente a sessão do login;
-                dadosUsuarioVerificado.token = data;
-                Auth.setUsuarioLogado(dadosUsuarioVerificado);
+        const urlAutenticar = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+        let resposta = await Fetch.getApi(urlAutenticar);
 
-                // Atribuir autenticação ao contexto de usuário;
-                setIsAuth(true);
+        if (resposta) {
+            // Inserir o token no json final para gravar localmente a sessão do login;
+            dadosUsuarioVerificado.token = resposta;
+            Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
-                // Voltar à tela principal;
-                navigate('/', { replace: true });
-            })
-            .catch((error) => {
-                console.log(error);
-                Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
-            });
+            // Voltar à tela principal;
+            navigate('/', { replace: true });
+
+            // Atribuir autenticação ao contexto de usuário;
+            setIsAuth(true);
+        } else {
+            Aviso.error('Algo deu errado ao se autenticar!', 5000);
+        }
     }
 
     return (
