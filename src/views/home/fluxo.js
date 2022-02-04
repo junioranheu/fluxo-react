@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import Typewriter from 'typewriter-effect';
 import '../../css/landingPage/default.css';
 import '../../css/landingPage/style.css';
 import Hamburguer from '../../static/gifs/hamburguer.webp';
@@ -29,6 +30,19 @@ export default function Fluxo() {
         autoplay: true,
         autoplaySpeed: 5000
     };
+
+    function gerarTituloAleatorio() {
+        var items = [
+            'descobrir um novo bar',
+            'encontrar uma nova hambúrgueria',
+            'ir à uma nova balada',
+            'encontrar uma sorveteria',
+            'saber o que tem de bom no centro',
+            'descobrir onde !importantomprar o beck maneiro'
+        ];
+        var item = items[Math.floor(Math.random() * items.length)];
+        return item;
+    }
 
     return (
         <React.Fragment>
@@ -69,7 +83,7 @@ export default function Fluxo() {
                                 <div className='col-lg-8 col-md-7'>
                                     <div className='slider-product-content'>
                                         <h1 className='slider-title mb-10'>Talvez, <span>você</span>...</h1>
-                                        <p className='mb-25'>queira @titulo... tá esperando o quê?</p>
+                                        <p className='mb-25'>queira {gerarTituloAleatorio()}... tá esperando o quê?</p>
                                         <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
                                     </div>
                                 </div>
@@ -145,13 +159,20 @@ export default function Fluxo() {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-lg-6'>
-                            <div className='section-title pb-30'>
+                            <div className='section-title'>
                                 <h5 className='mb-15 sem-highlight'>!!!</h5>
                                 <h3 className='title mb-15'>Está perdido?</h3>
-                                <p>
-                                    Conheça sua cidade usando o {nomeApp}<br />
-                                    Descubra nov<span id='spanTypeWriter'><span className='Typewriter__wrapper'>ex</span><span className='Typewriter__cursor'>|</span></span>
-                                </p>
+
+                                Conheça sua cidade usando o {nomeApp}<br />
+
+                                <Typewriter
+                                    options={{
+                                        strings: ['Descubra novas hamburguerias', 'Descubra novos bares',
+                                            'Descubra novas sorveterias', 'Descubra novas cafeterias'],
+                                        autoStart: true,
+                                        loop: true,
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
