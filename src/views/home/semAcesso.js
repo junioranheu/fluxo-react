@@ -36,14 +36,14 @@ export default function SemAcesso() {
                             <div className='buttons is-centered'>
                                 <a className='button is-text' href='/'>Início</a>
 
-                                {(isAuth) && (
+                                {(!isAuth) && (
                                     <React.Fragment>
                                         <a className='button is-text' href='/entrar'>Entre</a>
-                                        <a className='button is-text' href='/'>Crie sua conta</a>
+                                        <a className='button is-text' href='/criar-conta'>Crie sua conta</a>
                                     </React.Fragment>
                                 )}
 
-                                <a className='button is-text' href='/'>Reportar problema</a>
+                                <a className='button is-text' href='/reportar-problema'>Reportar problema</a>
                             </div>
 
                             <p className='mt-3 text-muted small sem-highlight'>Ref: @codigoAleatorio @dt</p>
