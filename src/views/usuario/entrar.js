@@ -105,7 +105,7 @@ export default function Index() {
             <div className='field mt-5'>
                 <label className='label'>Nome de usuário ou e-mail</label>
                 <div className='control has-icons-right'>
-                    <input type='email' name='usuario' className='input' onChange={handleChange} ref={refTxtNomeUsuario} />
+                    <input type='email' name='usuario' className='input' onChange={handleChange} ref={refTxtNomeUsuario} onKeyPress={handleKeyPress} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-user'></i>
                     </span>
