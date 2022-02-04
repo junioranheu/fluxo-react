@@ -52,7 +52,7 @@ export default function Estabelecimento() {
 
             let resposta = await Fetch.getApi(url);
             if (resposta) {
-                const titulo = `Encontre ${resposta.genero} ${resposta.tipo.toLowerCase()} perfeit${resposta.genero}`;
+                const titulo = `Encontre ${resposta.genero} <span class='grifar'>${resposta.tipo.toLowerCase()}</span> perfeit${resposta.genero}`;
                 setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
                 document.title = 'Fluxo — ' + resposta.tipo;
 

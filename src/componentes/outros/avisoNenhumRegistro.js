@@ -6,7 +6,8 @@ export default function AvisoNenhumRegistro() {
         <div className='mt-4'>
             <div className='has-text-centered'>
                 <span>
-                    Nenhum registro foi encontrado com o filtro utilizado
+                    {/* Nenhum registro foi encontrado com o filtro utilizado */}
+                    Nenhum registro foi encontrado
                 </span>
             </div>
 
