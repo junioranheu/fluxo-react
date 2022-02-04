@@ -14,7 +14,6 @@ import './css/site.css';
 import './fonts/poppins.css';
 import { UsuarioProvider } from './utilidades/context/usuarioContext';
 
-
 ReactDOM.render(
     <React.StrictMode>
         <ToastContainer />

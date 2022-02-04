@@ -126,11 +126,11 @@ export default function Fluxo() {
                                     <img src={Top} className='borda' loading='lazy' width='1' height='1' alt='' />
                                 </div>
 
-                                <div className='product-content'>
+                                <div className='product-content sem-highlight'>
                                     <h4 className='content-title mb-15 fundo-texto'>Imagine um texto bem legal aqui!</h4>
 
                                     <a className='fundo-texto' href='/'>
-                                        Ver mais <i className='lni-chevron-right'></i>
+                                        <span className='fundo-text-span'>Ver mais <i className='lni-chevron-right'></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -142,11 +142,11 @@ export default function Fluxo() {
                                     <img src={Poze} className='borda' loading='lazy' width='1' height='1' alt='' />
                                 </div>
 
-                                <div className='product-content'>
+                                <div className='product-content sem-highlight'>
                                     <h4 className='content-title mb-15 fundo-texto'>Testando essa bagaça... 1, 2, 3...</h4>
 
                                     <a className='fundo-texto' href='/'>
-                                        Ver mais <i className='lni-chevron-right'></i>
+                                        <span className='fundo-text-span'>Ver mais <i className='lni-chevron-right'></i></span>
                                     </a>
                                 </div>
                             </div>
