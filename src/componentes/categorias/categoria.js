@@ -24,7 +24,7 @@ export default function Categoria(props) {
             props.onRemoverCategoria(selecionar);
         }
 
-        // Scroll/
+        // Scrollar;
         executeScroll();
     }
 
