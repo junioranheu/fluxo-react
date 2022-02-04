@@ -14,6 +14,7 @@ export default function CriarConta() {
     const refEmail = useRef();
     const refNomeUsuario = useRef();
     const refSenha = useRef();
+    const refBtnCriar = useRef();
 
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [formData, setFormData] = useState(null);
@@ -286,6 +287,12 @@ export default function CriarConta() {
         }
     }
 
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            refBtnCriar.current.click();
+        }
+    }
+
     return (
         <DivCentralizada isCentralizar={false}>
             <div className='has-text-centered mb-6'>
@@ -333,7 +340,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' name='senha' onChange={handleChange} ref={refSenha} />
+                    <input className='input' type='password' name='senha' onChange={handleChange} onKeyPress={handleKeyPress} ref={refSenha} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>
@@ -341,7 +348,7 @@ export default function CriarConta() {
             </div>
 
             <div className='has-text-centered mt-5'>
-                <input onClick={handleSubmit} type='button' className='button is-vcentered is-primary is-fullwidth' value='Entrar' />
+                <input ref={refBtnCriar} onClick={handleSubmit} type='button' className='button is-vcentered is-primary is-fullwidth' value='Entrar' />
             </div>
 
             <div className='has-text-centered mt-4'>

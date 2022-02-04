@@ -12,6 +12,7 @@ import { Fetch } from '../../utilidades/fetch/fetch';
 export default function Index() {
     const refTxtNomeUsuario = useRef();
     const refTxtSenha = useRef();
+    const refBtnEntrar = useRef();
 
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [formData, setFormData] = useState(null);
@@ -84,6 +85,12 @@ export default function Index() {
         }
     }
 
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            refBtnEntrar.current.click();
+        }
+    }
+
     return (
         <DivCentralizada isCentralizar={true}>
             <div className='has-text-centered mb-6'>
@@ -108,7 +115,7 @@ export default function Index() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input type='password' name='senha' className='input' onChange={handleChange} ref={refTxtSenha} />
+                    <input type='password' name='senha' className='input' onChange={handleChange} ref={refTxtSenha} onKeyPress={handleKeyPress} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>
@@ -116,7 +123,7 @@ export default function Index() {
             </div>
 
             <div className='has-text-centered mt-5'>
-                <input onClick={handleSubmit} type='button' className='button is-vcentered is-primary is-fullwidth' value='Entrar' />
+                <input ref={refBtnEntrar} onClick={handleSubmit} type='button' className='button is-vcentered is-primary is-fullwidth' value='Entrar' />
             </div>
 
             <div className='has-text-centered mt-4'>
