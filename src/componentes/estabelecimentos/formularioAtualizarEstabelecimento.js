@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CONSTANTS from '../../utilidades/const/constEstabelecimentos';
 import { Auth } from '../../utilidades/context/usuarioContext';
-import { Fetch } from '../../utilidades/fetch/fetch';
+import { Fetch } from '../../utilidades/utils/fetch';
 import { Aviso } from '../outros/aviso';
 
 export default function FormularioAtualizarEstabelecimento(props) {

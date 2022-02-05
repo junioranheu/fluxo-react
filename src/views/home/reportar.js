@@ -3,7 +3,7 @@ import { Aviso } from '../../componentes/outros/aviso';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS from '../../utilidades/const/constReports';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
-import { Fetch } from '../../utilidades/fetch/fetch';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Reportar() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;

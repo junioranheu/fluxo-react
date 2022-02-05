@@ -8,7 +8,6 @@ export default function TipoEstabelecimento(props) {
     let imagemDinamica = '';
     try {
         imagemDinamica = require('../../static/' + props.thumbnail);
-        // console.log('Ok');
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);

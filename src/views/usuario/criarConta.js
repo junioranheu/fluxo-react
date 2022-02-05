@@ -7,7 +7,7 @@ import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
-import { Fetch } from '../../utilidades/fetch/fetch';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function CriarConta() {
     const refNomeCompleto = useRef();

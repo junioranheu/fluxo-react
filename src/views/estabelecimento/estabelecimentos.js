@@ -8,7 +8,7 @@ import Item from '../../componentes/outros/item';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
-import { Fetch } from '../../utilidades/fetch/fetch';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Estabelecimento() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;

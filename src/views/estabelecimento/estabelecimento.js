@@ -1,14 +1,73 @@
-import React, { useState } from 'react';
+import NProgress from 'nprogress';
+import React, { useEffect, useState } from 'react';
+import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/avaliacao.css';
 import '../../css/comentario.css';
 import '../../css/mapa.css';
 import '../../css/perfilEstabelecimento.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import ImagemAvaliacao from '../../static/svg/avaliacao.svg';
+import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Estabelecimento() {
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
+    const padraoEstabelecimento = {
+        'estabelecimentoId': parametroTipoEstabelecimentoId,
+        'usuarioId': 0,
+        'usuarios': {
+            'nomeCompleto': '',
+            'email': '',
+            'nomeUsuarioSistema': ''
+        },
+        'nome': '',
+        'descricao': '',
+        'thumbnail': '',
+        'rua': '',
+        'numeroEndereco': '',
+        'cep': '',
+        'bairro': '',
+        'cidades': {
+            'nome': '',
+            'estados': {
+                'nome': '',
+                'sigla': '',
+            },
+        },
+        'avaliacao': 0
+    };
+    const [estabelecimento, setEstabelecimento] = useState(padraoEstabelecimento);
+
+    async function getDetalheEstabelecimento() {
+        NProgress.start();
+
+        // Pegar o parâmetro da URL;
+        const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
+
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            setEstabelecimento(resposta);
+            NProgress.done();
+        } else {
+            Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
+        }
+    }
+
+    // Ao carregar página;
+    useEffect(() => {
+        // Pegar os detalhes do estabelecimento;
+        getDetalheEstabelecimento();
+    }, []);
+
+    // Import dinâmico;
+    let imagemDinamica = '';
+    try {
+        imagemDinamica = require('../../static/' + estabelecimento.thumbnail);
+    } catch (err) {
+        // console.log('Imagem não existe');        
+        // console.log(err);
+    }
 
     return (
         <React.Fragment>
@@ -20,7 +79,7 @@ export default function Estabelecimento() {
                         <div className='profile-left flexbox-start'>
                             <div className='profile-picture-wrapper profile-picture-large flexbox'>
                                 <div className='profile-picture-inner flexbox'>
-                                    <img className='profile-picture' src='@thumbnail' onError={(event) => event.target.src = SemImagem} alt='Erro' />
+                                    <img className='profile-picture' src={imagemDinamica} onError={(event) => event.target.src = SemImagem} alt='Erro' />
                                 </div>
 
                                 <div className='profile-picture-background'></div>
@@ -32,8 +91,8 @@ export default function Estabelecimento() {
                         } */}
 
                                 <h3 className='profile-username flexbox'>
-                                    <span className='name'>@Model.Nome</span>
-                                    <span className='name-small cor-principal'><i className='fas fa-star'></i>&nbsp;@avaliacao</span>
+                                    <span className='name'>{estabelecimento.nome}</span>
+                                    <span className='name-small cor-principal'><i className='fas fa-star'></i>&nbsp;{estabelecimento.avaliacao}</span>
                                 </h3>
 
                                 <div className='profile-followers profile-followers-desk flexbox'>
@@ -44,7 +103,7 @@ export default function Estabelecimento() {
 
                                 <div className='profile-bio'>
                                     <p className='profile-bio-inner'>
-                                        <span className='line'>@Model.Descricao</span>
+                                        <span className='line'>{estabelecimento.descricao}</span>
                                     </p>
                                 </div>
                             </div>
@@ -71,9 +130,9 @@ export default function Estabelecimento() {
                     </div>
 
                     <div>
-                        Rua @Model.Rua.Replace('Rua', ''), @Model.NumeroEndereco<br />
-                        @Model.Bairro, @Model.Cidades.Nome — @Model.Cidades.Estados.Nome<br />
-                        CEP @Model.CEP
+                        Rua {estabelecimento.rua.replace('Rua', '')}, {estabelecimento.numeroEndereco}<br />
+                        {estabelecimento.bairro}, {estabelecimento.cidades.nome} — {estabelecimento.cidades.estados.nome}<br />
+                        CEP {estabelecimento.cep}
                     </div>
 
                     <div className='mt-3 sem-highlight' id='divMapa'>
@@ -87,7 +146,7 @@ export default function Estabelecimento() {
                 <div className='content-section'>
                     <div className='titulo-wrapper'>
                         <h1 className='titulo'>
-                            Avalie sua experiência — <span className='grifar'>@Model.Nome</span>
+                            Avalie sua experiência — <span className='grifar'>{estabelecimento.nome}</span>
                         </h1>
                     </div>
 
@@ -117,8 +176,8 @@ export default function Estabelecimento() {
                                         <svg width='360' height='15' fill='none' xmlns='http://www.w3.org/2000/svg'>
                                             <defs>
                                                 <linearGradient id='gradient' x1='1' y1='0' x2='0' y2='0'>
-                                                    <stop offset='0%' stop-color='#EAEEF4' />
-                                                    <stop offset='0%' stop-color='#ff5757' />
+                                                    <stop offset='0%' stopColor='#EAEEF4' />
+                                                    <stop offset='0%' stopColor='#ff5757' />
                                                 </linearGradient>
                                             </defs>
 

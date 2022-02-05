@@ -4,7 +4,7 @@ import FormularioNovoEstabelecimento from '../../componentes/estabelecimentos/fo
 import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import { Auth } from '../../utilidades/context/usuarioContext';
-import { Fetch } from '../../utilidades/fetch/fetch';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Index() {
     const [estabelecimentos, setEstabelecimentos] = useState([]);
