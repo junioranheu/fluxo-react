@@ -2,6 +2,7 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useState } from 'react';
 import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import { Aviso } from '../../componentes/outros/aviso';
+import Mapa from '../../componentes/outros/mapa';
 import Post from '../../componentes/posts/post';
 import '../../css/comentario.css';
 import '../../css/mapa.css';
@@ -188,8 +189,10 @@ export default function Estabelecimento() {
                         CEP {estabelecimento.cep}
                     </div>
 
-                    <div className='mt-3 sem-highlight' id='divMapa'>
-                        <div id='mapa' className='mapa'></div>
+                    <div className='mt-3 sem-highlight'>
+                        <div className='mapa'>
+                            <Mapa />
+                        </div>
                     </div>
                 </div>
             </section>
