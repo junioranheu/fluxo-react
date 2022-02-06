@@ -17,7 +17,6 @@ L.Icon.Default.mergeOptions({
 export default function Mapa(props) {
     const [prop] = useState(props['props']);
     // console.log(prop);
-    // const position = [-22.7272, -45.1199];
 
     // Ao carregar o componente, set a coordenada;
     const [coordenada, setCoordenada] = useState(null);
@@ -76,7 +75,7 @@ export default function Mapa(props) {
 
                 <Marker position={coordenada}>
                     <Popup>
-                        <span>{props.nomeEstabelecimento}</span>
+                        <span>{prop.nome}</span>
                     </Popup>
                 </Marker>
             </MapContainer>
