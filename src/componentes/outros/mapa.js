@@ -1,8 +1,10 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/mapa.css';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -13,21 +15,72 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function Mapa(props) {
-    const position = [-22.7272, -45.1199];
+    const [prop] = useState(props['props']);
+    // console.log(prop);
+    // const position = [-22.7272, -45.1199];
+
+    // Ao carregar o componente, set a coordenada;
+    const [coordenada, setCoordenada] = useState(null);
+    useEffect(() => {
+        async function getCoordenadas() {
+            const numeroEndereco = prop.numeroEndereco;
+            const rua = prop.rua;
+            const cidade = prop.cidades.nome;
+
+            if (!rua || !cidade) {
+                Aviso.warn('Houve um erro ao encontrar a localização desse estabelecimento no mapa!', 5000);
+                console.log('Rua: ' + rua + '. Cidade: ' + cidade);
+                return false;
+            }
+
+            const baseUrlNomatim = 'https://nominatim.openstreetmap.org/';
+            const urlPais = 'country=Brazil';
+            const urlCidade = 'city=' + cidade;
+            const urlRua = (numeroEndereco) ? ('street=' + numeroEndereco + ' ' + rua) : ('street=' + rua);
+            const urlFormato = 'format=json';
+            const urlParametrosNomatim = 'search?' + urlPais + '&' + urlCidade + '&' + urlRua + '&' + urlFormato;
+            const urlFinalNominatim = baseUrlNomatim + urlParametrosNomatim;
+            // console.log(urlFinalNominatim);
+
+            let resposta = await Fetch.getApi(urlFinalNominatim);
+            if (resposta) {
+                if (resposta[0]) {
+                    var latitude = resposta[0].lat;
+                    var longitude = resposta[0].lon;
+
+                    const coordenadaJson = [latitude, longitude];
+                    setCoordenada(coordenadaJson);
+                } else {
+                    Aviso.warn(`A rua "${rua.replace('Rua ', '')}" da cidade "${cidade}" não foi localizada no mapa!`, 5000);
+                }
+            } else {
+                Aviso.warn('Houve um erro ao encontrar a localização desse estabelecimento no mapa!', 5000);
+            }
+        }
+
+        getCoordenadas();
+    }, []);
+
+    // Enquanto não finalizar o "coordenada"...
+    if (!coordenada) {
+        return null;
+    }
 
     return (
-        <MapContainer center={position} zoom={14} scrollWheelZoom={true} className='mapa'>
-            <TileLayer
-                // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        <div className='mt-3 sem-highlight'>
+            <MapContainer center={coordenada} zoom={14} scrollWheelZoom={true} className='mapa'>
+                <TileLayer
+                    // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
 
-            <Marker position={position}>
-                <Popup>
-                    <span>{props.nomeEstabelecimento}</span>
-                </Popup>
-            </Marker>
-        </MapContainer>
+                <Marker position={coordenada}>
+                    <Popup>
+                        <span>{props.nomeEstabelecimento}</span>
+                    </Popup>
+                </Marker>
+            </MapContainer>
+        </div>
     );
 }
 

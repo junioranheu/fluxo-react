@@ -187,9 +187,10 @@ export default function Estabelecimento() {
                         CEP {estabelecimento.cep}
                     </div>
 
-                    <div className='mt-3 sem-highlight'>
-                        <Mapa nomeEstabelecimento={estabelecimento.nome} />
-                    </div>
+                    {/* "usuarioId > 0" significa que todo o loading anterior foi finalizado */}
+                    {estabelecimento.usuarioId > 0 && (
+                        <Mapa props={estabelecimento} />
+                    )}
                 </div>
             </section>
 
