@@ -59,7 +59,7 @@ export default function Mapa(props) {
         }
 
         getCoordenadas();
-    }, []);
+    }, [prop.cidades.nome, prop.numeroEndereco, prop.rua]);
 
     // Enquanto não finalizar o "coordenada"...
     if (!coordenada) {
