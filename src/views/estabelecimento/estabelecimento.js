@@ -2,6 +2,7 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useState } from 'react';
 import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import { Aviso } from '../../componentes/outros/aviso';
+import Post from '../../componentes/posts/post';
 import '../../css/comentario.css';
 import '../../css/mapa.css';
 import '../../css/perfilEstabelecimento.css';
@@ -108,7 +109,14 @@ export default function Estabelecimento() {
         getPosts();
     }, [estabelecimento]);
 
-    console.log(posts);
+    // Ao carregar página, e depois que ter o valor em posts;
+    const [qtdPosts, setQtdPosts] = useState(0);
+    const [msgQtdPosts, setMsgQtdPosts] = useState('Posts');
+    useEffect(() => {
+        setQtdPosts(posts.length);
+        setMsgQtdPosts(qtdPosts > 1 || qtdPosts === 0 ? 'Posts' : 'Post');
+    }, [posts]);
+
 
     // Import dinâmico;
     let imagemDinamica = '';
@@ -129,7 +137,7 @@ export default function Estabelecimento() {
                         <div className='profile-left flexbox-start'>
                             <div className='profile-picture-wrapper profile-picture-large flexbox'>
                                 <div className='profile-picture-inner flexbox'>
-                                    <img className='profile-picture' src={imagemDinamica} onError={(event) => event.target.src = SemImagem} alt='Erro' />
+                                    <img className='profile-picture' src={imagemDinamica} onError={(event) => event.target.src = SemImagem} alt='' />
                                 </div>
 
                                 <div className='profile-picture-background'></div>
@@ -142,7 +150,7 @@ export default function Estabelecimento() {
                                 </h3>
 
                                 <div className='profile-followers profile-followers-desk flexbox'>
-                                    <p><span className='posts-amount'>@postsBd.Count()</span>Posts</p>
+                                    <p><span className='posts-amount'>{qtdPosts}</span> {msgQtdPosts}</p>
                                     <p><span className='followers-amount'>0</span>Seguidores</p>
                                     <p><span className='following-amount'>0</span>Seguindo</p>
                                 </div>
@@ -232,6 +240,17 @@ export default function Estabelecimento() {
                 </div>
 
                 {/* Posts */}
+                <div className='section-part mt-3'>
+                    <div className='content-part-line'>
+                        {
+                            posts.length > 0 && (
+                                posts.map((post) => (
+                                    <Post props={post} key={post.postId} />
+                                ))
+                            )
+                        }
+                    </div>
+                </div>
                 {/* if (postsBd.Count() > 0)
             {
                 <div className='section-part mt-3'>
