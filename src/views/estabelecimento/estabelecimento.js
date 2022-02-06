@@ -8,6 +8,7 @@ import '../../css/perfilEstabelecimento.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import CONSTANTS_AVALIACOES from '../../utilidades/const/constEstabelecimentosAvaliacoes';
+import CONSTANTS_POSTS from '../../utilidades/const/constPosts';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 
@@ -81,6 +82,33 @@ export default function Estabelecimento() {
         // Pegar as avaliações do estabelecimento;
         getAvaliacoes();
     }, []);
+
+    const [posts, setPosts] = useState([]);
+    async function getPosts() {
+        NProgress.start();
+
+        // Pegar o parâmetro da URL;
+        const donoEstabelecimentoUsuarioId = estabelecimento.usuarioId;
+        const tipoPostId = 2; // 2 = Estabelecimento;
+        const url = `${CONSTANTS_POSTS.API_URL_GET_POR_USUARIO_E_TIPO_POST_ID}?usuarioId=${donoEstabelecimentoUsuarioId}&tipoPostId=${tipoPostId}`;
+        // console.log(url);
+
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            setPosts(resposta);
+            NProgress.done();
+        } else {
+            Aviso.error('Algo deu errado ao consultar os posts do estabelecimento em questão!', 5000);
+        }
+    }
+
+    // Ao carregar página, e depois que ter o valor em estabelecimento;
+    useEffect(() => {
+        // Pegar os posts do estabelecimento;
+        getPosts();
+    }, [estabelecimento]);
+
+    console.log(posts);
 
     // Import dinâmico;
     let imagemDinamica = '';
