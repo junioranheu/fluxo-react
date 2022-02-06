@@ -20,6 +20,7 @@ export default function Estabelecimento() {
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
 
+    // Ao carregar página;
     const padraoEstabelecimento = {
         'estabelecimentoId': parametroTipoEstabelecimentoId,
         'usuarioId': 0,
@@ -45,67 +46,66 @@ export default function Estabelecimento() {
         'avaliacao': 0
     };
     const [estabelecimento, setEstabelecimento] = useState(padraoEstabelecimento);
-    async function getDetalheEstabelecimento() {
-        NProgress.start();
-
-        // Pegar o parâmetro da URL;
-        const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
-
-        let resposta = await Fetch.getApi(url);
-        if (resposta) {
-            setEstabelecimento(resposta);
-            NProgress.done();
-        } else {
-            Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
-        }
-    }
-
     const [avaliacoes, setAvaliacoes] = useState([]);
-    async function getAvaliacoes() {
-        NProgress.start();
-
-        // Pegar o parâmetro da URL;
-        const url = `${CONSTANTS_AVALIACOES.API_URL_GET_AVALIACOES_POR_ID}?id=${parametroTipoEstabelecimentoId}`;
-
-        let resposta = await Fetch.getApi(url);
-        if (resposta) {
-            setAvaliacoes(resposta);
-            NProgress.done();
-        } else {
-            Aviso.error('Algo deu errado ao consultar as avaliações do estabelecimento em questão!', 5000);
-        }
-    }
-
-    // Ao carregar página;
     useEffect(() => {
+        async function getDetalheEstabelecimento() {
+            NProgress.start();
+
+            // Pegar o parâmetro da URL;
+            const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
+
+            let resposta = await Fetch.getApi(url);
+            if (resposta) {
+                setEstabelecimento(resposta);
+                NProgress.done();
+            } else {
+                Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
+            }
+        }
+
+        async function getAvaliacoes() {
+            NProgress.start();
+
+            // Pegar o parâmetro da URL;
+            const url = `${CONSTANTS_AVALIACOES.API_URL_GET_AVALIACOES_POR_ID}?id=${parametroTipoEstabelecimentoId}`;
+
+            let resposta = await Fetch.getApi(url);
+            if (resposta) {
+                setAvaliacoes(resposta);
+                NProgress.done();
+            } else {
+                Aviso.error('Algo deu errado ao consultar as avaliações do estabelecimento em questão!', 5000);
+            }
+        }
+
         // Pegar os detalhes do estabelecimento;
         getDetalheEstabelecimento();
 
         // Pegar as avaliações do estabelecimento;
         getAvaliacoes();
-    }, []);
-
-    const [posts, setPosts] = useState([]);
-    async function getPosts() {
-        NProgress.start();
-
-        // Pegar o parâmetro da URL;
-        const donoEstabelecimentoUsuarioId = estabelecimento.usuarioId;
-        const tipoPostId = 2; // 2 = Estabelecimento;
-        const url = `${CONSTANTS_POSTS.API_URL_GET_POR_USUARIO_E_TIPO_POST_ID}?usuarioId=${donoEstabelecimentoUsuarioId}&tipoPostId=${tipoPostId}`;
-        // console.log(url);
-
-        let resposta = await Fetch.getApi(url);
-        if (resposta) {
-            setPosts(resposta);
-            NProgress.done();
-        } else {
-            Aviso.error('Algo deu errado ao consultar os posts do estabelecimento em questão!', 5000);
-        }
-    }
+    }, [parametroTipoEstabelecimentoId]);
 
     // Ao carregar página, e depois que ter o valor em estabelecimento;
+    const [posts, setPosts] = useState([]);
     useEffect(() => {
+        async function getPosts() {
+            NProgress.start();
+    
+            // Pegar o parâmetro da URL;
+            const donoEstabelecimentoUsuarioId = estabelecimento.usuarioId;
+            const tipoPostId = 2; // 2 = Estabelecimento;
+            const url = `${CONSTANTS_POSTS.API_URL_GET_POR_USUARIO_E_TIPO_POST_ID}?usuarioId=${donoEstabelecimentoUsuarioId}&tipoPostId=${tipoPostId}`;
+            // console.log(url);
+    
+            let resposta = await Fetch.getApi(url);
+            if (resposta) {
+                setPosts(resposta);
+                NProgress.done();
+            } else {
+                Aviso.error('Algo deu errado ao consultar os posts do estabelecimento em questão!', 5000);
+            }
+        }
+
         // Pegar os posts do estabelecimento;
         getPosts();
     }, [estabelecimento]);
@@ -116,8 +116,7 @@ export default function Estabelecimento() {
     useEffect(() => {
         setQtdPosts(posts.length);
         setMsgQtdPosts(qtdPosts > 1 || qtdPosts === 0 ? 'Posts' : 'Post');
-    }, [posts]);
-
+    }, [posts, qtdPosts]);
 
     // Import dinâmico;
     let imagemDinamica = '';
@@ -237,7 +236,7 @@ export default function Estabelecimento() {
                         Posts
                     </h1>
 
-                    <a className='titulo-link cor-principal-hover'>
+                    <a className='titulo-link cor-principal-hover' href={() => false}>
                         Ver mais
                     </a>
                 </div>

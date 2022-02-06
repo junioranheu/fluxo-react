@@ -5,6 +5,7 @@ import '../../css/avaliacao.css';
 export default function Avaliacao(props) {
     // console.log(props);
     const [prop] = useState(props['props']);
+    const [perfilUsuarioComentario] = useState(`/perfil/@${prop.usuarios.nomeUsuarioSistema}`);
 
     function segundosParaDHMS(seconds) {
         seconds = Number(seconds);
@@ -13,10 +14,10 @@ export default function Avaliacao(props) {
         var m = Math.floor(seconds % 3600 / 60);
         var s = Math.floor(seconds % 60);
 
-        var dDisplay = d > 0 ? d + (d == 1 ? ' dia' : ' dias') : '';
-        var hDisplay = h > 0 ? h + (h == 1 ? ' hora' : ' horas') : '';
-        var mDisplay = m > 0 ? m + (m == 1 ? ' minuto' : ' minutos') : '';
-        var sDisplay = s > 0 ? s + (s == 1 ? ' segundo' : ' segundos') : '';
+        var dDisplay = d > 0 ? d + (d === 1 ? ' dia' : ' dias') : '';
+        var hDisplay = h > 0 ? h + (h === 1 ? ' hora' : ' horas') : '';
+        var mDisplay = m > 0 ? m + (m === 1 ? ' minuto' : ' minutos') : '';
+        var sDisplay = s > 0 ? s + (s === 1 ? ' segundo' : ' segundos') : '';
 
         var retorno = '';
         if (dDisplay) {
@@ -43,7 +44,7 @@ export default function Avaliacao(props) {
             <div className='media-comment'>
                 <div className='media-comment-body'>
                     <div className='media-option'>
-                        <a className='ripple-grow' href={() => false} data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                        <a className='ripple-grow' href={() => false}>
                             <svg className='ripple-icon' width='28' height='28' xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 24 24'>
                                 <g fill='currentColor'>
                                     <circle cx='5' cy='12' r='2'></circle>
@@ -55,7 +56,7 @@ export default function Avaliacao(props) {
                     </div>
 
                     <div className='media-comment-data-person'>
-                        <a className='media-comment-name' href='${urlPerfil}' target='_blank'>
+                        <a className='media-comment-name' href={perfilUsuarioComentario} target='_blank' rel='noreferrer'>
                             @{prop.usuarios.nomeUsuarioSistema}
                         </a>
                         <span className='text-muted'>Nota {prop.avaliacao}, {dataAvaliacaoFinal}</span>
