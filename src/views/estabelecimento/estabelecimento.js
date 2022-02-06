@@ -5,7 +5,6 @@ import { Aviso } from '../../componentes/outros/aviso';
 import Mapa from '../../componentes/outros/mapa';
 import Post from '../../componentes/posts/post';
 import '../../css/comentario.css';
-import '../../css/mapa.css';
 import '../../css/perfilEstabelecimento.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
@@ -90,13 +89,13 @@ export default function Estabelecimento() {
     useEffect(() => {
         async function getPosts() {
             NProgress.start();
-    
+
             // Pegar o parâmetro da URL;
             const donoEstabelecimentoUsuarioId = estabelecimento.usuarioId;
             const tipoPostId = 2; // 2 = Estabelecimento;
             const url = `${CONSTANTS_POSTS.API_URL_GET_POR_USUARIO_E_TIPO_POST_ID}?usuarioId=${donoEstabelecimentoUsuarioId}&tipoPostId=${tipoPostId}`;
             // console.log(url);
-    
+
             let resposta = await Fetch.getApi(url);
             if (resposta) {
                 setPosts(resposta);
@@ -189,9 +188,7 @@ export default function Estabelecimento() {
                     </div>
 
                     <div className='mt-3 sem-highlight'>
-                        <div className='mapa'>
-                            <Mapa />
-                        </div>
+                        <Mapa nomeEstabelecimento={estabelecimento.nome} />
                     </div>
                 </div>
             </section>
