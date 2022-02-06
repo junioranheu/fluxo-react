@@ -7,6 +7,7 @@ import Post from '../../componentes/posts/post';
 import '../../css/comentario.css';
 import '../../css/perfilEstabelecimento.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
+import ImagemTriste from '../../static/svg/triste-1.svg';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import CONSTANTS_AVALIACOES from '../../utilidades/const/constEstabelecimentosAvaliacoes';
 import CONSTANTS_POSTS from '../../utilidades/const/constPosts';
@@ -250,50 +251,21 @@ export default function Estabelecimento() {
                             )
                         }
                     </div>
-                </div>
-                {/* if (postsBd.Count() > 0)
-            {
-                <div className='section-part mt-3'>
-                    <div className='content-part-line'>
-                        <!-- Com posts -->
-                        @foreach (var p in postsBd.Where(a => a.IsAtivo == 1))
-                        {
-                            // string semImagem = '/static/outro/cinza.webp';
-                            string semImagem = '/static/outro/smile.webp';
-                            string midia = (!String.IsNullOrEmpty(p.Midia)) ? ('/static/' + p.Midia) : semImagem;
 
-                            <a className='image-wrapper'>
-                                <div className='image-overlay'>
-                                    <div className='image-info'>
-                                        <div className='image-info-text'>
-                                            <h5 className='image-name medium cor-principal'>@p.Titulo</h5>
-                                            <p className='image-subtext tiny'>@Html.Raw(p.Conteudo)</p>
-                                        </div>
+                    {
+                        posts.length === 0 && (
+                            <React.Fragment>
+                                <p>Esse estabelecimento ainda não tem posts</p>
 
-                                        @*<button className='btn-play'></button>*@
-                                    </div>
+                                <div className='mt-2'>
+                                    <figure className='image is-256x256 has-image-centered sem-highlight'>
+                                        <img src={ImagemTriste} alt='' />
+                                    </figure>
                                 </div>
-
-                                <img src='@midia' loading='lazy' width='1' height='1' onerror='this.src='@semImagem';' />
-                                <span className='image-icone'>
-                                    <i className='far fa-smile' title='Post #@p.PostId'></i>
-                                </span>
-                            </a>
-                        }
-                    </div>
+                            </React.Fragment>
+                        )
+                    }
                 </div>
-            }
-            else
-            {
-                <p>Esse estabelecimento ainda não tem posts</p>
-
-                <div className='mt-4'>
-                    <figure className='image is-256x256 has-image-centered sem-highlight'>
-                        <img src='/static/svg/triste-1.svg'>
-                    </figure>
-                </div>
-            } 
-            </section>*/}
             </section>
         </React.Fragment >
     );
