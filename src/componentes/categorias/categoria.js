@@ -7,7 +7,7 @@ export default function Categoria(props) {
     const [isSelecionado, setIsSelecionado] = useState(false);
 
     // Scroll categorias;
-    const executeScroll = () => referenciaScroll.current.scrollIntoView({ behavior: 'smooth', });
+    const executeScroll = () => referenciaScroll.current.scrollIntoView({ behavior: 'smooth' });
     const referenciaScroll = useRef(null);
 
     function selecionarCategoria(props) {
