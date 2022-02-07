@@ -119,9 +119,7 @@ export default function Estabelecimento() {
         setQtdPosts(posts.length);
         setMsgQtdPosts(qtdPosts > 1 || qtdPosts === 0 ? 'Posts' : 'Post');
 
-        if (posts.length) {
-            setLoadingPosts(false);
-        }
+        setLoadingPosts(false);
     }, [posts, qtdPosts]);
 
     // Import dinâmico;
@@ -148,7 +146,7 @@ export default function Estabelecimento() {
     }, []);
 
     return (
-        <React.Fragment>
+        <div className='animate__animated animate__fadeIn animate__delay-1s'>
             {/* #01 - Perfil */}
             {
                 estabelecimento.usuarioId > 0 ? (
@@ -319,7 +317,7 @@ export default function Estabelecimento() {
                     }
                 </div>
             </section>
-        </React.Fragment >
+        </div >
     );
 }
 
