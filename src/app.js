@@ -10,6 +10,7 @@ import Politica from './views/home/politica';
 import Reportar from './views/home/reportar';
 import SemAcesso from './views/home/semAcesso';
 import Sobre from './views/home/sobre';
+import Teste from './views/home/teste';
 import CriarConta from './views/usuario/criarConta';
 import Entrar from './views/usuario/entrar';
 
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <Routes>
       <Route path='/' element={<Inicio />} />
+      <Route path='/teste' element={<Teste />} />
       <Route path='/fluxo' element={<Fluxo />} />
       <Route path='/sobre' element={<Sobre />} />
       <Route path='/politica-e-termos-de-uso' element={<Politica />} />
