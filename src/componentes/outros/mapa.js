@@ -50,7 +50,9 @@ export default function Mapa(props) {
                     const coordenadaJson = [latitude, longitude];
                     setCoordenada(coordenadaJson);
                 } else {
-                    Aviso.warn(`A rua "${rua.replace('Rua ', '')}" da cidade "${cidade}" não foi localizada no mapa!`, 5000);
+                    const msgNaoEncontrado = `A rua "${rua.replace('Rua ', '')}" da cidade "${cidade}" não foi localizada no mapa!`;
+                    console.log(msgNaoEncontrado);
+                    // Aviso.warn(msgNaoEncontrado, 5000);
                 }
             } else {
                 Aviso.warn('Houve um erro ao encontrar a localização desse estabelecimento no mapa!', 5000);
