@@ -110,6 +110,11 @@ export default function Estabelecimento() {
 
         // Pegar os posts do estabelecimento;
         getPosts();
+
+        if (estabelecimento.nome.length > 0) {
+            // Título da página;
+            document.title = 'Fluxo — ' + estabelecimento.nome;
+        }
     }, [estabelecimento]);
 
     // Ao carregar página, e depois que ter o valor em posts;
