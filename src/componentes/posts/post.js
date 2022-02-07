@@ -17,7 +17,7 @@ export default function Post(props) {
 
     return (
         <React.Fragment>
-            <a className='image-wrapper' href={() => false}>
+            <a className='image-wrapper sem-highlight' href={() => false}>
                 <div className='image-overlay'>
                     <div className='image-info'>
                         <div className='image-info-text'>

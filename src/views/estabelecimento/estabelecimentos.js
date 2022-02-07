@@ -64,10 +64,7 @@ export default function Estabelecimento() {
 
         async function getEstabelecimentos() {
             NProgress.start();
-            setLoadingEstabelecimentos(true);
-
             const cidadeIdUsuarioLogado = (isAuth ? Auth.getUsuarioLogado().cidadeId : 0);
-
             const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_TIPO_ID_MAIS_SIGLA_ESTADO_USUARIO}?id=${parametroTipoEstabelecimentoId}&cidadeIdUsuarioLogado=${cidadeIdUsuarioLogado}`;
             // console.log(url);
 
@@ -107,7 +104,7 @@ export default function Estabelecimento() {
     }
 
     // Pegar o width do #ref={divLoadingTiposEstabelecimentos} para saber o width dos ShimmerThumbnail;
-    const [loadingEstabelecimentos, setLoadingEstabelecimentos] = useState(false);
+    const [loadingEstabelecimentos, setLoadingEstabelecimentos] = useState(true);
     const [widthLoadingTiposEstabelecimentos, setWidthLoadingEstabelecimentos] = useState(0);
     useEffect(() => {
         // Pegar o width da div pai do loading dos tipos de estabelecimentos;

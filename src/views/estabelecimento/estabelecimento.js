@@ -1,5 +1,6 @@
 import NProgress from 'nprogress';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ShimmerCircularImage, ShimmerText, ShimmerThumbnail } from 'react-shimmer-effects';
 import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import { Aviso } from '../../componentes/outros/aviso';
 import Mapa from '../../componentes/outros/mapa';
@@ -89,6 +90,7 @@ export default function Estabelecimento() {
     const [posts, setPosts] = useState([]);
     useEffect(() => {
         async function getPosts() {
+            setLoadingPosts(true);
             NProgress.start();
 
             // Pegar o parâmetro da URL;
@@ -116,6 +118,10 @@ export default function Estabelecimento() {
     useEffect(() => {
         setQtdPosts(posts.length);
         setMsgQtdPosts(qtdPosts > 1 || qtdPosts === 0 ? 'Posts' : 'Post');
+
+        if (posts.length) {
+            setLoadingPosts(false);
+        }
     }, [posts, qtdPosts]);
 
     // Import dinâmico;
@@ -127,51 +133,73 @@ export default function Estabelecimento() {
         // console.log(err);
     }
 
+    // Pegar o width do #ref={divLoadingPosts} para saber o width dos ShimmerThumbnail;
+    const divLoadingPosts = useRef(null);
+    const [loadingPosts, setLoadingPosts] = useState(false);
+    const [widthLoadingPosts, setWidthLoadingPosts] = useState(0);
+    useEffect(() => {
+        // Pegar o width da div pai do loading dos tipos de estabelecimentos;
+        const widthdivLoading = divLoadingPosts.current ? divLoadingPosts.current.offsetWidth : 0;
+        const qtdDivsMostradas = 4;
+        const widthRespaldo = 15;
+        const wl = (widthdivLoading / qtdDivsMostradas) - widthRespaldo;
+        // console.log(wl);
+        setWidthLoadingPosts(wl);
+    }, []);
+
     return (
         <React.Fragment>
             {/* #01 - Perfil */}
-            <div className='profile-top'>
-                <div className='profile-info flexbox'>
-                    <div className='profile-info-inner view-width flexbox-space-bet-start'>
-                        {/* Esquerda do perfil */}
-                        <div className='profile-left flexbox-start'>
-                            <div className='profile-picture-wrapper profile-picture-large flexbox'>
-                                <div className='profile-picture-inner flexbox'>
-                                    <img className='profile-picture' src={imagemDinamica} onError={(event) => event.target.src = SemImagem} alt='' />
+            {
+                estabelecimento.usuarioId > 0 ? (
+                    <div className='profile-top'>
+                        <div className='profile-info flexbox'>
+                            <div className='profile-info-inner view-width flexbox-space-bet-start'>
+                                {/* Esquerda do perfil */}
+                                <div className='profile-left flexbox-start'>
+                                    <div className='profile-picture-wrapper profile-picture-large flexbox'>
+                                        <div className='profile-picture-inner flexbox'>
+                                            <img className='profile-picture' src={imagemDinamica} onError={(event) => event.target.src = SemImagem} alt='' />
+                                        </div>
+
+                                        <div className='profile-picture-background'></div>
+                                    </div>
+
+                                    <div className='profile-username-wrapper flexbox-col-start'>
+                                        <h3 className='profile-username flexbox'>
+                                            <span className='name'>{estabelecimento.nome}</span>
+                                            <span className='name-small cor-principal'><i className='fas fa-star'></i>&nbsp;{(estabelecimento.avaliacao > 0 ? estabelecimento.avaliacao : 'Sem avaliação')}</span>
+                                        </h3>
+
+                                        <div className='profile-followers profile-followers-desk flexbox'>
+                                            <p><span className='posts-amount'>{qtdPosts}</span> {msgQtdPosts}</p>
+                                            <p><span className='followers-amount'>0</span>Seguidores</p>
+                                            <p><span className='following-amount'>0</span>Seguindo</p>
+                                        </div>
+
+                                        <div className='profile-bio'>
+                                            <p className='profile-bio-inner'>
+                                                <span className='line'>{estabelecimento.descricao}</span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className='profile-picture-background'></div>
-                            </div>
-
-                            <div className='profile-username-wrapper flexbox-col-start'>
-                                <h3 className='profile-username flexbox'>
-                                    <span className='name'>{estabelecimento.nome}</span>
-                                    <span className='name-small cor-principal'><i className='fas fa-star'></i>&nbsp;{(estabelecimento.avaliacao > 0 ? estabelecimento.avaliacao : 'Sem avaliação')}</span>
-                                </h3>
-
-                                <div className='profile-followers profile-followers-desk flexbox'>
-                                    <p><span className='posts-amount'>{qtdPosts}</span> {msgQtdPosts}</p>
-                                    <p><span className='followers-amount'>0</span>Seguidores</p>
-                                    <p><span className='following-amount'>0</span>Seguindo</p>
-                                </div>
-
-                                <div className='profile-bio'>
-                                    <p className='profile-bio-inner'>
-                                        <span className='line'>{estabelecimento.descricao}</span>
-                                    </p>
-                                </div>
+                                {/* Direita do perfil */}
+                                {(usuarioId === estabelecimento.usuarioId) && (
+                                    <div className='profile-right flexbox-start'>
+                                        <input type='button' className='button is-small is-primary is-rounded' value='Editar perfil' />
+                                    </div>
+                                )}
                             </div>
                         </div>
-
-                        {/* Direita do perfil */}
-                        {(usuarioId === estabelecimento.usuarioId) && (
-                            <div className='profile-right flexbox-start'>
-                                <input type='button' className='button is-small is-primary is-rounded' value='Editar perfil' />
-                            </div>
-                        )}
                     </div>
-                </div>
-            </div>
+                ) : (
+                    <div className='has-text-centered'>
+                        <ShimmerCircularImage size={250} />
+                    </div>
+                )
+            }
 
             {/* <#02 - Localização e mapa */}
             <section className='mt-6'>
@@ -182,11 +210,20 @@ export default function Estabelecimento() {
                         </h1>
                     </div>
 
-                    <div>
-                        Rua {estabelecimento.rua.replace('Rua', '')}, {estabelecimento.numeroEndereco}<br />
-                        {estabelecimento.bairro}, {estabelecimento.cidades.nome} — {estabelecimento.cidades.estados.nome}<br />
-                        CEP {estabelecimento.cep}
-                    </div>
+                    {
+                        estabelecimento.usuarioId > 0 && (
+                            <div>
+                                Rua {estabelecimento.rua.replace('Rua', '')}, {estabelecimento.numeroEndereco}<br />
+                                {estabelecimento.bairro}, {estabelecimento.cidades.nome} — {estabelecimento.cidades.estados.nome}<br />
+                                CEP {estabelecimento.cep}
+                            </div>
+                        )
+                    }
+
+                    {/* Loading */}
+                    {loadingPosts && (
+                        <ShimmerText line={5} gap={10} />
+                    )}
 
                     {/* "usuarioId > 0" significa que todo o loading anterior foi finalizado */}
                     {estabelecimento.usuarioId > 0 && (
@@ -225,6 +262,11 @@ export default function Estabelecimento() {
                             ))
                         )
                     }
+
+                    {/* Loading */}
+                    {loadingPosts && (
+                        <ShimmerText line={5} gap={10} />
+                    )}
                 </div>
             </section>
 
@@ -242,18 +284,28 @@ export default function Estabelecimento() {
 
                 {/* Posts */}
                 <div className='section-part mt-3'>
-                    <div className='content-part-line'>
+                    <div className='content-part-line' ref={divLoadingPosts}>
                         {
-                            posts.length > 0 && (
+                            posts.length > 0 && !loadingPosts && (
                                 posts.map((post) => (
                                     <Post props={post} key={post.postId} />
                                 ))
                             )
                         }
+
+                        {/* Loading */}
+                        {loadingPosts && (
+                            <React.Fragment>
+                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                            </React.Fragment>
+                        )}
                     </div>
 
                     {
-                        posts.length === 0 && (
+                        posts.length === 0 && !loadingPosts && (
                             <React.Fragment>
                                 <p>Esse estabelecimento ainda não tem posts</p>
 
