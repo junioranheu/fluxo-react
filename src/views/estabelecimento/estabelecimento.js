@@ -4,6 +4,7 @@ import { ShimmerCircularImage, ShimmerText, ShimmerThumbnail } from 'react-shimm
 import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import { Aviso } from '../../componentes/outros/aviso';
 import Mapa from '../../componentes/outros/mapa';
+import ModalPost from '../../componentes/posts/modalPost';
 import Post from '../../componentes/posts/post';
 import '../../css/comentario.css';
 import '../../css/perfilEstabelecimento.css';
@@ -150,6 +151,12 @@ export default function Estabelecimento() {
         setWidthLoadingPosts(wl);
     }, []);
 
+    // Ao clicar em um post, abra o detalhamento deste;
+    const [propsModalDetalhamentoPost, setPropsModalDetalhamentoPost] = useState([]);
+    function abrirModalDetalhamentoPost(prop) {
+        setPropsModalDetalhamentoPost(prop);
+    }
+
     return (
         <div className='animate__animated animate__fadeIn animate__delay-1s'>
             {/* #01 - Perfil */}
@@ -291,7 +298,7 @@ export default function Estabelecimento() {
                         {
                             posts.length > 0 && !loadingPosts && (
                                 posts.map((post) => (
-                                    <Post props={post} key={post.postId} />
+                                    <Post props={post} onClicarPost={() => abrirModalDetalhamentoPost(post)} key={post.postId} />
                                 ))
                             )
                         }
@@ -322,6 +329,11 @@ export default function Estabelecimento() {
                     }
                 </div>
             </section>
+
+            {/* Quando algum post for clicado, exiba seu detalhamento */}
+            {propsModalDetalhamentoPost.postId > 0 && (
+                <ModalPost props={propsModalDetalhamentoPost} propsModalAberto={setPropsModalDetalhamentoPost}/>
+            )}
         </div >
     );
 }
