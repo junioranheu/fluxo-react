@@ -147,7 +147,7 @@ export default function Reportar() {
                                             <hr />
                                         </div>
 
-                                        <div className='has-text-centered'>
+                                        <div className='has-text-centered mt-6'>
                                             <a className='button is-primary' href='/'>Voltar ao início</a>
                                         </div>
                                     </div>
