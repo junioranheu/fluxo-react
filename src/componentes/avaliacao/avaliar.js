@@ -1,12 +1,75 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import '../../css/avaliar.css';
 import ImgAvaliacao from '../../static/svg/avaliacao.svg';
 
 export default function Avaliar() {
+    const [valorSlider, setValorSlider] = useState(60);
+    const [isMostrarAvaliar, setIsMostrarAvaliar] = useState(false);
+    const [classeRange, setClasseRange] = useState('good');
+    const [gradientGrey, setGradientGrey] = useState('0');
+    const [gradientStop, setGradientStop] = useState('');
+
+    let colorBad = '#ff5722';
+    let colorOk = '#3f51b5';
+    let colorGood = '#36d896';
+    let colorGreat = 'var(--cor-principal)';
+
+    useEffect(() => {
+        checkSliderValue();
+    }, []);
+
+    function handleChangeSlider(e) {
+        let valorSlider = e.target.value;
+        setValorSlider(valorSlider);
+        setIsMostrarAvaliar(true);
+        checkSliderValue();
+    }
+
+    function checkSliderValue() {
+        setGradientGrey((100 - valorSlider));
+
+        if (valorSlider > 0 && valorSlider <= 25) {
+            setClasseRange('bad');
+            setGradientStop(colorBad);
+            // refRange.closest('.row').classList.add('bad');
+            // refRange.closest('.row').classList.remove('ok', 'great', 'good');
+            // refGradientStop.setAttribute('stopColor', colorBad);
+        }
+
+        if (valorSlider > 25 && valorSlider <= 50) {
+            setClasseRange('ok');
+            setGradientStop(colorOk);
+            // refRange.closest('.row').classList.add('ok');
+            // refRange.closest('.row').classList.remove('bad', 'great', 'good');
+            // refGradientStop.setAttribute('stopColor', colorOk);
+        }
+
+        if (valorSlider > 50 && valorSlider <= 75) {
+            setClasseRange('good');
+            setGradientStop(colorGood);
+            // refRange.closest('.row').classList.add('good');
+            // refRange.closest('.row').classList.remove('ok', 'great', 'bad');
+            // refGradientStop.setAttribute('stopColor', colorGood);
+        }
+
+        if (valorSlider > 75 && valorSlider <= 100) {
+            setClasseRange('great');
+            setGradientStop(colorGreat);
+            // refRange.closest('.row').classList.add('great');
+            // refRange.closest('.row').classList.remove('ok', 'bad', 'good');
+            // refGradientStop.setAttribute('stopColor', colorGreat);
+        }
+    }
+
+    function hadleCancelarAvaliacao() {
+        setValorSlider(60);
+        setIsMostrarAvaliar(false);
+    }
+
     return (
         <div className='columns'>
             <div className='column is-half'>
-                <div className='row'>
+                <div className={`row ${classeRange}`}>
                     <div className='icon'>
                         <svg id='icon-bad' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 103.696 103.695'>
                             <path d='M75.835,72.818c0.656,1.521-0.043,3.287-1.563,3.945s-3.286-0.043-3.944-1.563c-2.894-6.688-9.729-11.013-17.42-11.013 c-7.869,0-14.748,4.32-17.523,11.006c-0.48,1.152-1.596,1.85-2.771,1.852c-0.385,0-0.773-0.074-1.15-0.23 c-1.531-0.637-2.256-2.393-1.619-3.922c3.709-8.933,12.764-14.703,23.064-14.703C62.993,58.189,71.993,63.932,75.835,72.818z M28.452,36.484c-0.676-1.176-0.27-2.676,0.906-3.351l9.045-5.196c1.176-0.674,2.676-0.268,3.352,0.907 c0.676,1.176,0.27,2.676-0.906,3.351l-9.045,5.194C30.626,38.065,29.126,37.66,28.452,36.484z M42.487,36.59 c1.688,1.689,1.688,4.429,0,6.115c-1.688,1.688-4.426,1.688-6.117-0.002c-1.688-1.688-1.688-4.426,0-6.113 C38.059,34.901,40.797,34.901,42.487,36.59z M57.188,21.907c0.121-1.35,1.312-2.347,2.662-2.226l10.391,0.934 c1.35,0.121,2.348,1.313,2.225,2.664c-0.121,1.351-1.312,2.347-2.664,2.225l-10.389-0.933 C58.063,24.45,57.065,23.256,57.188,21.907z M68.28,36.519c1.688,1.688,1.688,4.426,0,6.113c-1.691,1.69-4.43,1.69-6.117,0.002 c-1.688-1.687-1.688-4.426,0-6.115C63.852,34.829,66.59,34.829,68.28,36.519z M85.465,103.695H18.23 C8.178,103.695,0,95.518,0,85.465V18.23C0,8.177,8.179,0,18.23,0h67.235c10.053,0,18.229,8.178,18.229,18.23v67.235 C103.696,95.518,95.518,103.695,85.465,103.695z M18.23,8.577c-5.322,0-9.652,4.33-9.652,9.652v67.234 c0,5.322,4.33,9.652,9.652,9.652h67.235c5.321,0,9.651-4.33,9.651-9.652V18.23c0-5.322-4.33-9.652-9.651-9.652L18.23,8.577 L18.23,8.577z' />
@@ -29,20 +92,20 @@ export default function Avaliar() {
                         <svg width='360' height='15' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <defs>
                                 <linearGradient id='gradient' x1='1' y1='0' x2='0' y2='0'>
-                                    <stop id='gradient-grey' offset='0%' stop-color='#EAEEF4' />
-                                    <stop id='gradient-stop' offset='0%' stop-color='#ff5757' />
+                                    <stop offset={`${gradientGrey}%`} stopColor='#EAEEF4' />
+                                    <stop offset='0%' stopColor={`${gradientStop}`} />
                                 </linearGradient>
                             </defs>
 
                             <path d='M0 7.65377C0 6.22069 1.1207 5.01982 2.5 5L177.5 2.5L352.776 0.000723075C356.75 -0.0563631 360 3.27402 360 7.40212C360 11.5262 356.756 14.855 352.786 14.8037L177.5 13L2.5 10.5C1.11931 10.4821 0 9.08826 0 7.65377Z' fill='url(#gradient)' />
                         </svg>
 
-                        <input type='range' min='0' max='100' value='60' className='slider' />
-                        <p id='spanNotaAvaliacao'></p>
+                        <input type='range' min='0' max='100' value={valorSlider} className='slider' onChange={(e) => handleChangeSlider(e)} />
+                        <p>Nota {(valorSlider / 20)}</p>
                     </div>
                 </div>
 
-                <div className='mt-6 esconder' id='divAvaliacaoComentario'>
+                <div className={`mt-6 ${isMostrarAvaliar ? '' : 'esconder'}`} id='divAvaliacaoComentario'>
                     <div className='field'>
                         <div className='control'>
                             <textarea className='textarea'
@@ -52,13 +115,13 @@ export default function Avaliar() {
                     </div>
 
                     <div className='has-text-centered'>
-                        <input type='button' className='button' id='btnCancelarAvaliacao' value='Cancelar' />
-                        <input type='button' className='button is-primary' id='btnEnviarAvaliacao' value='Enviar avaliação' />
+                        <input type='button' className='button' value='Cancelar' onClick={() => hadleCancelarAvaliacao()} />
+                        <input type='button' className='button is-primary ml-2' value='Enviar avaliação' />
                     </div>
                 </div>
             </div>
 
-            <div className='column is-hidden-mobile esconder' id='divAvaliacaoSvg'>
+            <div className={`column is-hidden-mobile ${isMostrarAvaliar ? '' : 'esconder'}`}>
                 <figure className='image is-256x256 has-image-centered sem-highlight'>
                     <img src={ImgAvaliacao} alt='' />
                 </figure>
