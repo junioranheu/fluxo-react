@@ -1,4 +1,4 @@
-.divEfeitoFooter{background-color:var(--cor-principal)!important;height:5px}
+.divEfeitoFooter{background-color:var(--cor-principal)!important;height: 5px !important;}
 .divEspacoFooter{margin-bottom:200px!important}
 .padding-right-50{padding-right:50px}
 .site-footer{background-color:var(--cor-preto);padding:45px 0 20px;font-size:15px;line-height:24px;color:#737373;z-index:1;position:relative}
