@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import SemImagemSmile from '../../static/outro/smile.webp';
 
 export default function ModalPost(props) {
@@ -18,7 +19,7 @@ export default function ModalPost(props) {
         props.propsModalAberto([]);
     }
 
-    return (
+    return ReactDOM.createPortal(
         <div className='modal is-active sem-highlight'>
             <div className='modal-background' onClick={() => fecharModal()}></div>
 
@@ -32,7 +33,7 @@ export default function ModalPost(props) {
                                 <h5 className='image-subtext cor-preto medium'><span dangerouslySetInnerHTML={{ __html: prop.conteudo }}></span></h5>
                             </div>
                         </div>
-                        
+
                         {
                             imagemDinamica && (
                                 <div className='imagem-modal'>
@@ -45,7 +46,8 @@ export default function ModalPost(props) {
             </div>
 
             <button className='modal-close is-large' aria-label='close' onClick={() => fecharModal()}></button>
-        </div>
+        </div>,
+        document.getElementById('rootModal') // React portals: https://www.pluralsight.com/guides/how-to-get-a-component-from-anywhere-in-an-app-using-react
     );
 }
 
