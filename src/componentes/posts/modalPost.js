@@ -26,11 +26,13 @@ export default function ModalPost(props) {
                 <section className='modal-card-body'>
                     <div className='modal-padding'>
                         <div>
-                            <h5 className='image-name medium has-text-centered cor-principal'><span dangerouslySetInnerHTML={{ __html: prop.titulo }}></span></h5>
+                            <h4 className='image-name large has-text-centered cor-principal'><span dangerouslySetInnerHTML={{ __html: prop.titulo }}></span></h4>
                             <hr />
-                            <h5 className='image-subtext cor-preto medium'><span dangerouslySetInnerHTML={{ __html: prop.conteudo }}></span></h5>
+                            <div className='pt-3 pb-3'>
+                                <h5 className='image-subtext cor-preto medium'><span dangerouslySetInnerHTML={{ __html: prop.conteudo }}></span></h5>
+                            </div>
                         </div>
-
+                        
                         {
                             imagemDinamica && (
                                 <div className='imagem-modal'>
@@ -42,7 +44,7 @@ export default function ModalPost(props) {
                 </section>
             </div>
 
-            <button className='modal-close is-large' aria-label='close'></button>
+            <button className='modal-close is-large' aria-label='close' onClick={() => fecharModal()}></button>
         </div>
     );
 }

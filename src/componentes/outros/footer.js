@@ -5,9 +5,8 @@ export default function Footer() {
     return (
         <React.Fragment>
             {/* Espaço pro footer */}
-            <div id="divEspacoFooter"></div>
-
-            <div id='divEfeitoFooter' className='pl-6 pr-6 mt-6'></div>
+            <div className='divEspacoFooter'></div>
+            <div className='divEfeitoFooter' className='pl-6 pr-6 mt-6'></div>
 
             {/* Foter */}
             <footer className='site-footer sem-highlight'>

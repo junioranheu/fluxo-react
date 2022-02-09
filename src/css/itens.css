@@ -37,7 +37,8 @@
 100%{transform:translatey(0)}
 }
 .image-icone{position:absolute;z-index:1;border-radius:10px;padding:4px 12px;background-color:rgba(139,156,163,.5);font-size:10px;right:12px;top:12px;color:#fff}
-.image-icone:hover{color:var(--cor-principal);transition:.3s ease-in}
+.image-icone:hover,.image-icone-esquerda:hover{color:var(--cor-principal);transition:.3s ease-in}
+.image-icone-esquerda{position:absolute;z-index:1;border-radius:10px;padding:4px 12px;background-color:rgba(139,156,163,.5);font-size:10px;left:12px;top:12px;color:#fff}
 .btn-play{border-radius:50%;background-color:#fff;border:none;box-shadow:0 2px 6px 0 rgba(136,148,171,.2),0 24px 20px -24px rgba(71,82,107,.1);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%2322244a' stroke='%2322244a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-play'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'/%3E%3C/svg%3E");background-position:center;background-repeat:no-repeat;width:40px;height:40px;flex-shrink:0}
 @media screen and (min-width:850px) and (max-width:1042px){
 .access-icon{padding:16px}
