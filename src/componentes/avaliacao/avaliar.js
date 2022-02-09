@@ -93,7 +93,7 @@ export default function Avaliar() {
                             </svg>
 
                             <input type='range' value={valorSlider} className='slider' onChange={(e) => handleChangeSlider(e)} />
-                            <p>Nota {(valorSlider / 20)}</p>
+                            <p className='teste'>Nota {(valorSlider / 20)}</p>
                         </div>
                     </div>
 
