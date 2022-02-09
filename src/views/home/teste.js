@@ -1,8 +1,6 @@
 import NProgress from 'nprogress';
 import React, { useEffect, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
-import '../../css/comentario.css';
-import '../../css/perfilEstabelecimento.css';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import { Fetch } from '../../utilidades/utils/fetch';
 

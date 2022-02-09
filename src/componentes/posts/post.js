@@ -1,6 +1,5 @@
 import moment from 'moment';
 import React, { useState } from 'react';
-import '../../css/avaliacao.css';
 import SemImagemSmile from '../../static/outro/smile.webp';
 
 export default function Post(props) {

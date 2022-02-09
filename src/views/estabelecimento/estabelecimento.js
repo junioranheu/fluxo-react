@@ -2,11 +2,11 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ShimmerCircularImage, ShimmerText, ShimmerThumbnail } from 'react-shimmer-effects';
 import Avaliacao from '../../componentes/avaliacao/avaliacoes';
+import Avaliar from '../../componentes/avaliacao/avaliar';
 import { Aviso } from '../../componentes/outros/aviso';
 import Mapa from '../../componentes/outros/mapa';
 import ModalPost from '../../componentes/posts/modalPost';
 import Post from '../../componentes/posts/post';
-import '../../css/comentario.css';
 import '../../css/perfilEstabelecimento.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import ImagemTriste from '../../static/svg/triste-1.svg';
@@ -158,7 +158,7 @@ export default function Estabelecimento() {
     }
 
     return (
-        <div className='animate__animated animate__fadeIn animate__delay-1s'>
+        <div className='animate__animated animate__fadeIn animate__delay-1sxxx'>
             {/* #01 - Perfil */}
             {
                 estabelecimento.usuarioId > 0 ? (
@@ -252,6 +252,7 @@ export default function Estabelecimento() {
                     </div>
 
                     <div className='card-avaliacao'>
+                        <Avaliar />
                     </div>
                 </div>
             </section>
@@ -332,7 +333,7 @@ export default function Estabelecimento() {
 
             {/* Quando algum post for clicado, exiba seu detalhamento */}
             {propsModalDetalhamentoPost.postId > 0 && (
-                <ModalPost props={propsModalDetalhamentoPost} propsModalAberto={setPropsModalDetalhamentoPost}/>
+                <ModalPost props={propsModalDetalhamentoPost} propsModalAberto={setPropsModalDetalhamentoPost} />
             )}
         </div >
     );

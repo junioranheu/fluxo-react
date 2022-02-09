@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useState } from 'react';
-import '../../css/avaliacao.css';
+import '../../css/ultimasAvaliacoes.css';
 
 export default function Avaliacao(props) {
     // console.log(props);

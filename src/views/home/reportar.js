@@ -127,7 +127,7 @@ export default function Reportar() {
                                                 <div className='control'>
                                                     <label className='checkbox'>
                                                         <input type='checkbox' onChange={handleOnChangeCheckBox} checked={isCheckChecado} />
-                                                        <span> Eu concordo com os <a href='/politica-e-termos-de-uso' target='_blank' className='cor-principal'>termos e condições de uso</a></span>
+                                                        <span>&nbsp;Eu concordo com os <a href='/politica-e-termos-de-uso' target='_blank' className='cor-principal'>termos e condições de uso</a></span>
                                                     </label>
                                                 </div>
                                             </div>
