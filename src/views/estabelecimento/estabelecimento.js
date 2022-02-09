@@ -251,9 +251,7 @@ export default function Estabelecimento() {
                         </h1>
                     </div>
 
-                    <div className='card-avaliacao'>
-                        <Avaliar />
-                    </div>
+                    <Avaliar />
                 </div>
             </section>
 

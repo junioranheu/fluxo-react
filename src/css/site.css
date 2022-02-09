@@ -68,12 +68,6 @@ textarea:focus{box-shadow:none!important;border:1px solid var(--cor-principal)!i
 .grifar{background-image:linear-gradient(120deg,#f6f5f5 10%,var(--cor-principal) 100%);background-repeat:no-repeat;background-size:100% .2em;background-position:0 88%;transition:background-size .25s ease-in}
 .grifar:hover{background-size:100% 88%}
 h1,h2,h3,h4,h5,h6{margin:0}
-/* h1{font-size:var(--heading-large)}
-h2{font-size:var(--heading-medium)}
-h3{font-size:var(--heading-small)}
-h4{font-size:calc(var(--heading-small) - .2rem)}
-h5{font-size:calc(var(--heading-small) - .4rem)}
-h6{font-size:calc(var(--heading-small) - .6rem)} */
 h1,h2{font-weight:900}
 h3,h4,h5,h6{font-weight:800}
 .Toastify__toast-container{width:max-content;display:inline-block}
@@ -81,3 +75,4 @@ h3,h4,h5,h6{font-weight:800}
 .animate__animated.delay13{-webkit-animation-delay:1.3s;animation-delay:1.3s;-webkit-animation-delay:calc(1s*1.3);animation-delay:calc(1s*1.3)}
 .animate__animated.delay15{-webkit-animation-delay:1.5s;animation-delay:1.5s;-webkit-animation-delay:calc(1s*1.5);animation-delay:calc(1s*1.5)}
 .animate__animated.delay19{-webkit-animation-delay:1.9s;animation-delay:1.9s;-webkit-animation-delay:calc(1s*1.9);animation-delay:calc(1s*1.9)}
+.sem-drag{pointer-events:none!important}
