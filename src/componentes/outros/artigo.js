@@ -50,8 +50,8 @@ export default function Artigo(props) {
                                             <img src='' className='author-image' onError={(event) => event.target.src = SemImagem} alt='Erro' />
                                         </div>
 
-                                        <div className='media-content has-text-centered'>
-                                            {/* <h2 className='mt-4 title is-3'>xxx</h2> */}
+                                        <div className='media-content has-text-centered mt-4'>
+                                            <h2 className='mt-4 title is-3'>.</h2>
 
                                             <p className='subtitle is-6 article-subtitle mt-1'>
                                                 <a href={`/perfil/${props.nomeUsuarioPostador}`} className='cor-principal'>{props.nomeUsuarioPostador}</a> {props.dataPost}
