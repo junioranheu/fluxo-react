@@ -6,7 +6,7 @@ export default function Avaliar() {
     const [valorSlider, setValorSlider] = useState(60);
     const [isMostrarAvaliar, setIsMostrarAvaliar] = useState(false);
     const [classeRange, setClasseRange] = useState('good');
-    const [gradientGrey, setGradientGrey] = useState('0');
+    const [gradientGrey, setGradientGrey] = useState(0);
     const [gradientStop, setGradientStop] = useState('');
 
     let colorBad = '#ff5722';
@@ -55,6 +55,9 @@ export default function Avaliar() {
     function hadleCancelarAvaliacao() {
         setValorSlider(60);
         setIsMostrarAvaliar(false);
+        setGradientGrey(40);
+        setClasseRange('good');
+        setGradientStop(colorGood);
     }
 
     return (
@@ -92,8 +95,8 @@ export default function Avaliar() {
                                 <path d='M0 7.65377C0 6.22069 1.1207 5.01982 2.5 5L177.5 2.5L352.776 0.000723075C356.75 -0.0563631 360 3.27402 360 7.40212C360 11.5262 356.756 14.855 352.786 14.8037L177.5 13L2.5 10.5C1.11931 10.4821 0 9.08826 0 7.65377Z' fill='url(#gradient)' />
                             </svg>
 
-                            <input type='range' value={valorSlider} className='slider' onChange={(e) => handleChangeSlider(e)} />
-                            <p className='teste'>Nota {(valorSlider / 20)}</p>
+                            <input type='range' value={valorSlider} onChange={(e) => handleChangeSlider(e)} />
+                            <p>Nota {(valorSlider / 20)}</p>
                         </div>
                     </div>
 
