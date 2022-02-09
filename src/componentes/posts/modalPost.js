@@ -25,7 +25,7 @@ export default function ModalPost(props) {
             <div className='modal-content' style={{ maxWidth: '80vh' }}>
                 <section className='modal-card-body'>
                     <div className='modal-padding'>
-                        <div className='image-info-text'>
+                        <div>
                             <h5 className='image-name medium has-text-centered cor-principal'><span dangerouslySetInnerHTML={{ __html: prop.titulo }}></span></h5>
                             <hr />
                             <h5 className='image-subtext cor-preto medium'><span dangerouslySetInnerHTML={{ __html: prop.conteudo }}></span></h5>
