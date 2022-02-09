@@ -267,10 +267,14 @@ export default function Estabelecimento() {
                     </div>
 
                     {
-                        avaliacoes.length > 0 && (
+                        avaliacoes.length > 0 ? (
                             avaliacoes.map((avaliacao) => (
                                 <Avaliacao props={avaliacao} key={avaliacao.estabelecimentoAvaliacaoId} />
                             ))
+                        ) : (
+                            <div>
+                                Não existem avaliações para esse estabelecimento ainda
+                            </div>
                         )
                     }
 
@@ -294,30 +298,32 @@ export default function Estabelecimento() {
                 </div>
 
                 {/* Posts */}
-                <div className='section-part mt-3'>
-                    <div className='content-part-line' ref={divLoadingPosts}>
-                        {
-                            posts.length > 0 && !loadingPosts && (
-                                posts.map((post) => (
-                                    <Post props={post} onClicarPost={() => abrirModalDetalhamentoPost(post)} key={post.postId} />
-                                ))
-                            )
-                        }
+                <div className='section-part'>
+                    {
+                        posts.length > 0 && !loadingPosts && (
+                            <div className='content-part-line mt-3' ref={divLoadingPosts}>
+                                {
+                                    posts.map((post) => (
+                                        <Post props={post} onClicarPost={() => abrirModalDetalhamentoPost(post)} key={post.postId} />
+                                    ))
+                                }
+                            </div>
+                        )
+                    }
 
-                        {/* Loading */}
-                        {loadingPosts && (
-                            <React.Fragment>
-                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
-                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
-                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
-                                <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
-                            </React.Fragment>
-                        )}
-                    </div>
+                    {/* Loading */}
+                    {loadingPosts && (
+                        <React.Fragment>
+                            <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                            <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                            <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                            <ShimmerThumbnail height={widthLoadingPosts} width={widthLoadingPosts} className='m-0' rounded />
+                        </React.Fragment>
+                    )}
 
                     {
                         posts.length === 0 && !loadingPosts && (
-                            <React.Fragment>
+                            <div>
                                 <p>Esse estabelecimento ainda não tem posts</p>
 
                                 <div className='mt-2'>
@@ -325,7 +331,7 @@ export default function Estabelecimento() {
                                         <img src={ImagemTriste} alt='' />
                                     </figure>
                                 </div>
-                            </React.Fragment>
+                            </div>
                         )
                     }
                 </div>
