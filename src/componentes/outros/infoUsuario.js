@@ -7,7 +7,7 @@ export default function InfoUsuario() {
     return (
         <code className='mt-4' style={{ borderRadius: 10, padding: 20 }}>
             <span>
-                isLogado: {isAuth.toString()}
+                Logado? {isAuth ? '👍' : '👎'}
             </span>
 
             {(isAuth) && (
@@ -24,7 +24,7 @@ export default function InfoUsuario() {
                     <br />
                     <span>Cidade: {Auth.getUsuarioLogado().cidadeNome}</span>
                     <br />
-                    <span>Token: {Auth.getUsuarioLogado().token.substring(0, 15)}...</span>
+                    <span>Token: {Auth.getUsuarioLogado().token.substring(0, 30)}...</span>
                 </div>
             )}
         </code>
