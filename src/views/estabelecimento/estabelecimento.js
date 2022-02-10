@@ -214,7 +214,7 @@ export default function Estabelecimento() {
                 )
             }
 
-            {/* <#02 - Localização e mapa */}
+            {/* #02 - Localização e mapa */}
             <section className='mt-6'>
                 <div className='content-section'>
                     <div className='titulo-wrapper'>
@@ -245,52 +245,48 @@ export default function Estabelecimento() {
                 </div>
             </section>
 
-            {/* Teste */}
+            {/* #03 - Avaliações e Avaliar */}
             <section className='mt-6'>
-                <div className='columns'>
+                <div className='columns content-section'>
                     <div className='column is-half'>
-                        {/* #04 - Avaliações */}
-                        <div className='content-section'>
-                            <div className='titulo-wrapper'>
-                                <h1 className='titulo'>
-                                    Últimas avaliações
-                                </h1>
-                            </div>
-
-                            {
-                                avaliacoes.length > 0 ? (
-                                    avaliacoes.map((avaliacao) => (
-                                        <Avaliacao props={avaliacao} key={avaliacao.estabelecimentoAvaliacaoId} />
-                                    ))
-                                ) : (
-                                    <div>
-                                        Não existem avaliações para esse estabelecimento ainda
-                                    </div>
-                                )
-                            }
-
-                            {/* Loading */}
-                            {loadingPosts && (
-                                <ShimmerText line={5} gap={10} />
-                            )}
+                        {/* #03.1 - Avaliações */}
+                        <div className='titulo-wrapper'>
+                            <h1 className='titulo'>
+                                Últimas avaliações
+                            </h1>
                         </div>
+
+                        {
+                            avaliacoes.length > 0 ? (
+                                avaliacoes.map((avaliacao) => (
+                                    <Avaliacao props={avaliacao} key={avaliacao.estabelecimentoAvaliacaoId} />
+                                ))
+                            ) : (
+                                <div>
+                                    Não existem avaliações para esse estabelecimento ainda
+                                </div>
+                            )
+                        }
+
+                        {/* Loading */}
+                        {loadingPosts && (
+                            <ShimmerText line={5} gap={10} />
+                        )}
                     </div>
 
                     <div className='column'>
-                        {/* #03 - Avalie */}
-                        <div className='content-section'>
-                            <div className='titulo-wrapper'>
-                                <h1 className='titulo'>
-                                    Avalie sua experiência — <span className='grifar'>{estabelecimento.nome}</span>
-                                </h1>
-                            </div>
-
-                            {
-                                estabelecimento.usuarioId > 0 && (
-                                    <Avaliar props={estabelecimento} estabelecimentoId={parametroTipoEstabelecimentoId} avaliacoes={buscarAvaliacoesNovamente} />
-                                )
-                            }
+                        {/* #03.2 - Avaliar */}
+                        <div className='titulo-wrapper'>
+                            <h1 className='titulo'>
+                                Avalie sua experiência — <span className='grifar'>{estabelecimento.nome}</span>
+                            </h1>
                         </div>
+
+                        {
+                            estabelecimento.usuarioId > 0 && (
+                                <Avaliar props={estabelecimento} estabelecimentoId={parametroTipoEstabelecimentoId} avaliacoes={buscarAvaliacoesNovamente} />
+                            )
+                        }
                     </div>
                 </div>
             </section>
