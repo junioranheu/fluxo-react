@@ -1,7 +1,11 @@
 import NProgress from 'nprogress';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/avaliar.css';
 import ImgAvaliacao from '../../static/svg/avaliacao.svg';
+import CONSTANTS from '../../utilidades/const/constEstabelecimentosAvaliacoes';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Avaliar(props) {
     // console.log(props);
@@ -11,7 +15,17 @@ export default function Avaliar(props) {
     const [classeRange, setClasseRange] = useState('good');
     const [gradientGrey, setGradientGrey] = useState(0);
     const [gradientStop, setGradientStop] = useState('');
+    const [nota, setNota] = useState(0);
 
+    // Auth;
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
+
+    // Refs;
+    const refTextAreaComentario = useRef();
+    const refBotaoEnviarAvaliacao = useRef();
+
+    // Cores;
     const colorBad = '#ff5722';
     const colorOk = '#3f51b5';
     const colorGood = '#36d896';
@@ -33,6 +47,7 @@ export default function Avaliar(props) {
 
     function checkSliderValue() {
         setGradientGrey((100 - valorSlider));
+        setNota((valorSlider / 20));
 
         if (valorSlider > 0 && valorSlider <= 25) {
             setClasseRange('bad');
@@ -63,7 +78,13 @@ export default function Avaliar(props) {
         setGradientStop(colorGood);
     }
 
-    const [formData, setFormData] = useState(null);
+    const formDataPadrao = {
+        'estabelecimentoId': 0,
+        'usuarioId': 0,
+        'comentario': '',
+        'avaliacao': ''
+    };
+    const [formData, setFormData] = useState(formDataPadrao);
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -75,25 +96,45 @@ export default function Avaliar(props) {
         NProgress.start();
 
         // Verificações;
-        console.log(formData);
-        return false;
+        if (!usuarioId) {
+            NProgress.done();
+            Aviso.warn('Entre em sua conta antes de enviar uma avaliação', 5000);
+            return false;
+        }
 
-        // // Avaliar;
-        // const url = CONSTANTS.API_URL_POST_AVALIAR;
-        // const avaliacao = {
-        //     'estabelecimentoId': formData.nomeCompleto,
-        //     'usuarioId': formData.email,
-        //     'comentario': formData.nomeUsuario,
-        //     'avaliacao': formData.senha,
-        //     'data': new Date().toLocaleString(),
-        // };
+        if (!formData.comentario) {
+            NProgress.done();
+            Aviso.warn('Preencha com algum comentário, antes de enviar sua avaliação', 5000);
+            refTextAreaComentario.current.select();
+            return false;
+        }
 
-        // let resposta = await Fetch.postApi(url, avaliacao);
-        // if (resposta) {
-        //     console.log('Ok: ' + resposta);
-        // } else {
-        //     Aviso.error('Algo deu errado ao avaliar<br/>Consulte o F12!', 5000);
-        // }
+        formData.avaliacao = nota;
+        formData.estabelecimentoId = props.estabelecimentoId;
+        formData.usuarioId = usuarioId;
+        // console.log(formData);
+
+        // Avaliar;
+        const url = CONSTANTS.API_URL_POST_AVALIAR;
+        const token = Auth.getUsuarioLogado().token;
+        // console.log(token);
+        const avaliacao = {
+            'estabelecimentoId': formData.estabelecimentoId,
+            'usuarioId': formData.usuarioId,
+            'comentario': formData.comentario,
+            'avaliacao': formData.avaliacao,
+            'data': new Date().toLocaleString(),
+        };
+
+        let resposta = await Fetch.postApi(url, avaliacao, token);
+        if (resposta) {
+            Aviso.success('Avaliação enviada com sucesso', 5000);
+            refBotaoEnviarAvaliacao.current.disabled = true;
+            refTextAreaComentario.current.value = '';
+            props.avaliacoes();
+        } else {
+            Aviso.error('Algo deu errado ao avaliar<br/>Consulte o F12!', 5000);
+        }
     }
 
     return (
@@ -132,20 +173,20 @@ export default function Avaliar(props) {
                             </svg>
 
                             <input type='range' value={valorSlider} onChange={(e) => handleChangeSlider(e)} />
-                            <p>Nota {(valorSlider / 20)}</p>
+                            <p>Nota {nota}</p>
                         </div>
                     </div>
 
                     <div className={`mt-6 ${isMostrarAvaliar ? 'animate__animated animate__fadeIn' : 'esconder'}`}>
                         <div className='field'>
                             <div className='control'>
-                                <textarea name='comentario' onChange={handleChange} className='textarea' placeholder={`Detalhe sua avaliação do estabelecimento "${prop.nome}" aqui...`} style={{ resize: 'none' }}></textarea>
+                                <textarea ref={refTextAreaComentario} name='comentario' onChange={handleChange} className='textarea' placeholder={`Detalhe sua avaliação do estabelecimento "${prop.nome}" aqui...`} style={{ resize: 'none' }}></textarea>
                             </div>
                         </div>
 
                         <div className='has-text-centered'>
                             <input type='button' className='button' value='Cancelar' onClick={() => hadleCancelarAvaliacao()} />
-                            <input type='button' className='button is-primary ml-2' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
+                            <input ref={refBotaoEnviarAvaliacao} type='button' className='button is-primary ml-2' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
                         </div>
                     </div>
                 </div>

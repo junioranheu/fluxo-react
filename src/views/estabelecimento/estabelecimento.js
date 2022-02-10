@@ -49,6 +49,25 @@ export default function Estabelecimento() {
     };
     const [estabelecimento, setEstabelecimento] = useState(padraoEstabelecimento);
     const [avaliacoes, setAvaliacoes] = useState([]);
+    async function getAvaliacoes() {
+        NProgress.start();
+
+        // Pegar o parâmetro da URL;
+        const url = `${CONSTANTS_AVALIACOES.API_URL_GET_AVALIACOES_POR_ID}?id=${parametroTipoEstabelecimentoId}`;
+
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            setAvaliacoes(resposta);
+            NProgress.done();
+        } else {
+            Aviso.error('Algo deu errado ao consultar as avaliações do estabelecimento em questão!', 5000);
+        }
+    }
+
+    function buscarAvaliacoesNovamente() {
+        getAvaliacoes();
+    }
+
     useEffect(() => {
         async function getDetalheEstabelecimento() {
             NProgress.start();
@@ -64,22 +83,6 @@ export default function Estabelecimento() {
                 Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
             }
         }
-
-        async function getAvaliacoes() {
-            NProgress.start();
-
-            // Pegar o parâmetro da URL;
-            const url = `${CONSTANTS_AVALIACOES.API_URL_GET_AVALIACOES_POR_ID}?id=${parametroTipoEstabelecimentoId}`;
-
-            let resposta = await Fetch.getApi(url);
-            if (resposta) {
-                setAvaliacoes(resposta);
-                NProgress.done();
-            } else {
-                Aviso.error('Algo deu errado ao consultar as avaliações do estabelecimento em questão!', 5000);
-            }
-        }
-
         // Pegar os detalhes do estabelecimento;
         getDetalheEstabelecimento();
 
@@ -253,7 +256,7 @@ export default function Estabelecimento() {
 
                     {
                         estabelecimento.usuarioId > 0 && (
-                            <Avaliar props={estabelecimento} />
+                            <Avaliar props={estabelecimento} estabelecimentoId={parametroTipoEstabelecimentoId} avaliacoes={buscarAvaliacoesNovamente} />
                         )
                     }
                 </div>
