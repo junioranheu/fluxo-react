@@ -251,7 +251,11 @@ export default function Estabelecimento() {
                         </h1>
                     </div>
 
-                    <Avaliar />
+                    {
+                        estabelecimento.usuarioId > 0 && (
+                            <Avaliar props={estabelecimento} />
+                        )
+                    }
                 </div>
             </section>
 

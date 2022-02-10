@@ -1,22 +1,25 @@
+import NProgress from 'nprogress';
 import React, { useEffect, useState } from 'react';
 import '../../css/avaliar.css';
 import ImgAvaliacao from '../../static/svg/avaliacao.svg';
 
-export default function Avaliar() {
+export default function Avaliar(props) {
+    // console.log(props);
+    const [prop] = useState(props['props']);
     const [valorSlider, setValorSlider] = useState(60);
     const [isMostrarAvaliar, setIsMostrarAvaliar] = useState(false);
     const [classeRange, setClasseRange] = useState('good');
     const [gradientGrey, setGradientGrey] = useState(0);
     const [gradientStop, setGradientStop] = useState('');
 
-    let colorBad = '#ff5722';
-    let colorOk = '#3f51b5';
-    let colorGood = '#36d896';
-    let colorGreat = 'var(--cor-principal)';
+    const colorBad = '#ff5722';
+    const colorOk = '#3f51b5';
+    const colorGood = '#36d896';
+    const colorGreat = 'var(--cor-principal)';
 
     useEffect(() => {
         checkSliderValue();
-    }, []);
+    });
 
     function handleChangeSlider(e) {
         let valorSlider = e.target.value;
@@ -60,6 +63,39 @@ export default function Avaliar() {
         setGradientStop(colorGood);
     }
 
+    const [formData, setFormData] = useState(null);
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    async function handleEnviarAvaliacao() {
+        NProgress.start();
+
+        // Verificações;
+        console.log(formData);
+        return false;
+
+        // // Avaliar;
+        // const url = CONSTANTS.API_URL_POST_AVALIAR;
+        // const avaliacao = {
+        //     'estabelecimentoId': formData.nomeCompleto,
+        //     'usuarioId': formData.email,
+        //     'comentario': formData.nomeUsuario,
+        //     'avaliacao': formData.senha,
+        //     'data': new Date().toLocaleString(),
+        // };
+
+        // let resposta = await Fetch.postApi(url, avaliacao);
+        // if (resposta) {
+        //     console.log('Ok: ' + resposta);
+        // } else {
+        //     Aviso.error('Algo deu errado ao avaliar<br/>Consulte o F12!', 5000);
+        // }
+    }
+
     return (
         <div className='card-avaliacao sem-highlight'>
             <div className='columns'>
@@ -100,21 +136,21 @@ export default function Avaliar() {
                         </div>
                     </div>
 
-                    <div className={`mt-6 ${isMostrarAvaliar ? '' : 'esconder'}`} id='divAvaliacaoComentario'>
+                    <div className={`mt-6 ${isMostrarAvaliar ? 'animate__animated animate__fadeIn' : 'esconder'}`}>
                         <div className='field'>
                             <div className='control'>
-                                <textarea className='textarea' placeholder='Avalieeeeeeeeeeeeeeeeee' style={{ resize: 'none' }}></textarea>
+                                <textarea name='comentario' onChange={handleChange} className='textarea' placeholder={`Detalhe sua avaliação do estabelecimento "${prop.nome}" aqui...`} style={{ resize: 'none' }}></textarea>
                             </div>
                         </div>
 
                         <div className='has-text-centered'>
                             <input type='button' className='button' value='Cancelar' onClick={() => hadleCancelarAvaliacao()} />
-                            <input type='button' className='button is-primary ml-2' value='Enviar avaliação' />
+                            <input type='button' className='button is-primary ml-2' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
                         </div>
                     </div>
                 </div>
 
-                <div className={`column is-hidden-mobile sem-drag ${isMostrarAvaliar ? '' : 'esconder'}`}>
+                <div className={`column is-half is-hidden-mobile sem-drag ${isMostrarAvaliar ? 'animate__animated animate__fadeIn' : 'esconder'}`}>
                     <figure className='image is-256x256 has-image-centered sem-highlight'>
                         <img src={ImgAvaliacao} alt='' />
                     </figure>
