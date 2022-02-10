@@ -1,4 +1,4 @@
-import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export const Fetch = {
     async getApi(url, token) {
@@ -22,7 +22,7 @@ export const Fetch = {
                 'url': url,
                 'token': token,
                 'erro': erro.message,
-                'data': HoraBrasilia
+                'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
             }
 
             console.table(e);
@@ -55,7 +55,7 @@ export const Fetch = {
                 'body': body,
                 'token': token,
                 'erro': erro.message,
-                'data': HoraBrasilia
+                'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
             }
 
             console.table(e);

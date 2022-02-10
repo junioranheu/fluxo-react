@@ -12,7 +12,7 @@ import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -86,7 +86,7 @@ export default function Index() {
 
     // Olá;
     function ola() {
-        var hora = HoraBrasilia.hour();
+        var hora = HorarioBrasilia.hour();
         var msg = '';
 
         if (hora < 12) {

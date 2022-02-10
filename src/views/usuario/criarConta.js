@@ -8,7 +8,7 @@ import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function CriarConta() {
     const refNomeCompleto = useRef();
@@ -250,7 +250,7 @@ export default function CriarConta() {
             'nomeUsuarioSistema': formData.nomeUsuario,
             'senha': formData.senha,
             'usuarioTipoId': 2, // Usuário comum;
-            'dataCriacao': HoraBrasilia,
+            'dataCriacao': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
             'foto': '',
             'isAtivo': 1,
             'isPremium': 0

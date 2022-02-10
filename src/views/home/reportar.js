@@ -4,7 +4,7 @@ import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS from '../../utilidades/const/constReports';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Reportar() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -49,7 +49,7 @@ export default function Reportar() {
         const usuarioId = isAuth ? Auth.getUsuarioLogado().usuarioId : null;
         const report = {
             'reclamacao': textProblema,
-            'data': HoraBrasilia,
+            'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
             'usuarioId': usuarioId
         };
 

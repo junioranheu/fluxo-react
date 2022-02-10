@@ -5,7 +5,7 @@ import '../../css/avaliar.css';
 import CONSTANTS from '../../utilidades/const/constEstabelecimentosAvaliacoes';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Avaliar(props) {
     // console.log(props);
@@ -123,8 +123,10 @@ export default function Avaliar(props) {
             'usuarioId': formData.usuarioId,
             'comentario': formData.comentario,
             'avaliacao': formData.avaliacao,
-            'data': HoraBrasilia.format(),
+            'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
         };
+
+        console.log(avaliacao);
 
         let resposta = await Fetch.postApi(url, avaliacao, token);
         if (resposta) {
