@@ -140,7 +140,7 @@ export default function Avaliar(props) {
     return (
         <div className='card-avaliacao sem-highlight'>
             <div className='columns'>
-                <div className='column is-half'>
+                <div className='column is-fullwidth'>
                     <div className={`row ${classeRange}`}>
                         <div className='icon-avaliar'>
                             <svg id='icon-bad' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 103.696 103.695'>
@@ -184,7 +184,7 @@ export default function Avaliar(props) {
                             </div>
                         </div>
 
-                        <div className='has-text-centered'>
+                        <div className='has-text-right'>
                             <input type='button' className='button' value='Cancelar' onClick={() => hadleCancelarAvaliacao()} />
                             <input ref={refBotaoEnviarAvaliacao} type='button' className='button is-primary ml-2' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
                         </div>
