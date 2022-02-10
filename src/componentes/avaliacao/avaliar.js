@@ -125,9 +125,7 @@ export default function Avaliar(props) {
             'avaliacao': formData.avaliacao,
             'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
         };
-
-        console.log(avaliacao);
-
+        
         let resposta = await Fetch.postApi(url, avaliacao, token);
         if (resposta) {
             Aviso.success('Avaliação enviada com sucesso', 5000);
