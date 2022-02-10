@@ -2,10 +2,10 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/avaliar.css';
-import ImgAvaliacao from '../../static/svg/avaliacao.svg';
 import CONSTANTS from '../../utilidades/const/constEstabelecimentosAvaliacoes';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
 
 export default function Avaliar(props) {
     // console.log(props);
@@ -123,7 +123,7 @@ export default function Avaliar(props) {
             'usuarioId': formData.usuarioId,
             'comentario': formData.comentario,
             'avaliacao': formData.avaliacao,
-            'data': new Date().toLocaleString(),
+            'data': HoraBrasilia.format(),
         };
 
         let resposta = await Fetch.postApi(url, avaliacao, token);
@@ -189,12 +189,6 @@ export default function Avaliar(props) {
                             <input ref={refBotaoEnviarAvaliacao} type='button' className='button is-primary ml-2' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
                         </div>
                     </div>
-                </div>
-
-                <div className={`column is-half is-hidden-mobile sem-drag ${isMostrarAvaliar ? 'animate__animated animate__fadeIn' : 'esconder'}`}>
-                    <figure className='image is-256x256 has-image-centered sem-highlight'>
-                        <img src={ImgAvaliacao} alt='' />
-                    </figure>
                 </div>
             </div>
         </div>

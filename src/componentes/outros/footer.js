@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../css/footer.css';
+import HoraBrasilia from '../../utilidades/utils/horaBrasilia';
 
 export default function Footer() {
     return (
@@ -47,7 +48,7 @@ export default function Footer() {
                     <div className='row columns'>
                         <div className='column'>
                             <p className='copyright-text'>
-                                Copyright &copy; {new Date().getFullYear()} —
+                                Copyright &copy; {HoraBrasilia.year()} —
 
                                 Feito com o 💛 por <a href='https://www.instagram.com/junioranheu/' target='_blank' rel='noreferrer'>@junioranheu</a>
                             </p>

@@ -245,48 +245,53 @@ export default function Estabelecimento() {
                 </div>
             </section>
 
-            {/* #03 - Avalie */}
+            {/* Teste */}
             <section className='mt-6'>
-                <div className='content-section'>
-                    <div className='titulo-wrapper'>
-                        <h1 className='titulo'>
-                            Avalie sua experiência — <span className='grifar'>{estabelecimento.nome}</span>
-                        </h1>
-                    </div>
-
-                    {
-                        estabelecimento.usuarioId > 0 && (
-                            <Avaliar props={estabelecimento} estabelecimentoId={parametroTipoEstabelecimentoId} avaliacoes={buscarAvaliacoesNovamente} />
-                        )
-                    }
-                </div>
-            </section>
-
-            {/* #04 - Avaliações */}
-            <section className='mt-6'>
-                <div className='content-section'>
-                    <div className='titulo-wrapper'>
-                        <h1 className='titulo'>
-                            Últimas avaliações
-                        </h1>
-                    </div>
-
-                    {
-                        avaliacoes.length > 0 ? (
-                            avaliacoes.map((avaliacao) => (
-                                <Avaliacao props={avaliacao} key={avaliacao.estabelecimentoAvaliacaoId} />
-                            ))
-                        ) : (
-                            <div>
-                                Não existem avaliações para esse estabelecimento ainda
+                <div className='columns'>
+                    <div className='column is-half'>
+                        {/* #04 - Avaliações */}
+                        <div className='content-section'>
+                            <div className='titulo-wrapper'>
+                                <h1 className='titulo'>
+                                    Últimas avaliações
+                                </h1>
                             </div>
-                        )
-                    }
 
-                    {/* Loading */}
-                    {loadingPosts && (
-                        <ShimmerText line={5} gap={10} />
-                    )}
+                            {
+                                avaliacoes.length > 0 ? (
+                                    avaliacoes.map((avaliacao) => (
+                                        <Avaliacao props={avaliacao} key={avaliacao.estabelecimentoAvaliacaoId} />
+                                    ))
+                                ) : (
+                                    <div>
+                                        Não existem avaliações para esse estabelecimento ainda
+                                    </div>
+                                )
+                            }
+
+                            {/* Loading */}
+                            {loadingPosts && (
+                                <ShimmerText line={5} gap={10} />
+                            )}
+                        </div>
+                    </div>
+
+                    <div className='column'>
+                        {/* #03 - Avalie */}
+                        <div className='content-section'>
+                            <div className='titulo-wrapper'>
+                                <h1 className='titulo'>
+                                    Avalie sua experiência — <span className='grifar'>{estabelecimento.nome}</span>
+                                </h1>
+                            </div>
+
+                            {
+                                estabelecimento.usuarioId > 0 && (
+                                    <Avaliar props={estabelecimento} estabelecimentoId={parametroTipoEstabelecimentoId} avaliacoes={buscarAvaliacoesNovamente} />
+                                )
+                            }
+                        </div>
+                    </div>
                 </div>
             </section>
 

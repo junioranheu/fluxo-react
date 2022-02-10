@@ -30,12 +30,13 @@ export default function Avaliacao(props) {
             retorno = sDisplay;
         }
 
-        // return dDisplay + hDisplay + mDisplay + sDisplay;
+        // return seconds + ' - ' + dDisplay + hDisplay + mDisplay + sDisplay;
         return 'há ' + retorno;
     }
 
     var currentDate = moment();
-    var diferencaAgoraEDataComentario = moment.duration(currentDate.diff(prop.data));
+    var dataAjustadaPost = prop.data;
+    var diferencaAgoraEDataComentario = moment.duration(currentDate.diff(dataAjustadaPost));
     var diferencaEmSegundos = diferencaAgoraEDataComentario.asSeconds();
     const [dataAvaliacaoFinal] = useState(segundosParaDHMS(diferencaEmSegundos));
 
