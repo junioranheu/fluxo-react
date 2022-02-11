@@ -10,7 +10,7 @@ import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
-import verificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
+import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
 
 export default function CriarConta() {
     const refNomeCompleto = useRef();
@@ -76,7 +76,8 @@ export default function CriarConta() {
         e.preventDefault();
 
         // Verificações;
-        let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha);
+        const isTrocouSenha = true;
+        let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha);
         if (!isContinuarUm) {
             return false;
         }
@@ -87,7 +88,7 @@ export default function CriarConta() {
         // Verificar se o processo deve continuar, caso e-mail e senha estejam disponíveis para uso;
         const isNovoEmail = true;
         const isNovoNomeUsuario = true;
-        let isContinuarDois = await verificarEmailENomeUsuario(formData, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
+        let isContinuarDois = await VerificarEmailENomeUsuario(formData, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
         if (!isContinuarDois) {
             return false;
         }
@@ -97,7 +98,7 @@ export default function CriarConta() {
         const usuario_a_ser_criado = {
             'nomeCompleto': formData.nomeCompleto,
             'email': formData.email,
-            'nomeUsuarioSistema': formData.nomeUsuario,
+            'nomeUsuarioSistema': formData.nomeUsuarioSistema,
             'senha': formData.senha,
             'usuarioTipoId': 2, // Usuário comum;
             'dataCriacao': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
@@ -109,18 +110,18 @@ export default function CriarConta() {
         let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
         if (resposta) {
             // console.log('Ok: ' + resposta);
-            await getToken(formData.nomeUsuario, formData.senha);
+            await getToken(formData.nomeUsuarioSistema, formData.senha);
         } else {
             Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
         }
     };
 
-    async function getToken(nomeUsuario, senha) {
-        const urlDados = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+    async function getToken(nomeUsuarioSistema, senha) {
+        const urlDados = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${nomeUsuarioSistema}&senha=${senha}`;
         let dadosUsuarioVerificado = await Fetch.getApi(urlDados);
 
         // Gerar token;
-        const urlAutenticar = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuario}&senha=${senha}`;
+        const urlAutenticar = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuarioSistema}&senha=${senha}`;
         let resposta = await Fetch.getApi(urlAutenticar);
 
         if (resposta) {
@@ -185,7 +186,7 @@ export default function CriarConta() {
                     <span className='icon is-small is-left'>
                         <i className='fas fa-at'></i>
                     </span>
-                    <input className='input' type='text' name='nomeUsuario' placeholder='Seu nome de usuário no Fluxo' autoComplete='weon'
+                    <input className='input' type='text' name='nomeUsuarioSistema' placeholder='Seu nome de usuário no Fluxo' autoComplete='weon'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeUsuario}
                     />
                     <span className='icon is-small is-right'>

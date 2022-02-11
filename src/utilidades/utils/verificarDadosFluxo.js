@@ -1,7 +1,7 @@
 import NProgress from 'nprogress';
 import { Aviso } from '../../componentes/outros/aviso';
 
-function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, refSenha) {
+function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha) {
     // console.log(form);
 
     // Verificação 0;
@@ -54,7 +54,7 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
     }
 
     // Verificação de nome de usuário #1: nome de usuário preenchido?;
-    if (!form.nomeUsuario) {
+    if (!form.nomeUsuarioSistema) {
         NProgress.done();
         Aviso.warn('Parece que você esqueceu de colocar um nome de usuário (apelido que será utilizado no sistema)', 5000);
         refNomeUsuario.current.select();
@@ -62,24 +62,27 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
     }
 
     // Verificação de nome de usuário #2: pelo menos 03 caracteres?;
-    if (form.nomeUsuario.length > 20 || form.nomeUsuario.length < 4) {
+    if (form.nomeUsuarioSistema.length > 20 || form.nomeUsuarioSistema.length < 4) {
         NProgress.done();
-        Aviso.warn('O nome de usuário não pode ter não pode ter menos de 4 e nem mais de 10 caracteres, e agora está com ' + form.nomeUsuario.length + '!', 5000);
+        Aviso.warn('O nome de usuário não pode ter não pode ter menos de 4 e nem mais de 10 caracteres, e agora está com ' + form.nomeUsuarioSistema.length + '!', 5000);
         refNomeUsuario.current.select();
         return false;
     }
 
-    // Verificação de senha #1: senha preenchida?;
-    if (!form.senha) {
-        NProgress.done();
-        Aviso.warn('Parece que você esqueceu de colocar sua senha', 5000);
-        refSenha.current.select();
-        return false;
-    }
+    // Se a chamada vem da tela de criar nova conta, verifique a senha também;
+    if (isTrocouSenha) {
+        // Verificação de senha #1: senha preenchida?;
+        if (!form.senha) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar sua senha', 5000);
+            refSenha.current.select();
+            return false;
+        }
 
-    // Verificação da senha #2: realizar uma série de verificações, se alguma retornar falso, aborte;
-    if (checarSenha(form.senha, form, refSenha) === false) {
-        return false;
+        // Verificação da senha #2: realizar uma série de verificações, se alguma retornar falso, aborte;
+        if (checarSenha(form.senha, form, refSenha) === false) {
+            return false;
+        }
     }
 
     return true;

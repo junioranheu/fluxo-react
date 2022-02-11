@@ -1,5 +1,9 @@
 import NProgress from 'nprogress';
 import React, { useRef, useState } from 'react';
+import { Aviso } from '../../componentes/outros/aviso';
+import CONSTANTS from '../../utilidades/const/constUsuarios';
+import { Auth } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/utils/fetch';
 import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
 import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
 
@@ -18,7 +22,7 @@ export default function AbaDadosFluxo(props) {
     const formDadosFluxoJsonInicial = {
         nomeCompleto: prop.nomeCompleto,
         email: prop.email,
-        nomeUsuario: prop.nomeUsuarioSistema,
+        nomeUsuarioSistema: prop.nomeUsuarioSistema,
         senha: ''
     }
     const [formDadosFluxo, setFormDadosFluxo] = useState(formDadosFluxoJsonInicial);
@@ -41,44 +45,31 @@ export default function AbaDadosFluxo(props) {
         NProgress.start();
 
         // Verificações;
-        let isContinuarUm = VerificarDadosFluxo(formDadosFluxo, refNomeCompleto, refEmail, refNomeUsuario, refSenha);
+        const isTrocouSenha = prop.senha !== formDadosFluxo.senha;
+        let isContinuarUm = VerificarDadosFluxo(formDadosFluxo, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha);
         if (!isContinuarUm) {
             return false;
         }
 
         // Verificar se o processo deve continuar, caso e-mail e senha estejam disponíveis para uso;
-        if (prop.email !== formDadosFluxo.email || prop.nomeUsuarioSistema !== formDadosFluxo.nomeUsuario) {
+        if (prop.email !== formDadosFluxo.email || prop.nomeUsuarioSistema !== formDadosFluxo.nomeUsuarioSistema) {
             const isNovoEmail = (prop.email !== formDadosFluxo.email);
-            const isNovoNomeUsuario = (prop.nomeUsuarioSistema !== formDadosFluxo.nomeUsuario);
+            const isNovoNomeUsuario = (prop.nomeUsuarioSistema !== formDadosFluxo.nomeUsuarioSistema);
             let isContinuarDois = await VerificarEmailENomeUsuario(formDadosFluxo, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
             if (!isContinuarDois) {
                 return false;
             }
         }
 
-        console.log('ok');
-
-        // // Criar conta;
-        // const urlCriarConta = CONSTANTS.API_URL_POST_CRIAR;
-        // const usuario_a_ser_criado = {
-        //     'nomeCompleto': formData.nomeCompleto,
-        //     'email': formData.email,
-        //     'nomeUsuarioSistema': formData.nomeUsuario,
-        //     'senha': formData.senha,
-        //     'usuarioTipoId': 2, // Usuário comum;
-        //     'dataCriacao': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
-        //     'foto': '',
-        //     'isAtivo': 1,
-        //     'isPremium': 0
-        // };
-
-        // let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
-        // if (resposta) {
-        //     // console.log('Ok: ' + resposta);
-        //     await getToken(formData.nomeUsuario, formData.senha);
-        // } else {
-        //     Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
-        // }
+        // Atualizar informações;
+        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
+        const token = Auth.getUsuarioLogado().token;
+        let resposta = await Fetch.postApi(url, formDadosFluxo, token);
+        if (resposta) {
+            console.log('Ok: ' + resposta);
+        } else {
+            Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
+        }
     }
 
     if (!prop) {
@@ -125,7 +116,7 @@ export default function AbaDadosFluxo(props) {
                 <label className='label'>Nome de usuário</label>
                 <div className='control has-icons-right'>
                     <input onChange={(e) => handleChangeFormDadosFluxo(e)} ref={refNomeUsuario}
-                        type='text' name='nomeUsuario' className='input' value={formDadosFluxo.nomeUsuario} placeholder={`Seu nome de usuário no ${nomeApp}`} />
+                        type='text' name='nomeUsuarioSistema' className='input' value={formDadosFluxo.nomeUsuarioSistema} placeholder={`Seu nome de usuário no ${nomeApp}`} />
 
                     <span className='icon is-small is-right'>
                         <i className='fas fa-user'></i>

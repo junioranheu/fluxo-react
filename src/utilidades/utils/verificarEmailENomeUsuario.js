@@ -5,7 +5,7 @@ import { Fetch } from '../../utilidades/utils/fetch';
 
 async function verificarEmailENomeUsuario(form, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario) {
     const urlIsExisteEmail = `${CONSTANTS.API_URL_GET_IS_EXISTE_EMAIL}?email=${form.email}`;
-    const urlIsExisteNomeUsuario = `${CONSTANTS.API_URL_GET_IS_EXISTE_NOME_USUARIO}?nomeUsuarioSistema=${form.nomeUsuario}`;
+    const urlIsExisteNomeUsuario = `${CONSTANTS.API_URL_GET_IS_EXISTE_NOME_USUARIO}?nomeUsuarioSistema=${form.nomeUsuarioSistema}`;
     let isContinuar = true;
 
     // Verificar e-mail;

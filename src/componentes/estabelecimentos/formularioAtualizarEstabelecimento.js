@@ -52,10 +52,9 @@ export default function FormularioAtualizarEstabelecimento(props) {
             // dataCriacao: Date.now()
         }
 
+        // Post;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
-
-        // Post;
         let resposta = await Fetch.postApi(url, estabelecimento_a_ser_atualizado, token);
         if (resposta) {
             // console.log('Ok: ' + resposta);
