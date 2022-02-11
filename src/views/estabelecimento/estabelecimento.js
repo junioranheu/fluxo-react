@@ -1,5 +1,6 @@
 import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShimmerCircularImage, ShimmerText, ShimmerThumbnail } from 'react-shimmer-effects';
 import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import Avaliar from '../../componentes/avaliacao/avaliar';
@@ -17,11 +18,12 @@ import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Estabelecimento() {
+    const navigate = useNavigate();
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
-
+    
     // Ao carregar página;
     const padraoEstabelecimento = {
         'estabelecimentoId': parametroTipoEstabelecimentoId,
@@ -76,11 +78,13 @@ export default function Estabelecimento() {
             const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_ID}/${parametroTipoEstabelecimentoId}`;
 
             let resposta = await Fetch.getApi(url);
+            // console.log(resposta);
             if (resposta) {
                 setEstabelecimento(resposta);
                 NProgress.done();
             } else {
                 Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
+                navigate('/sem-acesso', { replace: true });
             }
         }
         // Pegar os detalhes do estabelecimento;

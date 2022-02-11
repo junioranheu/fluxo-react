@@ -1,5 +1,6 @@
 import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShimmerThumbnail } from 'react-shimmer-effects';
 import { Aviso } from '../../componentes/outros/aviso';
 import AvisoNenhumRegistro from '../../componentes/outros/avisoNenhumRegistro';
@@ -11,6 +12,7 @@ import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Estabelecimento() {
+    const navigate = useNavigate();
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
@@ -51,6 +53,7 @@ export default function Estabelecimento() {
             // console.log(url);
 
             let resposta = await Fetch.getApi(url);
+            console.log(resposta);
             if (resposta) {
                 const titulo = `Encontre ${resposta.genero} <span class='grifar'>${resposta.tipo.toLowerCase()}</span> perfeit${resposta.genero}`;
                 setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
@@ -58,7 +61,8 @@ export default function Estabelecimento() {
 
                 NProgress.done();
             } else {
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+                Aviso.error('Algo deu errado ao buscar os detalhes do tipo de estabelecimento selecionado<br/>Consulte o F12!', 5000);
+                navigate('/sem-acesso', { replace: true });
             }
         }
 
@@ -69,6 +73,7 @@ export default function Estabelecimento() {
             // console.log(url);
 
             let resposta = await Fetch.getApi(url);
+            // console.log(resposta);
             if (resposta) {
                 // console.log(resposta);
                 // console.log(cidadeIdUsuarioLogado);
@@ -86,7 +91,7 @@ export default function Estabelecimento() {
                 setLoadingEstabelecimentos(false);
                 NProgress.done();
             } else {
-                Aviso.error('Algo deu errado<br/>Consulte o F12!', 5000);
+                Aviso.error('Algo deu errado ao buscar os estabelecimentos do tipo selecionado<br/>Consulte o F12!', 5000);
             }
         }
 
