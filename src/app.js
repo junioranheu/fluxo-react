@@ -13,6 +13,7 @@ import Sobre from './views/home/sobre';
 import Teste from './views/home/teste';
 import CriarConta from './views/usuario/criarConta';
 import Entrar from './views/usuario/entrar';
+import Perfil from './views/usuario/perfil';
 
 export default function App() {
   const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -28,6 +29,7 @@ export default function App() {
       <Route path='/sem-acesso' element={<SemAcesso />} />
       <Route path='/entrar' element={<Entrar />} />
       <Route path='/criar-conta' element={!isAuth ? <CriarConta /> : <Navigate to={'/sem-acesso'} />} />
+      <Route path='/perfil/:nomeUsuarioSistema' element={<Perfil />} />
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimentos />} />
       <Route path='/estabelecimento/:estabelecimentoId' element={<Estabelecimento />} />
