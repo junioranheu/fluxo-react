@@ -44,12 +44,15 @@ export default function Atualizar() {
     const [isMulher, setIsMulher] = useState('');
     useEffect(() => {
         // console.log(detalhesPerfil);
+        // console.log(detalhesPerfil.usuariosInformacoes);
 
         if (!detalhesPerfil.usuariosInformacoes) {
             setFaltaCompletarPerfil(true);
         }
 
         if (detalhesPerfil.usuariosInformacoes) {
+            setFaltaCompletarPerfil(false);
+
             if (detalhesPerfil.usuariosInformacoes.genero === 1) {
                 setIsHomem('checked');
             } else if (detalhesPerfil.usuariosInformacoes.genero === 2) {
@@ -60,9 +63,23 @@ export default function Atualizar() {
 
     const [isAbaDadosFluxoSelecionada, setIsAbaDadosFluxoSelecionada] = useState(true);
     const [isAbaDadosPessoaisSelecionada, setIsAbaDadosPessoaisSelecionada] = useState(false);
-    function handleClickAba() {
-        setIsAbaDadosFluxoSelecionada(!isAbaDadosFluxoSelecionada);
-        setIsAbaDadosPessoaisSelecionada(!isAbaDadosPessoaisSelecionada);
+    function handleClickAbaFluxo() {
+        setIsAbaDadosFluxoSelecionada(true);
+        setIsAbaDadosPessoaisSelecionada(false);
+    }
+
+    function handleClickAbaPessoal() {
+        setIsAbaDadosPessoaisSelecionada(true);
+        setIsAbaDadosFluxoSelecionada(false);
+    }
+
+    // Verificações da foto de perfil e import dinâmico;
+    let fotoPerfilDinamica = '';
+    try {
+        // console.log(detalhesPerfil);
+        fotoPerfilDinamica = require('../../upload/usuario/' + detalhesPerfil.foto);
+    } catch (err) {
+        fotoPerfilDinamica = require('../../static/outro/sem-imagem.webp');
     }
 
     if (detalhesPerfil.length < 1) {
@@ -98,14 +115,14 @@ export default function Atualizar() {
                                     {/* <!-- #0 - Tabs --> */}
                                     <div className='tabs is-boxed mt-4'>
                                         <ul>
-                                            <li onClick={() => handleClickAba()}>
+                                            <li onClick={() => handleClickAbaFluxo()} className={isAbaDadosFluxoSelecionada ? 'is-active' : ''}>
                                                 <a className='cor-preto'>
                                                     <span className='icon is-small'><i className='fas fa-mobile-alt' aria-hidden='true'></i></span>
                                                     <span>Dados do {nomeApp}</span>
                                                 </a>
                                             </li>
 
-                                            <li onClick={() => handleClickAba()}>
+                                            <li onClick={() => handleClickAbaPessoal()} className={isAbaDadosPessoaisSelecionada ? 'is-active' : ''}>
                                                 <a className='cor-preto'>
                                                     <span className='icon is-small'><i className='fas fa-user-lock' aria-hidden='true'></i></span>
                                                     <span>Dados pessoais</span>
@@ -119,25 +136,10 @@ export default function Atualizar() {
                                         <div className='field has-image-centered texto-sem-highlight' id='div-imagem-perfil'>
                                             <label className='label'>Foto de perfil</label>
 
-                                            {/* @{
-                                                string usuarioFotoPerfil = Model.Foto;
-
-                                            if (String.IsNullOrEmpty(usuarioFotoPerfil))
-                                            {
-                                                usuarioFotoPerfil = '/static/outro/sem-imagem.webp';
-                                            }
-                                            else
-                                            {
-                                                usuarioFotoPerfil = '/upload/usuario/' + usuarioFotoPerfil;
-                                            string numeroAleatorio = ProjetoGuia_Biblioteca.Biblioteca.NumeroAleatorio(4);
-                                            usuarioFotoPerfil += String.Concat('?t=', numeroAleatorio); // Adicionar um número aleatório para 'desbugar' o cache;
-                                            }
-                                        } */}
-
                                             {/* style='background-image: url(@usuarioFotoPerfil);' */}
-                                            <div className='profile-pic has-image-centered' id='div-imagem-upload'>
+                                            <div className='profile-pic has-image-centered' id='div-imagem-upload' style={{ backgroundImage: `url(${fotoPerfilDinamica})` }}>
                                                 <span className='fas fa-camera'></span>
-                                                <span>Alterar</span>
+                                                <span className='ml-2'>Alterar</span>
                                             </div>
 
                                             <input type='file' id='inputFileUpload' accept='image/*' />
