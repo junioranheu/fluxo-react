@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Aviso } from '../../componentes/outros/aviso';
 import HeroZika from '../../componentes/outros/heroZika';
+import AbaDadosFluxo from '../../componentes/usuarios/abaDadosFluxo';
+import AbaDadosPessoais from '../../componentes/usuarios/abaDadosPessoais';
 import '../../css/perfilAtualizar.css';
 import CONSTANTS_USUARIOS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
@@ -39,9 +41,8 @@ export default function Atualizar() {
         getDetalhesPerfilUsuario();
     }, [navigate, usuarioId]);
 
+    // Detalhes do usuário;
     const [faltaCompletarPerfil, setFaltaCompletarPerfil] = useState(false);
-    const [isHomem, setIsHomem] = useState('');
-    const [isMulher, setIsMulher] = useState('');
     useEffect(() => {
         // console.log(detalhesPerfil);
         // console.log(detalhesPerfil.usuariosInformacoes);
@@ -52,40 +53,10 @@ export default function Atualizar() {
 
         if (detalhesPerfil.usuariosInformacoes) {
             setFaltaCompletarPerfil(false);
-
-            if (detalhesPerfil.usuariosInformacoes.genero === 1) {
-                setIsHomem('checked');
-            } else if (detalhesPerfil.usuariosInformacoes.genero === 2) {
-                setIsMulher('checked');
-            }
         }
-
-        // Preencher o formDadosFluxo;
-        const formDadosFluxoJsonInicial = {
-            nomeCompleto: detalhesPerfil.nomeCompleto,
-            email: detalhesPerfil.email,
-            nomeUsuarioSistema: detalhesPerfil.nomeUsuarioSistema,
-            senha: ''
-        }
-
-        setFormDadosFluxo(formDadosFluxoJsonInicial);
-
-        // Preencher o formDadosPessoais;
-        const formDadosPessoaisJsonInicial = {
-            cpf: detalhesPerfil.usuariosInformacoes?.cpf,
-            telefone: detalhesPerfil.usuariosInformacoes?.telefone,
-            dataAniversario: detalhesPerfil.usuariosInformacoes?.dataAniversario,
-            cep: detalhesPerfil.usuariosInformacoes?.cep,
-            numeroResidencia: detalhesPerfil.usuariosInformacoes?.numeroResidencia,
-            rua: detalhesPerfil.usuariosInformacoes?.rua,
-            bairro: detalhesPerfil.usuariosInformacoes?.bairro,
-            estadoSigla: detalhesPerfil.usuariosInformacoes?.cidades.estados.sigla,
-            cidadeNome: detalhesPerfil.usuariosInformacoes?.cidades.nome
-        }
-
-        setFormDadosPessoais(formDadosPessoaisJsonInicial);
     }, [detalhesPerfil]);
 
+    // Abas;
     const [isAbaDadosFluxoSelecionada, setIsAbaDadosFluxoSelecionada] = useState(true);
     const [isAbaDadosPessoaisSelecionada, setIsAbaDadosPessoaisSelecionada] = useState(false);
     function handleClickAbaFluxo() {
@@ -105,26 +76,6 @@ export default function Atualizar() {
         fotoPerfilDinamica = require('../../upload/usuario/' + detalhesPerfil.foto);
     } catch (err) {
         fotoPerfilDinamica = require('../../static/outro/sem-imagem.webp');
-    }
-
-    // formDadosFluxo;
-    const [formDadosFluxo, setFormDadosFluxo] = useState(null);
-    function handleChangeFormDadosFluxo(e) {
-        setFormDadosFluxo({
-            ...formDadosFluxo,
-            [e.target.name]: e.target.value
-        });
-    }
-
-    // formDadosPessoais;
-    const [formDadosPessoais, setFormDadosPessoais] = useState(null);
-    function handleChangeFormDadosPessoais(e) {
-        setFormDadosPessoais({
-            ...formDadosPessoais,
-            [e.target.name]: e.target.value
-        });
-
-        console.log('ok');
     }
 
     if (detalhesPerfil.length < 1) {
@@ -178,242 +129,12 @@ export default function Atualizar() {
 
                                     {/* <!-- #1 - Dados app --> */}
                                     <div className={isAbaDadosFluxoSelecionada ? '' : 'esconder'}>
-                                        <div className='field has-image-centered texto-sem-highlight' id='div-imagem-perfil'>
-                                            <label className='label'>Foto de perfil</label>
-
-                                            <div className='profile-pic has-image-centered' style={{ backgroundImage: `url(${fotoPerfilDinamica})` }}>
-                                                <span className='fas fa-camera'></span>
-                                                <span className='ml-2'>Alterar</span>
-                                            </div>
-
-                                            <input type='file' accept='image/*' />
-                                        </div>
-
-                                        <div className='field'>
-                                            <label className='label'>Nome completo</label>
-                                            <div className='control has-icons-right'>
-                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
-                                                    type='text' name='nomeCompleto' className='input' value={formDadosFluxo.nomeCompleto} placeholder='Seu nome completo'
-                                                />
-                                                <span className='icon is-small is-right'>
-                                                    <i className='fas fa-signature'></i>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className='field'>
-                                            <label className='label'>E-mail</label>
-                                            <div className='control has-icons-right'>
-                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
-                                                    type='email' name='email' className='input' value={formDadosFluxo.email} placeholder='Seu melhor e-mail'
-                                                />
-                                                <span className='icon is-small is-right'>
-                                                    <i className='fas fa-at'></i>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className='field'>
-                                            <label className='label'>Nome de usuário</label>
-                                            <div className='control has-icons-right'>
-                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
-                                                    type='text' name='nomeUsuarioSistema' className='input' value={formDadosFluxo.nomeUsuarioSistema} placeholder={`Seu nome de usuário no ${nomeApp}`}
-                                                />
-                                                <span className='icon is-small is-right'>
-                                                    <i className='fas fa-user'></i>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className='field'>
-                                            <label className='label'>Senha</label>
-                                            <div className='control has-icons-right'>
-                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
-                                                    type='password' name='senha' className='input' value='' placeholder='Sua senha' autoComplete='weon'
-                                                />
-                                                <span className='icon is-small is-right'>
-                                                    <i className='fa fa-key'></i>
-                                                </span>
-                                            </div>
-                                        </div>
+                                        <AbaDadosFluxo props={detalhesPerfil} />
                                     </div>
 
                                     {/* <!-- #2 - Dados pessoais --> */}
                                     <div className={isAbaDadosPessoaisSelecionada ? '' : 'esconder'}>
-                                        <div className='columns'>
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>CPF</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='cpf' className='input' value={formDadosPessoais.cpf} placeholder='Seu CPF'
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-id-card'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>Telefone</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='telefone' className='input' value={formDadosPessoais.telefone} placeholder='Seu número de telefone'
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-mobile-alt'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='columns'>
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>Data de aniversário</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='dataAniversario' className='input' value={formDadosPessoais.dataAniversario} placeholder='Sua data de aniversário'
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-birthday-cake'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='column'>
-                                                <div className='field'>
-
-                                                    <label className='label'>Gênero</label>
-
-                                                    <div className='control'>
-                                                        <label className='radio'>
-                                                            <input type='radio' value='1' name='rbGenero' checked={isHomem} />
-                                                            <span className='ml-2'>Masculino</span>
-                                                        </label>
-
-                                                        <label className='radio'>
-                                                            <input type='radio' value='2' name='rbGenero' checked={isMulher} />
-                                                            <span className='ml-2'>Feminino</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='columns'>
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>CEP</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='cep' className='input' value={formDadosPessoais.cep} placeholder='Seu CEP atual'
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-globe-americas'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>Número da residência</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='numeroResidencia' className='input' value={formDadosPessoais.numeroResidencia} placeholder='O número da sua residência'
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-home'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='columns'>
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>Rua</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='rua' className='input' value={formDadosPessoais.rua} placeholder='A rua em que você vive' disabled
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-road'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>Bairro</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='bairro' className='input' value={formDadosPessoais.bairro} placeholder='O bairro em que você vive' disabled
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-map-marker-alt'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='columns'>
-                                            <div className='column'>
-                                                <div className='field'>
-                                                    <label className='label'>Estado</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='estadoSigla' className='input' value={formDadosPessoais.estadoSigla} placeholder='O estado em que você vive' disabled
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-map-marked-alt'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='column'>
-                                                {/* @*                @{
-                                                var estadosBd = (List<Estado>)ViewData['EstadosBd'];
-                                                    <div className='field'>
-                                                        <label className='label'><i className='fas fa-home'></i> Estado</label>
-                                                        <div className='control'>
-                                                            <div className='select is-fullwidth'>
-                                                                <select id='selectEstado' disabled>
-                                                                    <option>Qual estado você vive?</option>
-                                                                    @{
-                                                                        foreach(var e in estadosBd)
-                                                                    {
-                                                                        <option value='@e.EstadoId'>@e.Sigla</option>
-                                                                    }
-                                                }
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }*@ */}
-
-                                                <div className='field'>
-                                                    <label className='label'>Cidade</label>
-                                                    <div className='control has-icons-right'>
-                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                                            type='text' name='cidadeNome' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
-                                                        />
-                                                        <span className='icon is-small is-right'>
-                                                            <i className='fas fa-city'></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <AbaDadosPessoais props={detalhesPerfil} />
                                     </div>
 
                                     <hr className='mt-4' />
@@ -427,41 +148,6 @@ export default function Atualizar() {
                     </div>
                 </div>
             </section>
-
-            <div className='mt-4'>
-                <h2>Atualizar perfil de @{detalhesPerfil.nomeUsuarioSistema}</h2>
-
-                <span className='mt-2'>
-                    dataCriacao: {detalhesPerfil.dataCriacao}<br />
-                    dataOnline: {detalhesPerfil.dataOnline}<br />
-                    email: {detalhesPerfil.email}<br />
-                    foto: {detalhesPerfil.foto}<br />
-                    isAtivo: {detalhesPerfil.isAtivo}<br />
-                    isPremium: {detalhesPerfil.isPremium}<br />
-                    nomeCompleto: {detalhesPerfil.nomeCompleto}<br />
-                    nomeUsuarioSistema: {detalhesPerfil.nomeUsuarioSistema}<br />
-                    usuarioId: {detalhesPerfil.usuarioId}<br />
-                    usuarioTipoId: {detalhesPerfil.usuarioTipoId}<br />
-                    usuarioTipos.tipo: {detalhesPerfil.usuarioTipos.tipo}<br />
-                    usuarioTipos.descricao: {detalhesPerfil.usuarioTipos.descricao}<br />
-
-                    {
-                        detalhesPerfil.usuariosInformacoes && (
-                            <React.Fragment>
-                                usuariosInformacoes.bairro: {detalhesPerfil.usuariosInformacoes.bairro}<br />
-                                usuariosInformacoes.cep: {detalhesPerfil.usuariosInformacoes.cep}<br />
-                                usuariosInformacoes.cidadeId: {detalhesPerfil.usuariosInformacoes.cidadeId}<br />
-                                usuariosInformacoes.cpf: {detalhesPerfil.usuariosInformacoes.cpf}<br />
-                                usuariosInformacoes.dataAniversario: {detalhesPerfil.usuariosInformacoes.dataAniversario}<br />
-                                usuariosInformacoes.genero: {detalhesPerfil.usuariosInformacoes.genero}<br />
-                                usuariosInformacoes.numeroResidencia: {detalhesPerfil.usuariosInformacoes.numeroResidencia}<br />
-                                usuariosInformacoes.rua: {detalhesPerfil.usuariosInformacoes.rua}<br />
-                                usuariosInformacoes.telefone: {detalhesPerfil.usuariosInformacoes.telefone}
-                            </React.Fragment>
-                        )
-                    }
-                </span>
-            </div>
         </React.Fragment>
     );
 }
