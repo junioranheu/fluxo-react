@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import InputMascara from '../outros/inputMascara';
 
 export default function AbaDadosPessoais(props) {
     const [prop] = useState(props['props']);
@@ -36,7 +37,7 @@ export default function AbaDadosPessoais(props) {
             setIsHomem('');
         }
 
-        // console.log(formDadosPessoais);
+        console.log(formDadosPessoais);
     }, [formDadosPessoais]);
 
     if (!prop) {
@@ -50,9 +51,9 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>CPF</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='cpf' className='input' value={formDadosPessoais.cpf} placeholder='Seu CPF'
-                            />
+                            <InputMascara mask='999.999.999-99' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                type='text' name='cpf' className='input' value={formDadosPessoais.cpf} placeholder='Seu CPF' />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-id-card'></i>
                             </span>
@@ -64,9 +65,9 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Telefone</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='telefone' className='input' value={formDadosPessoais.telefone} placeholder='Seu número de telefone'
-                            />
+                            <InputMascara mask='99 99999-9999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                type='text' name='telefone' className='input' value={formDadosPessoais.telefone} placeholder='Seu número de telefone' />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-mobile-alt'></i>
                             </span>
@@ -80,9 +81,9 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Data de aniversário</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='dataAniversario' className='input' value={formDadosPessoais.dataAniversario} placeholder='Sua data de aniversário'
-                            />
+                            <InputMascara mask='99/99/9999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                type='text' name='dataAniversario' className='input' value={formDadosPessoais.dataAniversario} placeholder='Sua data de aniversário' />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-birthday-cake'></i>
                             </span>
@@ -114,9 +115,9 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>CEP</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='cep' className='input' value={formDadosPessoais.cep} placeholder='Seu CEP atual'
-                            />
+                            <InputMascara mask='99999-999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                type='text' name='cep' className='input' value={formDadosPessoais.cep} placeholder='Seu CEP atual' />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-globe-americas'></i>
                             </span>
@@ -128,9 +129,9 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Número da residência</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='numeroResidencia' className='input' value={formDadosPessoais.numeroResidencia} placeholder='O número da sua residência'
-                            />
+                            <InputMascara mask='9999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                type='text' name='numeroResidencia' className='input' value={formDadosPessoais.numeroResidencia} placeholder='O número da sua residência' />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-home'></i>
                             </span>
@@ -147,6 +148,7 @@ export default function AbaDadosPessoais(props) {
                             <input onChange={(e) => handleChangeFormDadosPessoais(e)}
                                 type='text' name='rua' className='input' value={formDadosPessoais.rua} placeholder='A rua em que você vive' disabled
                             />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-road'></i>
                             </span>
@@ -161,6 +163,7 @@ export default function AbaDadosPessoais(props) {
                             <input onChange={(e) => handleChangeFormDadosPessoais(e)}
                                 type='text' name='bairro' className='input' value={formDadosPessoais.bairro} placeholder='O bairro em que você vive' disabled
                             />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-map-marker-alt'></i>
                             </span>
@@ -177,6 +180,7 @@ export default function AbaDadosPessoais(props) {
                             <input onChange={(e) => handleChangeFormDadosPessoais(e)}
                                 type='text' name='estadoSigla' className='input' value={formDadosPessoais.estadoSigla} placeholder='O estado em que você vive' disabled
                             />
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-map-marked-alt'></i>
                             </span>
@@ -211,6 +215,7 @@ export default function AbaDadosPessoais(props) {
                             <input onChange={(e) => handleChangeFormDadosPessoais(e)}
                                 type='text' name='cidadeNome' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
                             />
+                            
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-city'></i>
                             </span>
