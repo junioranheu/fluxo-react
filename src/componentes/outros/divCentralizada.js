@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HeroZika from './heroZika';
 
 export default function DivCentralizada(props) {
     // console.log(props.isCentralizar);
@@ -7,12 +8,7 @@ export default function DivCentralizada(props) {
 
     return (
         <React.Fragment>
-            {/* Efeito */}
-            <div className='hero-zika'>
-                <svg className='secao-diagonal' preserveAspectRatio='none' viewBox='0 0 1438 620' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M0 620V0h1438v240L0 620z' />
-                </svg>
-            </div>
+            <HeroZika />
 
             {/* Seção */}
             <section className={`hero sem-highlight ${classe}`}>
