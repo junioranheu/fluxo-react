@@ -59,6 +59,31 @@ export default function Atualizar() {
                 setIsMulher('checked');
             }
         }
+
+        // Preencher o formDadosFluxo;
+        const formDadosFluxoJsonInicial = {
+            nomeCompleto: detalhesPerfil.nomeCompleto,
+            email: detalhesPerfil.email,
+            nomeUsuarioSistema: detalhesPerfil.nomeUsuarioSistema,
+            senha: ''
+        }
+
+        setFormDadosFluxo(formDadosFluxoJsonInicial);
+
+        // Preencher o formDadosPessoais;
+        const formDadosPessoaisJsonInicial = {
+            cpf: detalhesPerfil.usuariosInformacoes?.cpf,
+            telefone: detalhesPerfil.usuariosInformacoes?.telefone,
+            dataAniversario: detalhesPerfil.usuariosInformacoes?.dataAniversario,
+            cep: detalhesPerfil.usuariosInformacoes?.cep,
+            numeroResidencia: detalhesPerfil.usuariosInformacoes?.numeroResidencia,
+            rua: detalhesPerfil.usuariosInformacoes?.rua,
+            bairro: detalhesPerfil.usuariosInformacoes?.bairro,
+            estadoSigla: detalhesPerfil.usuariosInformacoes?.cidades.estados.sigla,
+            cidadeNome: detalhesPerfil.usuariosInformacoes?.cidades.nome
+        }
+
+        setFormDadosPessoais(formDadosPessoaisJsonInicial);
     }, [detalhesPerfil]);
 
     const [isAbaDadosFluxoSelecionada, setIsAbaDadosFluxoSelecionada] = useState(true);
@@ -80,6 +105,26 @@ export default function Atualizar() {
         fotoPerfilDinamica = require('../../upload/usuario/' + detalhesPerfil.foto);
     } catch (err) {
         fotoPerfilDinamica = require('../../static/outro/sem-imagem.webp');
+    }
+
+    // formDadosFluxo;
+    const [formDadosFluxo, setFormDadosFluxo] = useState(null);
+    function handleChangeFormDadosFluxo(e) {
+        setFormDadosFluxo({
+            ...formDadosFluxo,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    // formDadosPessoais;
+    const [formDadosPessoais, setFormDadosPessoais] = useState(null);
+    function handleChangeFormDadosPessoais(e) {
+        setFormDadosPessoais({
+            ...formDadosPessoais,
+            [e.target.name]: e.target.value
+        });
+
+        console.log('ok');
     }
 
     if (detalhesPerfil.length < 1) {
@@ -136,19 +181,20 @@ export default function Atualizar() {
                                         <div className='field has-image-centered texto-sem-highlight' id='div-imagem-perfil'>
                                             <label className='label'>Foto de perfil</label>
 
-                                            {/* style='background-image: url(@usuarioFotoPerfil);' */}
-                                            <div className='profile-pic has-image-centered' id='div-imagem-upload' style={{ backgroundImage: `url(${fotoPerfilDinamica})` }}>
+                                            <div className='profile-pic has-image-centered' style={{ backgroundImage: `url(${fotoPerfilDinamica})` }}>
                                                 <span className='fas fa-camera'></span>
                                                 <span className='ml-2'>Alterar</span>
                                             </div>
 
-                                            <input type='file' id='inputFileUpload' accept='image/*' />
+                                            <input type='file' accept='image/*' />
                                         </div>
 
                                         <div className='field'>
                                             <label className='label'>Nome completo</label>
                                             <div className='control has-icons-right'>
-                                                <input type='text' id='txtNome' className='input' value={detalhesPerfil.nomeCompleto} placeholder='Seu nome completo' />
+                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
+                                                    type='text' name='nomeCompleto' className='input' value={formDadosFluxo.nomeCompleto} placeholder='Seu nome completo'
+                                                />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fas fa-signature'></i>
                                                 </span>
@@ -158,7 +204,9 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>E-mail</label>
                                             <div className='control has-icons-right'>
-                                                <input type='email' id='txtEmail' className='input' value={detalhesPerfil.email} placeholder='Seu melhor e-mail' />
+                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
+                                                    type='email' name='email' className='input' value={formDadosFluxo.email} placeholder='Seu melhor e-mail'
+                                                />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fas fa-at'></i>
                                                 </span>
@@ -168,7 +216,9 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>Nome de usuário</label>
                                             <div className='control has-icons-right'>
-                                                <input type='text' id='txtNomeUsuario' className='input' value={detalhesPerfil.nomeUsuarioSistema} placeholder={`Seu nome de usuário no ${nomeApp}`} />
+                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
+                                                    type='text' name='nomeUsuarioSistema' className='input' value={formDadosFluxo.nomeUsuarioSistema} placeholder={`Seu nome de usuário no ${nomeApp}`}
+                                                />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fas fa-user'></i>
                                                 </span>
@@ -178,7 +228,9 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>Senha</label>
                                             <div className='control has-icons-right'>
-                                                <input type='password' id='txtSenha' className='input' value='' placeholder='Sua senha' autoComplete='weon' />
+                                                <input onChange={(e) => handleChangeFormDadosFluxo(e)}
+                                                    type='password' name='senha' className='input' value='' placeholder='Sua senha' autoComplete='weon'
+                                                />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fa fa-key'></i>
                                                 </span>
@@ -193,7 +245,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>CPF</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtCPF' className='input' value={detalhesPerfil.usuariosInformacoes.cpf} placeholder='Seu CPF' />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='cpf' className='input' value={formDadosPessoais.cpf} placeholder='Seu CPF'
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-id-card'></i>
                                                         </span>
@@ -205,7 +259,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Telefone</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtTelefone' className='input' value={detalhesPerfil.usuariosInformacoes.telefone} placeholder='Seu número de telefone' />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='telefone' className='input' value={formDadosPessoais.telefone} placeholder='Seu número de telefone'
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-mobile-alt'></i>
                                                         </span>
@@ -219,7 +275,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Data de aniversário</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtDataAniversario' className='input' value={detalhesPerfil.usuariosInformacoes.dataAniversario} placeholder='Sua data de aniversário' />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='dataAniversario' className='input' value={formDadosPessoais.dataAniversario} placeholder='Sua data de aniversário'
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-birthday-cake'></i>
                                                         </span>
@@ -252,7 +310,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>CEP</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtCEP' className='input' value={detalhesPerfil.usuariosInformacoes.cep} placeholder='Seu CEP atual' />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='cep' className='input' value={formDadosPessoais.cep} placeholder='Seu CEP atual'
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-globe-americas'></i>
                                                         </span>
@@ -264,7 +324,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Número da residência</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtNumeroResidencia' className='input' value={detalhesPerfil.usuariosInformacoes.numeroResidencia} placeholder='O número da sua residência' />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='numeroResidencia' className='input' value={formDadosPessoais.numeroResidencia} placeholder='O número da sua residência'
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-home'></i>
                                                         </span>
@@ -278,7 +340,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Rua</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtRua' className='input' value={detalhesPerfil.usuariosInformacoes.rua} placeholder='A rua em que você vive' disabled />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='rua' className='input' value={formDadosPessoais.rua} placeholder='A rua em que você vive' disabled
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-road'></i>
                                                         </span>
@@ -290,7 +354,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Bairro</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtBairro' className='input' value={detalhesPerfil.usuariosInformacoes.bairro} placeholder='O bairro em que você vive' disabled />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='bairro' className='input' value={formDadosPessoais.bairro} placeholder='O bairro em que você vive' disabled
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-map-marker-alt'></i>
                                                         </span>
@@ -304,7 +370,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Estado</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtEstado' className='input' value={detalhesPerfil.usuariosInformacoes.cidades.estados.sigla} placeholder='O estado em que você vive' disabled />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='estadoSigla' className='input' value={formDadosPessoais.estadoSigla} placeholder='O estado em que você vive' disabled
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-map-marked-alt'></i>
                                                         </span>
@@ -336,7 +404,9 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Cidade</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtCidade' className='input' value={detalhesPerfil.usuariosInformacoes.cidades.nome} placeholder='A cidade em que você vive' disabled />
+                                                        <input onChange={(e) => handleChangeFormDadosPessoais(e)}
+                                                            type='text' name='cidadeNome' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
+                                                        />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-city'></i>
                                                         </span>
@@ -349,7 +419,7 @@ export default function Atualizar() {
                                     <hr className='mt-4' />
 
                                     <div className='has-text-centered mt-4'>
-                                        <input type='submit' className='button is-primary' value='Salvar alterações' id='btnSalvarAlteracao' />
+                                        <input type='submit' className='button is-primary' value='Salvar alterações' />
                                     </div>
                                 </div>
                             </div>

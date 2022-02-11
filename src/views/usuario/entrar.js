@@ -105,7 +105,9 @@ export default function Index() {
             <div className='field mt-5'>
                 <label className='label'>Nome de usuário ou e-mail</label>
                 <div className='control has-icons-right'>
-                    <input type='email' name='usuario' className='input' onChange={handleChange} ref={refTxtNomeUsuario} onKeyPress={handleKeyPress} />
+                    <input type='email' name='usuario' className='input' placeholder='Seu nome de usuário ou e-mail registrado no Fluxo'
+                    onChange={handleChange} ref={refTxtNomeUsuario} onKeyPress={handleKeyPress}
+                     />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-user'></i>
                     </span>
@@ -115,7 +117,8 @@ export default function Index() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input type='password' name='senha' className='input' onChange={handleChange} ref={refTxtSenha} onKeyPress={handleKeyPress} />
+                    <input type='password' name='senha' className='input' placeholder='Sua senha'
+                    onChange={handleChange} ref={refTxtSenha} onKeyPress={handleKeyPress} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>
