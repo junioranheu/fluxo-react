@@ -12,7 +12,7 @@ export default function Perfil() {
     const [parametroPerfilUsuario] = useState(urlPagina.substring(urlPagina.lastIndexOf('@') + 1));
 
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
-    const [usuarioTipoId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioTipoId : null);
+    const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
 
     const [detalhesPerfil, setDetalhesPerfil] = useState([]);
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function Perfil() {
             NProgress.start();
 
             // Pegar o parâmetro da URL;
-            const url = `${CONSTANTS_USUARIOS.GET_POR_NOME_USUARIO_SISTEMA}?nomeUsuarioSistema=${parametroPerfilUsuario}`;
+            const url = `${CONSTANTS_USUARIOS.API_URL_GET_POR_NOME_USUARIO_SISTEMA}?nomeUsuarioSistema=${parametroPerfilUsuario}`;
             // console.log(url);
 
             let resposta = await Fetch.getApi(url);
@@ -36,7 +36,7 @@ export default function Perfil() {
 
         // Pegar os detalhes do usuário em questão;
         getDetalhesPerfilUsuario();
-    }, []);
+    }, [navigate, parametroPerfilUsuario]);
     // console.log(detalhesPerfil);
 
     if (detalhesPerfil.length < 1) {
@@ -44,11 +44,11 @@ export default function Perfil() {
     }
 
     return (
-        <div classNameName='mt-4'>
+        <div className='mt-4'>
             <h2>Perfil de @{detalhesPerfil.nomeUsuarioSistema}</h2>
 
             {
-                detalhesPerfil.usuarioId === usuarioTipoId && (
+                detalhesPerfil.usuarioId === usuarioId && (
                     <div className='mt-2'>
                         <a className='button is-small is-primary is-rounded' href='/perfil/atualizar'>Editar perfil</a>
                     </div>

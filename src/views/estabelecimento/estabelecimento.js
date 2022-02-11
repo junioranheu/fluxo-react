@@ -92,7 +92,7 @@ export default function Estabelecimento() {
 
         // Pegar as avaliações do estabelecimento;
         getAvaliacoes();
-    }, [parametroTipoEstabelecimentoId]);
+    }, [navigate, parametroTipoEstabelecimentoId]);
 
     // Ao carregar página, e depois que ter o valor em estabelecimento;
     const [posts, setPosts] = useState([]);

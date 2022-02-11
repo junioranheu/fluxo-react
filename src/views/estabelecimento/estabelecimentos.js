@@ -53,7 +53,7 @@ export default function Estabelecimento() {
             // console.log(url);
 
             let resposta = await Fetch.getApi(url);
-            console.log(resposta);
+            // console.log(resposta);
             if (resposta) {
                 const titulo = `Encontre ${resposta.genero} <span class='grifar'>${resposta.tipo.toLowerCase()}</span> perfeit${resposta.genero}`;
                 setTitulo(!cidadeNome ? titulo : (`${titulo} em <span class='grifar'>${cidadeNome}</span>`));
