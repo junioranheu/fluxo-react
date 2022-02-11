@@ -9,6 +9,8 @@ import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
+import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
+import verificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
 
 export default function CriarConta() {
     const refNomeCompleto = useRef();
@@ -32,42 +34,6 @@ export default function CriarConta() {
             [e.target.name]: e.target.value
         });
     };
-
-    function checarSenha(senha) {
-        var number = /([0-9])/;
-        var alphabets = /([a-zA-Z])/;
-        // var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
-
-        if (senha.length < 6) {
-            Aviso.warn('Sua senha deve ter pelo menos 06 caracteres', 6000);
-            refSenha.current.select();
-            refSenha.current.value = '';
-            formData.senha = '';
-            return false;
-        } else {
-            if (senha.match(number) && senha.match(alphabets)) { // && senha.match(special_characters)
-                // Aviso.success('Sua senha é bem forte!', 6000);
-                return true;
-            } else {
-                Aviso.warn('Sua senha não é forte o suficiente<br/>Lembre-se de usar: letras e números!', 6000);
-                refSenha.current.select();
-                refSenha.current.value = '';
-                formData.senha = '';
-                return false;
-            }
-        }
-    }
-
-    function checarEmail(email) {
-        //var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var regex = /^([a-zA-Z0-9_.\-+])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-        if (!regex.test(email)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     function padronizarNomeCompletoUsuario(nome) {
         // Trim o nome, já que o usuário pode colocar espaços a mais;
@@ -104,131 +70,13 @@ export default function CriarConta() {
         return nome;
     }
 
-    function verificarCampos() {
-        // Verificação 0;
-        if (!formData) {
-            NProgress.done();
-            Aviso.warn('Preencha os dados para criar sua conta', 5000);
-            refNomeCompleto.current.select();
-            return false;
-        }
-
-        // Verificação do nome #1: nome preenchido?;
-        if (!formData.nomeCompleto) {
-            NProgress.done();
-            Aviso.warn('Parece que você esqueceu de colocar o seu nome', 5000);
-            refNomeCompleto.current.select();
-            return false;
-        }
-
-        // Verificação do nome #2: pelo menos 03 caracteres?;
-        if (formData.nomeCompleto.length < 3) {
-            NProgress.done();
-            Aviso.warn('Seu nome não pode ter menos de 03 caracteres!', 5000);
-            refNomeCompleto.current.select();
-            return false;
-        }
-
-        // Verificação do nome #3: se existe pelo menos um espaço (dois nomes), false = não;
-        var reg = new RegExp("(\\w+)(\\s+)(\\w+)");
-        if (reg.test(formData.nomeCompleto) === false) {
-            NProgress.done();
-            Aviso.warn(formData.nomeCompleto + ' é um belo nome, mas cadê seu sobrenome?', 5000);
-            refNomeCompleto.current.select();
-            return false;
-        }
-
-        // Verificação de e-mail #1: e-mail preenchido?;
-        if (!formData.email) {
-            NProgress.done();
-            Aviso.warn('Parece que você esqueceu de colocar o seu e-mail', 5000);
-            refEmail.current.select();
-            return false;
-        }
-
-        // Verificação de e-mail #2: e-mail válido?;
-        if (checarEmail(formData.email) === false) {
-            NProgress.done();
-            Aviso.warn('Parece que esse e-mail não é válido...', 5000);
-            refEmail.current.select();
-            return false;
-        }
-
-        // Verificação de nome de usuário #1: nome de usuário preenchido?;
-        if (!formData.nomeUsuario) {
-            NProgress.done();
-            Aviso.warn('Parece que você esqueceu de colocar um nome de usuário (apelido que será utilizado no sistema)', 5000);
-            refNomeUsuario.current.select();
-            return false;
-        }
-
-        // Verificação de nome de usuário #2: pelo menos 03 caracteres?;
-        if (formData.nomeUsuario.length > 20 || formData.nomeUsuario.length < 4) {
-            NProgress.done();
-            Aviso.warn('O nome de usuário não pode ter não pode ter menos de 4 e nem mais de 10 caracteres, e agora está com ' + formData.nomeUsuario.length + '!', 5000);
-            refNomeUsuario.current.select();
-            return false;
-        }
-
-        // Verificação de senha #1: senha preenchida?;
-        if (!formData.senha) {
-            NProgress.done();
-            Aviso.warn('Parece que você esqueceu de colocar sua senha', 5000);
-            refSenha.current.select();
-            return false;
-        }
-
-        // Verificação da senha #2: realizar uma série de verificações, se alguma retornar falso, aborte;
-        if (checarSenha(formData.senha) === false) {
-            return false;
-        }
-
-        return true;
-    }
-
-    async function verificarEmailENomeUsuario(email, nomeUsuario) {
-        const urlIsExisteEmail = `${CONSTANTS.API_URL_GET_IS_EXISTE_EMAIL}?email=${email}`;
-        const urlIsExisteNomeUsuario = `${CONSTANTS.API_URL_GET_IS_EXISTE_NOME_USUARIO}?nomeUsuarioSistema=${nomeUsuario}`;
-        let isContinuar = true;
-
-        // Verificar e-mail;
-        let isJaExiste = await Fetch.getApi(urlIsExisteEmail);
-
-        if (isJaExiste) {
-            NProgress.done();
-            Aviso.warn('Existe outro usuário que já está usando este e-mail!', 5000);
-            refEmail.current.select();
-            refSenha.current.value = '';
-            formData.senha = '';
-
-            isContinuar = false;
-        }
-
-        // Verificar nome de usuário;
-        if (isContinuar) {
-            isJaExiste = await Fetch.getApi(urlIsExisteNomeUsuario);
-
-            if (isJaExiste) {
-                NProgress.done();
-                Aviso.warn('Existe outro usuário que já está usando este nome de usuário!', 5000);
-                refNomeUsuario.current.select();
-                refSenha.current.value = '';
-                formData.senha = '';
-
-                isContinuar = false;
-            }
-        }
-
-        return isContinuar;
-    }
-
     // Ao clicar no botão para entrar;
     async function handleSubmit(e) {
         NProgress.start();
         e.preventDefault();
 
         // Verificações;
-        let isContinuarUm = verificarCampos();
+        let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha);
         if (!isContinuarUm) {
             return false;
         }
@@ -237,7 +85,9 @@ export default function CriarConta() {
         formData.nomeCompleto = padronizarNomeCompletoUsuario(formData.nomeCompleto);
 
         // Verificar se o processo deve continuar, caso e-mail e senha estejam disponíveis para uso;
-        let isContinuarDois = await verificarEmailENomeUsuario(formData.email, formData.nomeUsuario);
+        const isNovoEmail = true;
+        const isNovoNomeUsuario = true;
+        let isContinuarDois = await verificarEmailENomeUsuario(formData, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
         if (!isContinuarDois) {
             return false;
         }
@@ -308,7 +158,7 @@ export default function CriarConta() {
             <div className='field mt-5'>
                 <label className='label'>Nome completo</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='text' name='nomeCompleto' autoComplete='weon' placeholder='Seu nome completo'
+                    <input className='input' type='text' name='nomeCompleto' placeholder='Seu nome completo' autoComplete='weon'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeCompleto}
                     />
                     <span className='icon is-small is-right'>
@@ -320,7 +170,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='email' name='email' autoComplete='weon' placeholder='Seu melhor e-mail'
+                    <input className='input' type='email' name='email' placeholder='Seu melhor e-mail' autoComplete='weon'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refEmail}
                     />
                     <span className='icon is-small is-right'>
@@ -335,7 +185,7 @@ export default function CriarConta() {
                     <span className='icon is-small is-left'>
                         <i className='fas fa-at'></i>
                     </span>
-                    <input className='input' type='text' name='nomeUsuario' autoComplete='weon' placeholder='Seu nome de usuário no Fluxo'
+                    <input className='input' type='text' name='nomeUsuario' placeholder='Seu nome de usuário no Fluxo' autoComplete='weon'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeUsuario}
                     />
                     <span className='icon is-small is-right'>
@@ -347,8 +197,8 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' name='senha' placeholder='Sua senha'
-                        autoComplete='weon' onChange={handleChange} onKeyPress={handleKeyPress} ref={refSenha}
+                    <input className='input' type='password' name='senha' placeholder='Sua senha' autoComplete='weon'
+                        onChange={handleChange} onKeyPress={handleKeyPress} ref={refSenha}
                     />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>

@@ -69,15 +69,6 @@ export default function Atualizar() {
         setIsAbaDadosFluxoSelecionada(false);
     }
 
-    // Verificações da foto de perfil e import dinâmico;
-    let fotoPerfilDinamica = '';
-    try {
-        // console.log(detalhesPerfil);
-        fotoPerfilDinamica = require('../../upload/usuario/' + detalhesPerfil.foto);
-    } catch (err) {
-        fotoPerfilDinamica = require('../../static/outro/sem-imagem.webp');
-    }
-
     if (detalhesPerfil.length < 1) {
         return null;
     }
@@ -112,14 +103,14 @@ export default function Atualizar() {
                                     <div className='tabs is-boxed mt-4'>
                                         <ul>
                                             <li onClick={() => handleClickAbaFluxo()} className={isAbaDadosFluxoSelecionada ? 'is-active' : ''}>
-                                                <a className='cor-preto'>
+                                                <a href={() => false} className='cor-preto'>
                                                     <span className='icon is-small'><i className='fas fa-mobile-alt' aria-hidden='true'></i></span>
                                                     <span>Dados do {nomeApp}</span>
                                                 </a>
                                             </li>
 
                                             <li onClick={() => handleClickAbaPessoal()} className={isAbaDadosPessoaisSelecionada ? 'is-active' : ''}>
-                                                <a className='cor-preto'>
+                                                <a href={() => false} className='cor-preto'>
                                                     <span className='icon is-small'><i className='fas fa-user-lock' aria-hidden='true'></i></span>
                                                     <span>Dados pessoais</span>
                                                 </a>
@@ -135,12 +126,6 @@ export default function Atualizar() {
                                     {/* <!-- #2 - Dados pessoais --> */}
                                     <div className={isAbaDadosPessoaisSelecionada ? '' : 'esconder'}>
                                         <AbaDadosPessoais props={detalhesPerfil} />
-                                    </div>
-
-                                    <hr className='mt-4' />
-
-                                    <div className='has-text-centered mt-4'>
-                                        <input type='submit' className='button is-primary' value='Salvar alterações' />
                                     </div>
                                 </div>
                             </div>

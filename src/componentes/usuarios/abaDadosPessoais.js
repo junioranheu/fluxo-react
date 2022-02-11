@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import InputMascara from '../outros/inputMascara';
 
@@ -6,10 +7,11 @@ export default function AbaDadosPessoais(props) {
     // console.log(prop);
 
     // formDadosPessoais;
+    const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format("DD/MM/YYYY") : '');
     const formDadosPessoaisJsonInicial = {
         cpf: prop.usuariosInformacoes?.cpf,
         telefone: prop.usuariosInformacoes?.telefone,
-        dataAniversario: prop.usuariosInformacoes?.dataAniversario,
+        dataAniversario: dataAniversarioFormatada,
         genero: prop.usuariosInformacoes?.genero,
         cep: prop.usuariosInformacoes?.cep,
         numeroResidencia: prop.usuariosInformacoes?.numeroResidencia,
@@ -29,15 +31,15 @@ export default function AbaDadosPessoais(props) {
     const [isHomem, setIsHomem] = useState('');
     const [isMulher, setIsMulher] = useState('');
     useEffect(() => {
-        if (formDadosPessoais.genero === '1') {
+        if (formDadosPessoais.genero === '1' || formDadosPessoais.genero === 1) {
             setIsHomem('checked');
             setIsMulher('');
-        } else if (formDadosPessoais.genero === '2') {
+        } else if (formDadosPessoais.genero === '2' || formDadosPessoais.genero === 2) {
             setIsMulher('checked');
             setIsHomem('');
         }
 
-        console.log(formDadosPessoais);
+        // console.log(formDadosPessoais);
     }, [formDadosPessoais]);
 
     if (!prop) {

@@ -105,7 +105,7 @@ export default function Index() {
             <div className='field mt-5'>
                 <label className='label'>Nome de usuário ou e-mail</label>
                 <div className='control has-icons-right'>
-                    <input type='email' name='usuario' className='input' placeholder='Seu nome de usuário ou e-mail registrado no Fluxo'
+                    <input type='email' name='usuario' className='input' placeholder='Seu nome de usuário ou e-mail'
                     onChange={handleChange} ref={refTxtNomeUsuario} onKeyPress={handleKeyPress}
                      />
                     <span className='icon is-small is-right'>
