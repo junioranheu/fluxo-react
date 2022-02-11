@@ -12,6 +12,7 @@ export default function Atualizar() {
     const navigate = useNavigate();
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
+    const [nomeUsuarioSistema] = useState(isAuth ? Auth.getUsuarioLogado().nomeUsuarioSistema : null);
     const nomeApp = 'Fluxo';
 
     const [detalhesPerfil, setDetalhesPerfil] = useState([]);
@@ -24,7 +25,7 @@ export default function Atualizar() {
             // console.log(url);
 
             let resposta = await Fetch.getApi(url);
-            console.log(resposta);
+            // console.log(resposta);
             if (resposta) {
                 setDetalhesPerfil(resposta);
                 NProgress.done();
@@ -38,9 +39,31 @@ export default function Atualizar() {
         getDetalhesPerfilUsuario();
     }, [navigate, usuarioId]);
 
+    const [faltaCompletarPerfil, setFaltaCompletarPerfil] = useState(false);
+    const [isHomem, setIsHomem] = useState('');
+    const [isMulher, setIsMulher] = useState('');
     useEffect(() => {
-        console.log(detalhesPerfil);
+        // console.log(detalhesPerfil);
+
+        if (!detalhesPerfil.usuariosInformacoes) {
+            setFaltaCompletarPerfil(true);
+        }
+
+        if (detalhesPerfil.usuariosInformacoes) {
+            if (detalhesPerfil.usuariosInformacoes.genero === 1) {
+                setIsHomem('checked');
+            } else if (detalhesPerfil.usuariosInformacoes.genero === 2) {
+                setIsMulher('checked');
+            }
+        }
     }, [detalhesPerfil]);
+
+    const [isAbaDadosFluxoSelecionada, setIsAbaDadosFluxoSelecionada] = useState(true);
+    const [isAbaDadosPessoaisSelecionada, setIsAbaDadosPessoaisSelecionada] = useState(false);
+    function handleClickAba() {
+        setIsAbaDadosFluxoSelecionada(!isAbaDadosFluxoSelecionada);
+        setIsAbaDadosPessoaisSelecionada(!isAbaDadosPessoaisSelecionada);
+    }
 
     if (detalhesPerfil.length < 1) {
         return null;
@@ -62,26 +85,27 @@ export default function Atualizar() {
 
                                     <hr />
 
-                                    {/* @if (TempData['AvisoDadosFaltantes'] != null)
                                     {
-                                        <div className='notification mt-4'>
-                                            <p>Ei, @Model.NomeUsuarioSistema, <span className='grifar'>parado aí</span> ✋</p>
-                                            <p>@Html.Raw(TempData['AvisoDadosFaltantes'].ToString())</p>
-                                            <p>Juramos que manteremos sua privacidade 🤠</p>
-                                        </div>
-                                    } */}
+                                        faltaCompletarPerfil && (
+                                            <div className='notification mt-4'>
+                                                <p>Ei, {nomeUsuarioSistema}, <span className='grifar'>parado aí</span> ✋</p>
+                                                <p>Preencha seus dados antes de sair por aí usando o sistema 😎</p>
+                                                <p>Juramos que manteremos sua privacidade 🤠</p>
+                                            </div>
+                                        )
+                                    }
 
                                     {/* <!-- #0 - Tabs --> */}
                                     <div className='tabs is-boxed mt-4'>
                                         <ul>
-                                            <li id='liDadosApp'>
+                                            <li onClick={() => handleClickAba()}>
                                                 <a className='cor-preto'>
                                                     <span className='icon is-small'><i className='fas fa-mobile-alt' aria-hidden='true'></i></span>
                                                     <span>Dados do {nomeApp}</span>
                                                 </a>
                                             </li>
 
-                                            <li id='liDadosPessoais'>
+                                            <li onClick={() => handleClickAba()}>
                                                 <a className='cor-preto'>
                                                     <span className='icon is-small'><i className='fas fa-user-lock' aria-hidden='true'></i></span>
                                                     <span>Dados pessoais</span>
@@ -91,7 +115,7 @@ export default function Atualizar() {
                                     </div>
 
                                     {/* <!-- #1 - Dados app --> */}
-                                    <div id='divDadosApp' className='esconder'>
+                                    <div className={isAbaDadosFluxoSelecionada ? '' : 'esconder'}>
                                         <div className='field has-image-centered texto-sem-highlight' id='div-imagem-perfil'>
                                             <label className='label'>Foto de perfil</label>
 
@@ -122,7 +146,7 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>Nome completo</label>
                                             <div className='control has-icons-right'>
-                                                <input type='text' id='txtNome' className='input' value='@Model.NomeCompleto' placeholder='Seu nome completo' />
+                                                <input type='text' id='txtNome' className='input' value={detalhesPerfil.nomeCompleto} placeholder='Seu nome completo' />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fas fa-signature'></i>
                                                 </span>
@@ -132,7 +156,7 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>E-mail</label>
                                             <div className='control has-icons-right'>
-                                                <input type='email' id='txtEmail' className='input' value='@Model.Email' placeholder='Seu melhor e-mail' />
+                                                <input type='email' id='txtEmail' className='input' value={detalhesPerfil.email} placeholder='Seu melhor e-mail' />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fas fa-at'></i>
                                                 </span>
@@ -142,7 +166,7 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>Nome de usuário</label>
                                             <div className='control has-icons-right'>
-                                                <input type='text' id='txtNomeUsuario' className='input' value='@Model.NomeUsuarioSistema' placeholder={`Seu nome de usuário no ${nomeApp}`} />
+                                                <input type='text' id='txtNomeUsuario' className='input' value={detalhesPerfil.nomeUsuarioSistema} placeholder={`Seu nome de usuário no ${nomeApp}`} />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fas fa-user'></i>
                                                 </span>
@@ -152,7 +176,7 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>Senha</label>
                                             <div className='control has-icons-right'>
-                                                <input type='password' id='txtSenha' className='input' value='@Model.Senha' placeholder='Sua senha' autoComplete='weon' />
+                                                <input type='password' id='txtSenha' className='input' value='' placeholder='Sua senha' autoComplete='weon' />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fa fa-key'></i>
                                                 </span>
@@ -161,13 +185,13 @@ export default function Atualizar() {
                                     </div>
 
                                     {/* <!-- #2 - Dados pessoais --> */}
-                                    <div id='divDadosPessoais' className='esconder'>
+                                    <div className={isAbaDadosPessoaisSelecionada ? '' : 'esconder'}>
                                         <div className='columns'>
                                             <div className='column'>
                                                 <div className='field'>
                                                     <label className='label'>CPF</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtCPF' className='input' value='@Model.UsuariosInformacoes?.CPF' placeholder='Seu CPF' />
+                                                        <input type='text' id='txtCPF' className='input' value={detalhesPerfil.usuariosInformacoes.cpf} placeholder='Seu CPF' />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-id-card'></i>
                                                         </span>
@@ -179,7 +203,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Telefone</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtTelefone' className='input' value='@Model.UsuariosInformacoes?.Telefone' placeholder='Seu número de telefone' />
+                                                        <input type='text' id='txtTelefone' className='input' value={detalhesPerfil.usuariosInformacoes.telefone} placeholder='Seu número de telefone' />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-mobile-alt'></i>
                                                         </span>
@@ -193,7 +217,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Data de aniversário</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtDataAniversario' className='input' value='@Model.UsuariosInformacoes?.DataAniversario' placeholder='Sua data de aniversário' />
+                                                        <input type='text' id='txtDataAniversario' className='input' value={detalhesPerfil.usuariosInformacoes.dataAniversario} placeholder='Sua data de aniversário' />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-birthday-cake'></i>
                                                         </span>
@@ -201,29 +225,24 @@ export default function Atualizar() {
                                                 </div>
                                             </div>
 
-                                            {/* <div className='column'>
+                                            <div className='column'>
                                                 <div className='field'>
-                                                    @{
-                                                        int genero = Convert.ToInt32(Model.UsuariosInformacoes?.Genero);
-                                                    string isMasculino = (genero == 1) ? 'checked' : '';
-                                                    string isFeminino = (genero == 2) ? 'checked' : '';
-                                                }
 
                                                     <label className='label'>Gênero</label>
 
                                                     <div className='control'>
                                                         <label className='radio'>
-                                                            <input type='radio' value='1' name='rbGenero' @isMasculino/>
-                                                            <span>Masculino</span>
+                                                            <input type='radio' value='1' name='rbGenero' checked={isHomem} />
+                                                            <span className='ml-2'>Masculino</span>
                                                         </label>
 
                                                         <label className='radio'>
-                                                            <input type='radio' value='2' name='rbGenero' @isFeminino/>
-                                                            <span>Feminino</span>
+                                                            <input type='radio' value='2' name='rbGenero' checked={isMulher} />
+                                                            <span className='ml-2'>Feminino</span>
                                                         </label>
                                                     </div>
                                                 </div>
-                                            </div> */}
+                                            </div>
                                         </div>
 
                                         <div className='columns'>
@@ -231,7 +250,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>CEP</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtCEP' className='input' value='@Model.UsuariosInformacoes?.CEP' placeholder='Seu CEP atual' />
+                                                        <input type='text' id='txtCEP' className='input' value={detalhesPerfil.usuariosInformacoes.cep} placeholder='Seu CEP atual' />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-globe-americas'></i>
                                                         </span>
@@ -243,7 +262,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Número da residência</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtNumeroResidencia' className='input' value='@Model.UsuariosInformacoes?.NumeroResidencia' placeholder='O número da sua residência' />
+                                                        <input type='text' id='txtNumeroResidencia' className='input' value={detalhesPerfil.usuariosInformacoes.numeroResidencia} placeholder='O número da sua residência' />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-home'></i>
                                                         </span>
@@ -257,7 +276,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Rua</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtRua' className='input' value='@Model.UsuariosInformacoes?.Rua' placeholder='A rua em que você vive' disabled />
+                                                        <input type='text' id='txtRua' className='input' value={detalhesPerfil.usuariosInformacoes.rua} placeholder='A rua em que você vive' disabled />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-road'></i>
                                                         </span>
@@ -269,7 +288,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Bairro</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtBairro' className='input' value='@Model.UsuariosInformacoes?.Bairro' placeholder='O bairro em que você vive' disabled />
+                                                        <input type='text' id='txtBairro' className='input' value={detalhesPerfil.usuariosInformacoes.bairro} placeholder='O bairro em que você vive' disabled />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-map-marker-alt'></i>
                                                         </span>
@@ -283,7 +302,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Estado</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtEstado' className='input' value='@Model.UsuariosInformacoes?.Cidades.Estados.Sigla' placeholder='O estado em que você vive' disabled />
+                                                        <input type='text' id='txtEstado' className='input' value={detalhesPerfil.usuariosInformacoes.cidades.estados.sigla} placeholder='O estado em que você vive' disabled />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-map-marked-alt'></i>
                                                         </span>
@@ -315,7 +334,7 @@ export default function Atualizar() {
                                                 <div className='field'>
                                                     <label className='label'>Cidade</label>
                                                     <div className='control has-icons-right'>
-                                                        <input type='text' id='txtCidade' className='input' value='@Model.UsuariosInformacoes?.Cidades.Nome' placeholder='A cidade em que você vive' disabled />
+                                                        <input type='text' id='txtCidade' className='input' value={detalhesPerfil.usuariosInformacoes.cidades.nome} placeholder='A cidade em que você vive' disabled />
                                                         <span className='icon is-small is-right'>
                                                             <i className='fas fa-city'></i>
                                                         </span>
@@ -325,9 +344,9 @@ export default function Atualizar() {
                                         </div>
                                     </div>
 
-                                    <hr />
+                                    <hr className='mt-4' />
 
-                                    <div className='has-text-centered mt-5'>
+                                    <div className='has-text-centered mt-4'>
                                         <input type='submit' className='button is-primary' value='Salvar alterações' id='btnSalvarAlteracao' />
                                     </div>
                                 </div>
