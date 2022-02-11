@@ -37,7 +37,10 @@ export default function Atualizar() {
         // Pegar os detalhes do usuário em questão;
         getDetalhesPerfilUsuario();
     }, [navigate, usuarioId]);
-    // console.log(detalhesPerfil);
+
+    useEffect(() => {
+        console.log(detalhesPerfil);
+    }, [detalhesPerfil]);
 
     if (detalhesPerfil.length < 1) {
         return null;
@@ -149,7 +152,7 @@ export default function Atualizar() {
                                         <div className='field'>
                                             <label className='label'>Senha</label>
                                             <div className='control has-icons-right'>
-                                                <input type='password' id='txtSenha' className='input' value='@Model.Senha' placeholder='Sua senha' autocomplete='new-password' />
+                                                <input type='password' id='txtSenha' className='input' value='@Model.Senha' placeholder='Sua senha' autoComplete='weon' />
                                                 <span className='icon is-small is-right'>
                                                     <i className='fa fa-key'></i>
                                                 </span>
