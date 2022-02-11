@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import ImagemErro from '../../static/svg/erro.svg';
 import { UsuarioContext } from '../../utilidades/context/usuarioContext';
+import CodigoAleatorio from '../../utilidades/utils/codigoAleatorio';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function SemAcesso() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -46,7 +48,7 @@ export default function SemAcesso() {
                                 <a className='button is-text' href='/reportar-problema'>Reportar problema</a>
                             </div>
 
-                            <p className='mt-3 text-muted small sem-highlight'>Ref: @codigoAleatorio @dt</p>
+                            <p className='mt-3 text-muted small sem-highlight'>Ref: {CodigoAleatorio(15)}{HorarioBrasilia.toString()}</p>
                         </div>
                     </div>
                 </div>
