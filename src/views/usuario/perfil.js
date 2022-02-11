@@ -1,15 +1,18 @@
 import NProgress from 'nprogress';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Aviso } from '../../componentes/outros/aviso';
-import '../../css/perfilEstabelecimento.css';
 import CONSTANTS_USUARIOS from '../../utilidades/const/constUsuarios';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function Perfil() {
     const navigate = useNavigate();
     const [urlPagina] = useState(window.location.pathname);
     const [parametroPerfilUsuario] = useState(urlPagina.substring(urlPagina.lastIndexOf('@') + 1));
+
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioTipoId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioTipoId : null);
 
     const [detalhesPerfil, setDetalhesPerfil] = useState([]);
     useEffect(() => {
@@ -41,8 +44,18 @@ export default function Perfil() {
     }
 
     return (
-        <div className='mt-4'>
-            <span>
+        <div classNameName='mt-4'>
+            <h2>Perfil de @{detalhesPerfil.nomeUsuarioSistema}</h2>
+
+            {
+                detalhesPerfil.usuarioId === usuarioTipoId && (
+                    <div className='mt-2'>
+                        <a className='button is-small is-primary is-rounded' href='/perfil/atualizar'>Editar perfil</a>
+                    </div>
+                )
+            }
+            
+            <span className='mt-2'>
                 dataCriacao: {detalhesPerfil.dataCriacao}<br />
                 dataOnline: {detalhesPerfil.dataOnline}<br />
                 email: {detalhesPerfil.email}<br />

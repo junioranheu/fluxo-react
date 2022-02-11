@@ -125,7 +125,7 @@ export default function Avaliar(props) {
             'avaliacao': formData.avaliacao,
             'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
         };
-        
+
         let resposta = await Fetch.postApi(url, avaliacao, token);
         if (resposta) {
             Aviso.success('Avaliação enviada com sucesso', 5000);
@@ -180,13 +180,20 @@ export default function Avaliar(props) {
                     <div className={`mt-6 ${isMostrarAvaliar ? 'animate__animated animate__fadeIn' : 'esconder'}`}>
                         <div className='field'>
                             <div className='control'>
-                                <textarea ref={refTextAreaComentario} name='comentario' onChange={handleChange} className='textarea' placeholder={`Detalhe sua avaliação do estabelecimento "${prop.nome}" aqui...`} style={{ resize: 'none' }}></textarea>
+                                <textarea ref={refTextAreaComentario} name='comentario' onChange={handleChange}
+                                    className='textarea' placeholder={`Detalhe sua avaliação para o estabelecimento "${prop.nome}" aqui e diga o porquê de ter dado a nota ${nota}`}
+                                    style={{ resize: 'none', borderRadius: '10px' }}></textarea>
                             </div>
                         </div>
 
-                        <div className='has-text-right'>
-                            <input type='button' className='button' value='Cancelar' onClick={() => hadleCancelarAvaliacao()} />
-                            <input ref={refBotaoEnviarAvaliacao} type='button' className='button is-primary ml-2' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
+                        <div className='columns'>
+                            <div className='column is-half'>
+                                <input type='button' className='button is-fullwidth' value='Cancelar' onClick={() => hadleCancelarAvaliacao()} />
+                            </div>
+
+                            <div className='column is-half'>
+                                <input ref={refBotaoEnviarAvaliacao} type='button' className='button is-primary is-fullwidth' value='Enviar avaliação' onClick={() => handleEnviarAvaliacao()} />
+                            </div>
                         </div>
                     </div>
                 </div>

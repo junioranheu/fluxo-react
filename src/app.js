@@ -11,6 +11,7 @@ import Reportar from './views/home/reportar';
 import SemAcesso from './views/home/semAcesso';
 import Sobre from './views/home/sobre';
 import Teste from './views/home/teste';
+import AtualizarPerfil from './views/usuario/atualizar';
 import CriarConta from './views/usuario/criarConta';
 import Entrar from './views/usuario/entrar';
 import Perfil from './views/usuario/perfil';
@@ -30,6 +31,7 @@ export default function App() {
       <Route path='/entrar' element={<Entrar />} />
       <Route path='/criar-conta' element={!isAuth ? <CriarConta /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/perfil/:nomeUsuarioSistema' element={<Perfil />} />
+      <Route path='/perfil/atualizar' element={<AtualizarPerfil />} />
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimentos />} />
       <Route path='/estabelecimento/:estabelecimentoId' element={<Estabelecimento />} />
