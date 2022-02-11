@@ -28,11 +28,15 @@ export default function AbaDadosPessoais(props) {
     const [isHomem, setIsHomem] = useState('');
     const [isMulher, setIsMulher] = useState('');
     useEffect(() => {
-        if (formDadosPessoaisJsonInicial.genero === 1) {
+        if (formDadosPessoais.genero === '1') {
             setIsHomem('checked');
-        } else if (formDadosPessoaisJsonInicial.genero === 2) {
+            setIsMulher('');
+        } else if (formDadosPessoais.genero === '2') {
             setIsMulher('checked');
+            setIsHomem('');
         }
+
+        // console.log(formDadosPessoais);
     }, [formDadosPessoais]);
 
     if (!prop) {
@@ -92,12 +96,12 @@ export default function AbaDadosPessoais(props) {
 
                         <div className='control'>
                             <label className='radio'>
-                                <input type='radio' value='1' name='rbGenero' checked={isHomem} />
+                                <input type='radio' value='1' name='genero' checked={isHomem} onChange={(e) => handleChangeFormDadosPessoais(e)} />
                                 <span className='ml-2'>Masculino</span>
                             </label>
 
                             <label className='radio'>
-                                <input type='radio' value='2' name='rbGenero' checked={isMulher} />
+                                <input type='radio' value='2' name='genero' checked={isMulher} onChange={(e) => handleChangeFormDadosPessoais(e)} />
                                 <span className='ml-2'>Feminino</span>
                             </label>
                         </div>
