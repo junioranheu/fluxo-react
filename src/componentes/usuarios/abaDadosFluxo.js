@@ -4,12 +4,13 @@ import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import padronizarNomeCompletoUsuario from '../../utilidades/utils/padronizarNomeCompletoUsuario';
 import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
 import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
 
 export default function AbaDadosFluxo(props) {
     const [prop] = useState(props['props']);
-    console.log(prop);
+    // console.log(prop);
     const nomeApp = 'Fluxo';
 
     // Refs;
@@ -24,7 +25,14 @@ export default function AbaDadosFluxo(props) {
         nomeCompleto: prop.nomeCompleto,
         email: prop.email,
         nomeUsuarioSistema: prop.nomeUsuarioSistema,
-        senha: ''
+        senha: '',
+        // Padrão;
+        dataCriacao: prop.dataCriacao,
+        dataOnline: prop.dataOnline,
+        foto: prop.foto,
+        isAtivo: prop.isAtivo,
+        isPremium: prop.isPremium,
+        usuarioTipoId: prop.usuarioTipoId
     }
     const [formDadosFluxo, setFormDadosFluxo] = useState(formDadosFluxoJsonInicial);
     function handleChangeFormDadosFluxo(e) {
@@ -62,12 +70,16 @@ export default function AbaDadosFluxo(props) {
             }
         }
 
+        // Atribuir o nome formatado para a variavel nome, novamente;
+        formDadosFluxo.nomeCompleto = padronizarNomeCompletoUsuario(formDadosFluxo.nomeCompleto);
+
         // Atualizar informações;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
         let resposta = await Fetch.postApi(url, formDadosFluxo, token);
         if (resposta) {
-            console.log('Ok: ' + resposta);
+            Aviso.success('Informações atualizadas com sucesso', 5000);
+            NProgress.done();
         } else {
             Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
         }
