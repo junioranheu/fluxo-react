@@ -9,7 +9,7 @@ import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENo
 
 export default function AbaDadosFluxo(props) {
     const [prop] = useState(props['props']);
-    // console.log(prop);
+    console.log(prop);
     const nomeApp = 'Fluxo';
 
     // Refs;
@@ -20,6 +20,7 @@ export default function AbaDadosFluxo(props) {
 
     // formDadosFluxo;
     const formDadosFluxoJsonInicial = {
+        usuarioId: prop.usuarioId,
         nomeCompleto: prop.nomeCompleto,
         email: prop.email,
         nomeUsuarioSistema: prop.nomeUsuarioSistema,

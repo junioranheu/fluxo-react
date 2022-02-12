@@ -7,7 +7,7 @@ import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 export default function Navbar() {
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [isNavbarExpandido, setIsNavbarExpandido] = useState(false);
-    const [caminhoPerfil] = useState(isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '');
+    const caminhoPerfil = isAuth ? ('/perfil/@' + Auth.getUsuarioLogado().nomeUsuarioSistema) : '';
     const navigate = useNavigate();
 
     // Verificações da foto de perfil e import dinâmico;
@@ -21,7 +21,7 @@ export default function Navbar() {
         } catch (err) {
             // console.log('Imagem não existe');        
             // console.log(err);
-        }
+        }       
     }
 
     function deslogar() {
