@@ -2,6 +2,7 @@ import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export const Fetch = {
     async getApi(url, token) {
+        // console.log(url);
         let respostaJson = '';
         let headers = {
             'Accept': 'application/json',
