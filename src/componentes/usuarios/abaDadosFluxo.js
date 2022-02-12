@@ -73,6 +73,18 @@ export default function AbaDadosFluxo(props) {
         // Atribuir o nome formatado para a variavel nome, novamente;
         formDadosFluxo.nomeCompleto = padronizarNomeCompletoUsuario(formDadosFluxo.nomeCompleto);
 
+        // Criptografar a senha;
+        const urlCriptografar = `${CONSTANTS.API_URL_GET_CRIPTOGRAFAR}?senha=${formDadosFluxo.senha}`;
+        // console.log(urlCriptografar);
+        const senhaCriptografada = await Fetch.getApi(urlCriptografar);
+        if (!senhaCriptografada) {
+            Aviso.error('Algo deu errado ao criptografar sua senha!', 5000);
+            return false;
+        }
+
+        // Atribuir a senha criptografada;
+        formDadosFluxo.senha = senhaCriptografada;
+
         // Atualizar informações;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
