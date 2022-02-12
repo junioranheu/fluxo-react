@@ -1,7 +1,7 @@
 import '../../css/itens.css';
 import SemImagem from '../../static/outro/cinza.webp';
 
-export default function TipoEstabelecimento(props) {
+export default function Item(props) {
     // console.log(props);
 
     // Import dinâmico;
