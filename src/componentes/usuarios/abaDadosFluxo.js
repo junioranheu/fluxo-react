@@ -29,7 +29,7 @@ export default function AbaDadosFluxo(props) {
         senha: '',
         // Padrão;
         dataCriacao: prop.dataCriacao,
-        dataOnline: prop.dataOnline, 
+        dataOnline: prop.dataOnline,
         foto: prop.foto,
         isAtivo: prop.isAtivo,
         isPremium: prop.isPremium,
@@ -114,7 +114,7 @@ export default function AbaDadosFluxo(props) {
 
                 <input type='file' accept='image/*' />
 
-                <BotaoUpload/>
+                <BotaoUpload texto='Upar imagem' pathUpload='../../upload/usuario/' />
             </div>
 
             <div className='field'>
