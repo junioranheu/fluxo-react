@@ -97,7 +97,7 @@ p{font-size:16px;font-weight:400;line-height:24px;color:#777;margin:0}
 .single-slider{padding:0 30px}
 }
 .single-slider .slider-bg{background-color:inherit}
-.single-slider .slider-product-image img{width:100%}
+.single-slider .slider-product-image img{width:100%!important}
 .single-slider .slider-product-image .slider-discount-tag{width:125px;height:125px;background-color:var(--cor-principal);border-radius:50%;text-align:center;display:table;position:absolute;top:90px;right:-63px}
 @media only screen and (min-width:992px) and (max-width:1200px){
 .single-slider .slider-product-image .slider-discount-tag{width:100px;height:100px;right:-50px;top:50px}

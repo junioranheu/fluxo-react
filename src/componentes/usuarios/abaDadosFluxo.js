@@ -1,6 +1,7 @@
 import NProgress from 'nprogress';
 import React, { useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
+import BotaoUpload from '../../componentes/outros/botaoUpload';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
@@ -112,6 +113,8 @@ export default function AbaDadosFluxo(props) {
                 </div>
 
                 <input type='file' accept='image/*' />
+
+                <BotaoUpload/>
             </div>
 
             <div className='field'>
