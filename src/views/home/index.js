@@ -39,7 +39,7 @@ export default function Index() {
             'mostrarApenasAutenticado': true,
             'usuarioTipoId': 3, // Estabelecimento;
             'imagem': 'static/cards/loja.webp',
-            'titulo': 'aaaaa',
+            'titulo': 'Perfil',
             'descricao': 'Oi, né?<br/>Veja o perfil de seu estabelecimento',
             'url': 'aaaaaaaaa',
             'mensagemBotao': 'Ver',

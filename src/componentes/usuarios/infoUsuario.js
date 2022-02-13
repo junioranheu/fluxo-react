@@ -1,5 +1,5 @@
 import { useHealthCheck } from '@webscopeio/react-health-check';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 
 export default function InfoUsuario() {
@@ -18,10 +18,6 @@ export default function InfoUsuario() {
             console.log(`API "${service.name}" não está disponível no momento 😔`);
         },
     });
-
-    useEffect(() => {
-        console.log(available);
-    }, [])
 
     return (
         <code className='mt-4' style={{ borderRadius: 10, padding: 20 }}>

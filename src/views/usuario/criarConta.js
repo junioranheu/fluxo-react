@@ -39,12 +39,14 @@ export default function CriarConta() {
     // Ao clicar no botão para entrar;
     async function handleSubmit(e) {
         NProgress.start();
+        refBtnCriar.current.disabled = true;
         e.preventDefault();
 
         // Verificações;
         const isTrocouSenha = true;
         let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha);
         if (!isContinuarUm) {
+            refBtnCriar.current.disabled = false;
             return false;
         }
 
@@ -56,6 +58,7 @@ export default function CriarConta() {
         const isNovoNomeUsuario = true;
         let isContinuarDois = await VerificarEmailENomeUsuario(formData, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
         if (!isContinuarDois) {
+            refBtnCriar.current.disabled = false;
             return false;
         }
 
@@ -78,6 +81,7 @@ export default function CriarConta() {
             // console.log('Ok: ' + resposta);
             await getToken(formData.nomeUsuarioSistema, formData.senha);
         } else {
+            refBtnCriar.current.disabled = false;
             Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
         }
     };

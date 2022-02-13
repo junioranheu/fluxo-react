@@ -39,6 +39,7 @@ export default function Index() {
     // Ao clicar no botão para entrar;
     async function handleSubmit(e) {
         NProgress.start();
+        refBtnEntrar.current.disabled = true;
         e.preventDefault();
 
         if (!formData || !formData.usuario || !formData.senha) {
@@ -46,6 +47,7 @@ export default function Index() {
             Aviso.error('O nome de usuário e/ou e-mail estão vazios!', 5000);
             refTxtSenha.current.value = '';
             refTxtNomeUsuario.current.select();
+            refBtnEntrar.current.disabled = false;
             return false;
         }
 
@@ -61,6 +63,7 @@ export default function Index() {
             refTxtSenha.current.value = '';
             formData.senha = '';
             refTxtNomeUsuario.current.select();
+            refBtnEntrar.current.disabled = false;
             Aviso.error('Algo deu errado<br/>Provavelmente o usuário e/ou a senha estão errados!', 5000);
         }
     };
@@ -106,8 +109,8 @@ export default function Index() {
                 <label className='label'>Nome de usuário ou e-mail</label>
                 <div className='control has-icons-right'>
                     <input type='email' name='usuario' className='input' placeholder='Seu nome de usuário ou e-mail'
-                    onChange={handleChange} ref={refTxtNomeUsuario} onKeyPress={handleKeyPress}
-                     />
+                        onChange={handleChange} ref={refTxtNomeUsuario} onKeyPress={handleKeyPress}
+                    />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-user'></i>
                     </span>
@@ -118,7 +121,7 @@ export default function Index() {
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
                     <input type='password' name='senha' className='input' placeholder='Sua senha'
-                    onChange={handleChange} ref={refTxtSenha} onKeyPress={handleKeyPress} />
+                        onChange={handleChange} ref={refTxtSenha} onKeyPress={handleKeyPress} />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>
