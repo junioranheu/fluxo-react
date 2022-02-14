@@ -8,6 +8,7 @@ import padronizarNomeCompletoUsuario from '../../utilidades/utils/padronizarNome
 import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
 import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
+import BotaoUparImagem from '../outros/botaoUparImagem';
 
 export default function AbaDadosFluxo(props) {
     const [prop] = useState(props['props']);
@@ -113,6 +114,8 @@ export default function AbaDadosFluxo(props) {
                 </div>
 
                 <input type='file' accept='image/*' />
+
+                <BotaoUparImagem />
             </div>
 
             <div className='field'>
