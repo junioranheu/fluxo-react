@@ -1,8 +1,8 @@
 import NProgress from 'nprogress';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
-import { Auth } from '../../utilidades/context/usuarioContext';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import padronizarNomeCompletoUsuario from '../../utilidades/utils/padronizarNomeCompletoUsuario';
 import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
@@ -11,9 +11,12 @@ import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENo
 import BotaoUparImagem from '../outros/botaoUparImagem';
 
 export default function AbaDadosFluxo(props) {
+    const nomeApp = 'Fluxo';
     const [prop] = useState(props['props']);
     // console.log(prop);
-    const nomeApp = 'Fluxo';
+
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
 
     // Refs;
     const refNomeCompleto = useRef();
@@ -115,7 +118,11 @@ export default function AbaDadosFluxo(props) {
 
                 <input type='file' accept='image/*' />
 
-                <BotaoUparImagem />
+                {
+                    usuarioId && (
+                        <BotaoUparImagem props={usuarioId} />
+                    )
+                }
             </div>
 
             <div className='field'>

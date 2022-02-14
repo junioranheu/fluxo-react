@@ -4,7 +4,9 @@ import CONSTANTS from '../../utilidades/const/constUsuarios';
 
 // https://sankhadip.medium.com/how-to-upload-files-in-net-core-web-api-and-react-36a8fbf5c9e8
 // https://thewebdev.info/2021/11/07/how-to-read-and-upload-a-file-in-react-using-custom-button/
-export default function BotaoUparImagem() {
+export default function BotaoUparImagem(props) {
+    const [usuarioId] = useState(props['props']);
+    // console.log(usuarioId);
     const refBtnUpar = useRef();
     const [arquivo, setArquivo] = useState();
 
@@ -17,11 +19,11 @@ export default function BotaoUparImagem() {
     // Ao upar um arquivo;
     useEffect(() => {
         async function postUparImagem() {
-            console.log(arquivo);
+            // console.log(arquivo);
             const formData = new FormData();
             formData.append('formPasta', 'usuario');
-            // formData.append('formId', '111');
-            formData.append('fileName', arquivo);
+            formData.append('formId', usuarioId.toString());
+            formData.append('formFile', arquivo);
 
             // Upar;
             const url = CONSTANTS.API_URL_POST_UPAR_IMAGEM;
@@ -31,15 +33,12 @@ export default function BotaoUparImagem() {
                 method: 'POST',
                 body: formData
             }).then(function (res) {
-                console.log(res);
-
                 if (res.ok) {
                     Aviso.success('Foto de perfil atualizada com sucesso', 5000);
                 } else if (res.status === 401) {
                     Aviso.error('Erro 401!', 5000);
                 }
             }, function (e) {
-                console.log(e);
                 Aviso.error('Algo deu errado ao upar esse arquivo!', 5000);
             });
         }
