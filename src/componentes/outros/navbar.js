@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
+import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 
 export default function Navbar() {
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -14,14 +15,7 @@ export default function Navbar() {
     let fotoPerfilDinamica = '';
     if (isAuth) {
         const foto = Auth.getUsuarioLogado().foto;
-
-        try {
-            fotoPerfilDinamica = require('../../upload/usuario/' + foto);
-            // console.log('Ok');
-        } catch (err) {
-            // console.log('Imagem não existe');        
-            // console.log(err);
-        }       
+        fotoPerfilDinamica = `${UrlImagemApi}/usuario/${foto}`;  
     }
 
     function deslogar() {

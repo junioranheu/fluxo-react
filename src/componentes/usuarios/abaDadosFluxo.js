@@ -1,11 +1,11 @@
 import NProgress from 'nprogress';
 import React, { useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
-import BotaoUpload from '../../componentes/outros/botaoUpload';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import padronizarNomeCompletoUsuario from '../../utilidades/utils/padronizarNomeCompletoUsuario';
+import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
 import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
 
@@ -46,7 +46,7 @@ export default function AbaDadosFluxo(props) {
     // Verificações da foto de perfil e import dinâmico;
     let fotoPerfilDinamica = '';
     try {
-        fotoPerfilDinamica = require('../../upload/usuario/' + prop.foto);
+        fotoPerfilDinamica = `${UrlImagemApi}/usuario/${prop.foto}`;
     } catch (err) {
         fotoPerfilDinamica = require('../../static/outro/sem-imagem.webp');
     }
@@ -113,8 +113,6 @@ export default function AbaDadosFluxo(props) {
                 </div>
 
                 <input type='file' accept='image/*' />
-
-                <BotaoUpload texto='Upar imagem' pathUpload='../../upload/usuario/' />
             </div>
 
             <div className='field'>

@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "@rpldy/upload-button": "^0.17.4",
-    "@rpldy/upload-preview": "^0.17.4",
-    "@rpldy/uploady": "^0.17.4",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
