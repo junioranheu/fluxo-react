@@ -2,6 +2,7 @@ import moment from 'moment';
 import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
+import { Validacao } from '../../utilidades/utils/validacao';
 import InputMascara from '../outros/inputMascara';
 
 export default function AbaDadosPessoais(props) {
@@ -100,6 +101,14 @@ export default function AbaDadosPessoais(props) {
             return false;
         }
 
+        // Verificação do cpf #2: cpf válido?;
+        if (!Validacao.validarCPF(formDadosPessoais.cpf)) {
+            NProgress.done();
+            Aviso.warn('Parece que esse CPF não é válido', 5000);
+            refCpf.current.select();
+            return false;
+        }
+
         // Verificação do telefone #1: telefone preenchido?;
         if (!formDadosPessoais.telefone) {
             NProgress.done();
@@ -108,10 +117,26 @@ export default function AbaDadosPessoais(props) {
             return false;
         }
 
+        // Verificação do telefone #2: telefone preenchido completamente?;
+        if (formDadosPessoais.telefone.length < 13) {
+            NProgress.done();
+            Aviso.warn('Parece que esse número de telefone não é válido', 5000);
+            refTelefone.current.select();
+            return false;
+        }
+
         // Verificação de aniversário #1: dataAniversario preenchido?;
         if (!formDadosPessoais.dataAniversario) {
             NProgress.done();
             Aviso.warn('Parece que você esqueceu de colocar sua data de nascimento', 5000);
+            refDataAniversario.current.select();
+            return false;
+        }
+
+        // Verificação de aniversário #2: dataAniversario válida?;
+        if (!Validacao.validarData(formDadosPessoais.dataAniversario)) {
+            NProgress.done();
+            Aviso.warn('Parece que essa data não é válida', 5000);
             refDataAniversario.current.select();
             return false;
         }
@@ -130,6 +155,15 @@ export default function AbaDadosPessoais(props) {
             refCep.current.select();
             return false;
         }
+
+        // Verificação de cep #1: cep válido?;
+        if (formDadosPessoais.cep.length < 9) {
+            NProgress.done();
+            Aviso.warn('Parece que esse CEP não é válido', 5000);
+            refCep.current.select();
+            return false;
+        }
+
 
         // Verificação de número de residência #1: numeroResidencia preenchido?;
         if (!formDadosPessoais.numeroResidencia) {

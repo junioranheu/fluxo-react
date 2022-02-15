@@ -14,9 +14,12 @@ export default function Navbar() {
     // Verificações da foto de perfil e import dinâmico;
     let fotoPerfilDinamica = '';
     if (isAuth) {
+        fotoPerfilDinamica = UrlImagemApi; // Padrão;
+        
         const foto = Auth.getUsuarioLogado().foto;
-        fotoPerfilDinamica = `${UrlImagemApi}/usuario/${foto}`; 
-        // console.log(fotoPerfilDinamica); 
+        if (foto) {
+            fotoPerfilDinamica = `${UrlImagemApi}/usuario/${foto}`;
+        }
     }
 
     function deslogar() {
