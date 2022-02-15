@@ -1,17 +1,22 @@
 import moment from 'moment';
 import NProgress from 'nprogress';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS_CIDADES from '../../utilidades/const/constCidades';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
-import { Auth } from '../../utilidades/context/usuarioContext';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import horarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 import { Validacao } from '../../utilidades/utils/validacao';
 import InputMascara from '../outros/inputMascara';
 
 export default function AbaDadosPessoais(props) {
     const [prop] = useState(props['props']);
     // console.log(prop);
+
+    // Auth;
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
 
     // Refs;
     const refCpf = useRef(null);
@@ -26,19 +31,14 @@ export default function AbaDadosPessoais(props) {
     const [cidadeNome, setCidadeNome] = useState(prop.usuariosInformacoes?.cidades.nome);
 
     // formDadosPessoais;
-    const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format("DD/MM/YYYY") : '');
+    const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format('DD/MM/YYYY') : '');
     const formDadosPessoaisJsonInicial = {
         cpf: prop.usuariosInformacoes?.cpf,
         telefone: prop.usuariosInformacoes?.telefone,
         dataAniversario: dataAniversarioFormatada,
         genero: prop.usuariosInformacoes?.genero,
         cep: prop.usuariosInformacoes?.cep,
-        numeroResidencia: prop.usuariosInformacoes?.numeroResidencia,
-        rua: prop.usuariosInformacoes?.rua,
-        bairro: prop.usuariosInformacoes?.bairro,
-        estadoSigla: prop.usuariosInformacoes?.cidades.estados.sigla,
-        cidadeNome: prop.usuariosInformacoes?.cidades.nome,
-        cidadeId: prop.usuariosInformacoes?.cidadeId
+        numeroResidencia: prop.usuariosInformacoes?.numeroResidencia
     }
     const [formDadosPessoais, setFormDadosPessoais] = useState(formDadosPessoaisJsonInicial);
     function handleChangeFormDadosPessoais(e) {
@@ -206,6 +206,7 @@ export default function AbaDadosPessoais(props) {
         // console.log(urlCidade);
         let respostaCidade = await Fetch.getApi(urlCidade);
         if (!respostaCidade) {
+            NProgress.done();
             Aviso.error('Houve um erro ao buscar a identicação da sua cidade com base no nome dela e a sigla do seu estado!', 5000);
             return false;
         }
@@ -217,6 +218,25 @@ export default function AbaDadosPessoais(props) {
         formDadosPessoais.cidadeNome = cidadeNome;
         formDadosPessoais.cidadeId = respostaCidade.cidadeId;
 
+        // Montar o json para atualizar infos;
+        const usuarioInformacoesJson = {
+            usuariosInformacoes: {
+                // usuarioInformacaoId: 1,
+                usuarioId: usuarioId,
+                genero: formDadosPessoais.genero,
+                dataAniversario: formDadosPessoais.dataAniversario,
+                cpf: formDadosPessoais.cpf,
+                telefone: formDadosPessoais.telefone,
+                rua: rua,
+                numeroResidencia: formDadosPessoais.numeroResidencia,
+                cep: formDadosPessoais.cep,
+                bairro: bairro,
+                cidadeId: respostaCidade.cidadeId,
+                dataUltimaAlteracao: horarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+            }
+        };
+        // console.log(usuarioInformacoesJson);
+  
         // Atualizar informações;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
