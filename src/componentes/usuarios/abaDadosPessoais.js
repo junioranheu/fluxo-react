@@ -238,7 +238,7 @@ export default function AbaDadosPessoais(props) {
         // console.log(usuarioInformacoesJson);
   
         // Atualizar informações;
-        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
+        const url = CONSTANTS.POST_ATUALIZAR_INFORMACOES;
         const token = Auth.getUsuarioLogado().token;
         let resposta = await Fetch.postApi(url, formDadosPessoais, token);
         if (resposta) {
