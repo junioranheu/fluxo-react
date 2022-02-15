@@ -56,6 +56,23 @@ export default function AbaDadosPessoais(props) {
         // console.log(formDadosPessoais);
     }, [formDadosPessoais]);
 
+    async function handleBuscarCEP(e) {
+        const cep = e.target.value;
+
+        if (cep.length === 9) {
+            const cepFormato = cep.replace(/\D/g, '');
+            const urlViaCep = `https://viacep.com.br/ws/${cepFormato}/json/`;
+            // console.log(urlViaCep);
+
+            let resposta = await Fetch.getApi(urlViaCep);
+            if (resposta) {
+                console.log(resposta);
+            } else {
+                Aviso.warn(`Houve um erro ao encontrar as informações do cep ${cep}!`, 5000);
+            }
+        }
+    }
+
     async function handleSubmitDadosPessoais() {
         NProgress.start();
 
@@ -253,7 +270,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>CEP</label>
                         <div className='control has-icons-right'>
-                            <InputMascara mask='99999-999' onChange={(e) => handleChangeFormDadosPessoais(e)} innerRef={refCep}
+                            <InputMascara mask='99999-999' onChange={(e) => { handleChangeFormDadosPessoais(e); handleBuscarCEP(e); }} innerRef={refCep}
                                 type='text' name='cep' className='input' value={formDadosPessoais.cep} placeholder='Seu CEP atual' />
 
                             <span className='icon is-small is-right'>
