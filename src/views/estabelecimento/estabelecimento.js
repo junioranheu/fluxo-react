@@ -16,6 +16,7 @@ import CONSTANTS_AVALIACOES from '../../utilidades/const/constEstabelecimentosAv
 import CONSTANTS_POSTS from '../../utilidades/const/constPosts';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import urlImagemApi from '../../utilidades/utils/urlImagemApi';
 
 export default function Estabelecimento() {
     const navigate = useNavigate();
@@ -138,7 +139,7 @@ export default function Estabelecimento() {
     // Import dinâmico;
     let imagemDinamica = '';
     try {
-        imagemDinamica = require('../../static/' + estabelecimento.thumbnail);
+        imagemDinamica = `${urlImagemApi}/${estabelecimento.thumbnail}`;
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);

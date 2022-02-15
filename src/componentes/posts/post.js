@@ -11,7 +11,7 @@ export default function Post(props) {
     let imagemDinamica = '';
     try {
         imagemDinamica = `${UrlImagemApi}/${prop.midia}`;
-        console.log(imagemDinamica);
+        // console.log(imagemDinamica);
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);
