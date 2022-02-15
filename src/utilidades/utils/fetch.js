@@ -72,5 +72,35 @@ export const Fetch = {
         }
 
         return respostaJson;
+    },
+
+    async postUparImagemApi(url, formData, token) {
+        let resposta = '';
+        let headers = {
+            'Authorization': `Bearer ${token}`
+        }
+
+        try {
+            resposta = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: formData
+            });
+
+            // console.log(resposta);
+        } catch (erro) {
+            const e = {
+                'url': url,
+                'formData': formData,
+                'token': token,
+                'erro': erro.message,
+                'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+            }
+
+            console.table(e);
+            // Aviso.error('Houve uma falha na requisição POST (Upar imagem) ao servidor!', 5000);
+        }
+
+        return resposta;
     }
 }

@@ -18,7 +18,7 @@ export const UsuarioProvider = props => {
 export const Auth = {
     // Função para salar o usuário logado (local storage);
     setUsuarioLogado(data) {
-        // console.log(data);
+        console.log(data);
         const dadosUsuario = {
             usuarioId: data.usuarioId,
             nome: data.nomeCompleto,
@@ -29,7 +29,7 @@ export const Auth = {
             cidadeNome: data.usuariosInformacoes.cidades.nome,
             token: data.token
         };
-        // console.log(dadosUsuario);
+        console.log(dadosUsuario);
 
         let parsedData = JSON.stringify(dadosUsuario);
         localStorage.setItem('usuarioAutenticado', parsedData);

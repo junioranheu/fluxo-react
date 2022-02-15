@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useState } from 'react';
 import SemImagemSmile from '../../static/outro/smile.webp';
-import urlImagemApi from '../../utilidades/utils/urlImagemApi';
+import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 
 export default function Post(props) {
     // console.log(props);
@@ -10,7 +10,7 @@ export default function Post(props) {
     // Import dinâmico;
     let imagemDinamica = '';
     try {
-        imagemDinamica = `${urlImagemApi}/${prop.midia}`;
+        imagemDinamica = `${UrlImagemApi}/${prop.midia}`;
         console.log(imagemDinamica);
     } catch (err) {
         // console.log('Imagem não existe');        

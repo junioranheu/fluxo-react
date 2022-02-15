@@ -6,7 +6,7 @@ export default function InfoUsuario() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
 
     // Health da API;
-    const { available, refresh } = useHealthCheck({
+    const { available } = useHealthCheck({
         service: {
             name: 'fluxo_api',
             url: 'https://fluxoapi.azurewebsites.net/status',

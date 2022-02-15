@@ -1,6 +1,6 @@
 import '../../css/itens.css';
 import SemImagem from '../../static/outro/cinza.webp';
-import urlImagemApi from '../../utilidades/utils/urlImagemApi';
+import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 
 export default function Item(props) {
     // console.log(props);
@@ -8,7 +8,7 @@ export default function Item(props) {
     // Import dinâmico;
     let imagemDinamica = '';
     try {
-        imagemDinamica = `${urlImagemApi}/${props.thumbnail}`;
+        imagemDinamica = `${UrlImagemApi}/${props.thumbnail}`;
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);

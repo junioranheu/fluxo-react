@@ -1,6 +1,7 @@
 import NProgress from 'nprogress';
 import React, { useContext, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
+import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
@@ -48,14 +49,33 @@ export default function AbaDadosFluxo(props) {
     }
 
     // Verificações da foto de perfil e import dinâmico;
-    let fotoPerfilDinamica = '';
-    try {
-        fotoPerfilDinamica = `${UrlImagemApi}/usuario/${prop.foto}`;
-    } catch (err) {
-        fotoPerfilDinamica = require('../../static/outro/sem-imagem.webp');
+    const [fotoPerfilDinamica, setFotoPerfilDinamica] = useState(prop.foto ? `${UrlImagemApi}/usuario/${prop.foto}` : SemImagem);
+
+    function exibirFotoPerfilAlterada(arq, caminhoImagem) {
+        console.log(arq);
+        setFotoPerfilDinamica(URL.createObjectURL(arq));
+
+        // Atualizar os dados que estão em usuarioContext.js/Auth;
+        // Atualizar a foto de perfil;
+        const dadosUsuario = {
+            usuarioId: Auth.getUsuarioLogado().usuarioId,
+            nomeCompleto: Auth.getUsuarioLogado().nome,
+            nomeUsuarioSistema: Auth.getUsuarioLogado().nomeUsuarioSistema,
+            usuarioTipoId: Auth.getUsuarioLogado().usuarioTipoId,
+            foto: caminhoImagem, // Alterar;
+            usuariosInformacoes: {
+                cidadeId: Auth.getUsuarioLogado().cidadeId,
+                cidades: {
+                    nome: Auth.getUsuarioLogado().cidadeNome
+                }
+            },
+            token: Auth.getUsuarioLogado().token
+        };
+
+        Auth.setUsuarioLogado(dadosUsuario);
     }
 
-    async function handleSubmit() {
+    async function handleSubmitDadosFluxo() {
         NProgress.start();
 
         // Verificações;
@@ -79,16 +99,18 @@ export default function AbaDadosFluxo(props) {
         formDadosFluxo.nomeCompleto = padronizarNomeCompletoUsuario(formDadosFluxo.nomeCompleto);
 
         // Criptografar a senha;
-        const urlCriptografar = `${CONSTANTS.API_URL_GET_CRIPTOGRAFAR}?senha=${formDadosFluxo.senha}`;
-        // console.log(urlCriptografar);
-        const senhaCriptografada = await Fetch.getApi(urlCriptografar);
-        if (!senhaCriptografada) {
-            Aviso.error('Algo deu errado ao criptografar sua senha!', 5000);
-            return false;
-        }
+        if (formDadosFluxo.senha) {
+            const urlCriptografar = `${CONSTANTS.API_URL_GET_CRIPTOGRAFAR}?senha=${formDadosFluxo.senha}`;
+            // console.log(urlCriptografar);
+            const senhaCriptografada = await Fetch.getApi(urlCriptografar);
+            if (!senhaCriptografada) {
+                Aviso.error('Algo deu errado ao criptografar sua senha!', 5000);
+                return false;
+            }
 
-        // Atribuir a senha criptografada;
-        formDadosFluxo.senha = senhaCriptografada;
+            // Atribuir a senha criptografada;
+            formDadosFluxo.senha = senhaCriptografada;
+        }
 
         // Atualizar informações;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
@@ -97,6 +119,25 @@ export default function AbaDadosFluxo(props) {
         if (resposta) {
             Aviso.success('Informações atualizadas com sucesso', 5000);
             NProgress.done();
+
+            // Atualizar os dados que estão em usuarioContext.js/Auth;
+            // Atualizar o nomeCompleto e nomeUsuarioSistema;
+            const dadosUsuario = {
+                usuarioId: Auth.getUsuarioLogado().usuarioId,
+                nomeCompleto: formDadosFluxo.nomeCompleto, // Alterar;
+                nomeUsuarioSistema: formDadosFluxo.nomeUsuarioSistema, // Alterar;
+                usuarioTipoId: Auth.getUsuarioLogado().usuarioTipoId,
+                foto: Auth.getUsuarioLogado().foto,
+                usuariosInformacoes: {
+                    cidadeId: Auth.getUsuarioLogado().cidadeId,
+                    cidades: {
+                        nome: Auth.getUsuarioLogado().cidadeNome
+                    }
+                },
+                token: Auth.getUsuarioLogado().token
+            };
+
+            Auth.setUsuarioLogado(dadosUsuario);
         } else {
             Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
         }
@@ -120,7 +161,7 @@ export default function AbaDadosFluxo(props) {
 
                 {
                     usuarioId && (
-                        <BotaoUparImagem props={usuarioId} />
+                        <BotaoUparImagem props={usuarioId} onAlterar={exibirFotoPerfilAlterada} />
                     )
                 }
             </div>
@@ -174,7 +215,7 @@ export default function AbaDadosFluxo(props) {
 
             <hr className='mt-4' />
             <div className='has-text-centered mt-4'>
-                <input type='submit' className='button is-primary' value='Salvar alterações' onClick={() => handleSubmit()} />
+                <input type='submit' className='button is-primary' value='Salvar alterações' onClick={() => handleSubmitDadosFluxo()} />
             </div>
         </React.Fragment>
     );
