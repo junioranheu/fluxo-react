@@ -76,3 +76,4 @@ h3,h4,h5,h6{font-weight:800}
 .animate__animated.delay15{-webkit-animation-delay:1.5s;animation-delay:1.5s;-webkit-animation-delay:calc(1s*1.5);animation-delay:calc(1s*1.5)}
 .animate__animated.delay19{-webkit-animation-delay:1.9s;animation-delay:1.9s;-webkit-animation-delay:calc(1s*1.9);animation-delay:calc(1s*1.9)}
 .sem-drag{pointer-events:none!important}
+.btn-canto-direito{right:20px;top:28px;position:absolute;border-radius:4px;color:var(--cor-principal);font-weight:bolder;font-size:20px}
