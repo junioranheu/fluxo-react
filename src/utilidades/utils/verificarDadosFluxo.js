@@ -7,7 +7,7 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
     // Verificação 0;
     if (!form) {
         NProgress.done();
-        Aviso.warn('Preencha os dados para criar sua conta', 5000);
+        Aviso.warn('Preencha os dados para continuar', 5000);
         refNomeCompleto.current.select();
         return false;
     }

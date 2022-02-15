@@ -12,6 +12,7 @@ const InputMascara = (props) => (
     value={props.value}
     placeholder={props.placeholder}
     maskPlaceholder={null} // Null para não exibir os "___.___.___"
+    ref={props.innerRef}
   />
 );
 

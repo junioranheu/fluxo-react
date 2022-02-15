@@ -143,7 +143,7 @@ export default function AbaDadosFluxo(props) {
                     <span className='fas fa-camera'></span>
                     <span className='ml-2'>Alterar</span>
                 </div>
-
+ 
                 {
                     usuarioId && (
                         <BotaoUparImagem

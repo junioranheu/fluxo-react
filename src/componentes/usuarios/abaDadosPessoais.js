@@ -1,10 +1,19 @@
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import NProgress from 'nprogress';
+import React, { useEffect, useRef, useState } from 'react';
+import { Aviso } from '../../componentes/outros/aviso';
 import InputMascara from '../outros/inputMascara';
 
 export default function AbaDadosPessoais(props) {
     const [prop] = useState(props['props']);
     // console.log(prop);
+
+    // Refs;
+    const refCpf = useRef(null);
+    const refTelefone = useRef(null);
+    const refDataAniversario = useRef(null);
+    const refCep = useRef(null);
+    const refNumeroResidencia = useRef(null);
 
     // formDadosPessoais;
     const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format("DD/MM/YYYY") : '');
@@ -42,6 +51,97 @@ export default function AbaDadosPessoais(props) {
         // console.log(formDadosPessoais);
     }, [formDadosPessoais]);
 
+    async function handleSubmitDadosPessoais() {
+        NProgress.start();
+
+        // Verificações;
+        let isContinuar = verificarDadosPessoais();
+        if (!isContinuar) {
+            return false;
+        }
+
+        console.log('aea');
+
+        // // Atualizar informações;
+        // const url = CONSTANTS.API_URL_POST_ATUALIZAR;
+        // const token = Auth.getUsuarioLogado().token;
+        // let resposta = await Fetch.postApi(url, formDadosFluxo, token);
+        // if (resposta) {
+        //     Aviso.success('Informações atualizadas com sucesso', 5000);
+        //     NProgress.done();
+
+        //     // Atualizar os dados que estão em usuarioContext.js/Auth;
+        //     // Atualizar o nome (nome completo) e nomeUsuarioSistema;
+        //     const dadosUsuarioAtualizar = {
+        //         nome: formDadosFluxo.nomeCompleto,
+        //         nomeUsuarioSistema: formDadosFluxo.nomeUsuarioSistema
+        //     };
+        //     Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
+        // } else {
+        //     Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
+        // }
+    }
+
+    function verificarDadosPessoais() {
+        // console.log(formDadosPessoais);
+
+        // Verificação 0;
+        if (!formDadosPessoais) {
+            NProgress.done();
+            Aviso.warn('Preencha os campos com seus dados pessoais para atualizar as informações', 5000);
+            return false;
+        }
+
+        // Verificação do cpf #1: cpf preenchido?;
+        if (!formDadosPessoais.cpf) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar o seu CPF', 5000);
+            refCpf.current.select();
+            return false;
+        }
+
+        // Verificação do telefone #1: telefone preenchido?;
+        if (!formDadosPessoais.telefone) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar o seu número de telefone', 5000);
+            refTelefone.current.select();
+            return false;
+        }
+
+        // Verificação de aniversário #1: dataAniversario preenchido?;
+        if (!formDadosPessoais.dataAniversario) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar sua data de nascimento', 5000);
+            refDataAniversario.current.select();
+            return false;
+        }
+
+        // Verificação de gênero #1: cep selecionado?;
+        if (!formDadosPessoais.genero) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de selecionar seu gênero', 5000);
+            return false;
+        }
+
+        // Verificação de cep #1: cep preenchido?;
+        if (!formDadosPessoais.cep) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar seu CEP', 5000);
+            refCep.current.select();
+            return false;
+        }
+
+        // Verificação de número de residência #1: numeroResidencia preenchido?;
+        if (!formDadosPessoais.numeroResidencia) {
+            NProgress.done();
+            Aviso.warn('Parece que você esqueceu de colocar o número da sua residência', 5000);
+            refNumeroResidencia.current.select();
+            return false;
+        }
+
+        return true;
+    }
+
     if (!prop) {
         return null;
     }
@@ -53,7 +153,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>CPF</label>
                         <div className='control has-icons-right'>
-                            <InputMascara mask='999.999.999-99' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                            <InputMascara mask='999.999.999-99' onChange={(e) => handleChangeFormDadosPessoais(e)} innerRef={refCpf}
                                 type='text' name='cpf' className='input' value={formDadosPessoais.cpf} placeholder='Seu CPF' />
 
                             <span className='icon is-small is-right'>
@@ -67,7 +167,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Telefone</label>
                         <div className='control has-icons-right'>
-                            <InputMascara mask='99 99999-9999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                            <InputMascara mask='99 99999-9999' onChange={(e) => handleChangeFormDadosPessoais(e)} innerRef={refTelefone}
                                 type='text' name='telefone' className='input' value={formDadosPessoais.telefone} placeholder='Seu número de telefone' />
 
                             <span className='icon is-small is-right'>
@@ -83,7 +183,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Data de aniversário</label>
                         <div className='control has-icons-right'>
-                            <InputMascara mask='99/99/9999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                            <InputMascara mask='99/99/9999' onChange={(e) => handleChangeFormDadosPessoais(e)} innerRef={refDataAniversario}
                                 type='text' name='dataAniversario' className='input' value={formDadosPessoais.dataAniversario} placeholder='Sua data de aniversário' />
 
                             <span className='icon is-small is-right'>
@@ -117,7 +217,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>CEP</label>
                         <div className='control has-icons-right'>
-                            <InputMascara mask='99999-999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                            <InputMascara mask='99999-999' onChange={(e) => handleChangeFormDadosPessoais(e)} innerRef={refCep}
                                 type='text' name='cep' className='input' value={formDadosPessoais.cep} placeholder='Seu CEP atual' />
 
                             <span className='icon is-small is-right'>
@@ -131,7 +231,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Número da residência</label>
                         <div className='control has-icons-right'>
-                            <InputMascara mask='9999' onChange={(e) => handleChangeFormDadosPessoais(e)}
+                            <InputMascara mask='9999' onChange={(e) => handleChangeFormDadosPessoais(e)} innerRef={refNumeroResidencia}
                                 type='text' name='numeroResidencia' className='input' value={formDadosPessoais.numeroResidencia} placeholder='O número da sua residência' />
 
                             <span className='icon is-small is-right'>
@@ -217,13 +317,18 @@ export default function AbaDadosPessoais(props) {
                             <input onChange={(e) => handleChangeFormDadosPessoais(e)}
                                 type='text' name='cidadeNome' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
                             />
-                            
+
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-city'></i>
                             </span>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <hr className='mt-4' />
+            <div className='has-text-centered mt-4'>
+                <input type='submit' className='button is-primary' value='Salvar alterações' onClick={() => handleSubmitDadosPessoais()} />
             </div>
         </React.Fragment>
     );
