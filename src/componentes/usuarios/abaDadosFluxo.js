@@ -20,10 +20,10 @@ export default function AbaDadosFluxo(props) {
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
 
     // Refs;
-    const refNomeCompleto = useRef();
-    const refEmail = useRef();
-    const refNomeUsuario = useRef();
-    const refSenha = useRef();
+    const refNomeCompleto = useRef(null);
+    const refEmail = useRef(null);
+    const refNomeUsuario = useRef(null);
+    const refSenha = useRef(null);
 
     // formDadosFluxo;
     const formDadosFluxoJsonInicial = {
@@ -120,6 +120,12 @@ export default function AbaDadosFluxo(props) {
         }
     }
 
+    // Trigger para alterar foto de perfil que fica dentro de botaoUparImagem.js;
+    const [submitAlterarFotoClicado, setSubmitAlterarFotoClicado] = useState(false);
+    function handleClickAlterarFoto() {
+        setSubmitAlterarFotoClicado(!submitAlterarFotoClicado);
+    }
+
     if (!prop) {
         return null;
     }
@@ -129,16 +135,26 @@ export default function AbaDadosFluxo(props) {
             <div className='field has-image-centered texto-sem-highlight' id='div-imagem-perfil'>
                 <label className='label'>Foto de perfil</label>
 
-                <div className='profile-pic has-image-centered' style={{ backgroundImage: `url(${fotoPerfilDinamica})` }}>
+                <div
+                    className='profile-pic has-image-centered'
+                    style={{ backgroundImage: `url(${fotoPerfilDinamica})` }}
+                    onClick={() => handleClickAlterarFoto()}
+                >
                     <span className='fas fa-camera'></span>
                     <span className='ml-2'>Alterar</span>
                 </div>
 
-                <input type='file' accept='image/*' />
-
                 {
                     usuarioId && (
-                        <BotaoUparImagem props={usuarioId} onAlterar={exibirFotoPerfilAlterada} />
+                        <BotaoUparImagem
+                            props={usuarioId}
+                            onAlterar={exibirFotoPerfilAlterada}
+                            className={'esconder'}
+
+                            // Opcionais para realizar o trigger "automático", sem clicar no botão de upload;
+                            submitAlterarFotoClicado={submitAlterarFotoClicado}
+                            handleClickAlterarFoto={handleClickAlterarFoto}
+                        />
                     )
                 }
             </div>

@@ -16,6 +16,14 @@ export default function BotaoUparImagem(props) {
     const [formPastaInfo] = useState('usuario');
     const [caminhoImagem, setCaminhoImagem] = useState('');
 
+    // Dar trigger na em refBtnUpar para abrir prompt para escolher imagem; 
+    useEffect(() => {
+        if (props.submitAlterarFotoClicado) {
+            refBtnUpar.current.click();
+            props.handleClickAlterarFoto(false);
+        }
+    }, [props.submitAlterarFotoClicado]);
+
     function salvarTemporariamenteArquivo(e) {
         const arq = e.target.files[0];
         setArquivo(arq);
@@ -70,7 +78,8 @@ export default function BotaoUparImagem(props) {
 
     return (
         <React.Fragment>
-            <input type='button' value='Upar imagem' onClick={() => refBtnUpar.current.click()} />
+            <input type='button' className={`button is-primary is-fullwidth ${props.className}`}
+                value='Upar imagem' onClick={() => refBtnUpar.current.click()} />
 
             <input
                 ref={refBtnUpar}
