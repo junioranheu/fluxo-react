@@ -16,6 +16,7 @@ import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
 
     // Refs;
     const divLoadingTiposEstabelecimentos = useRef(null);
@@ -240,7 +241,7 @@ export default function Index() {
     return (
         <React.Fragment>
             {/* Info usuário */}
-            {process.env.NODE_ENV === 'development' && (
+            {(process.env.NODE_ENV === 'development' || usuarioId === 2) && (
                 <InfoUsuario />
             )}
 
