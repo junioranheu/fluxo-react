@@ -2,6 +2,9 @@ import moment from 'moment';
 import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
+import CONSTANTS from '../../utilidades/const/constUsuarios';
+import { Auth } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/utils/fetch';
 import { Validacao } from '../../utilidades/utils/validacao';
 import InputMascara from '../outros/inputMascara';
 
@@ -28,7 +31,8 @@ export default function AbaDadosPessoais(props) {
         rua: prop.usuariosInformacoes?.rua,
         bairro: prop.usuariosInformacoes?.bairro,
         estadoSigla: prop.usuariosInformacoes?.cidades.estados.sigla,
-        cidadeNome: prop.usuariosInformacoes?.cidades.nome
+        cidadeNome: prop.usuariosInformacoes?.cidades.nome,
+        cidadeId: prop.usuariosInformacoes?.cidadeId
     }
     const [formDadosPessoais, setFormDadosPessoais] = useState(formDadosPessoaisJsonInicial);
     function handleChangeFormDadosPessoais(e) {
@@ -61,26 +65,24 @@ export default function AbaDadosPessoais(props) {
             return false;
         }
 
-        console.log('aea');
+        // Atualizar informações;
+        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
+        const token = Auth.getUsuarioLogado().token;
+        let resposta = await Fetch.postApi(url, formDadosPessoais, token);
+        if (resposta) {
+            Aviso.success('Informações atualizadas com sucesso', 5000);
+            NProgress.done();
 
-        // // Atualizar informações;
-        // const url = CONSTANTS.API_URL_POST_ATUALIZAR;
-        // const token = Auth.getUsuarioLogado().token;
-        // let resposta = await Fetch.postApi(url, formDadosFluxo, token);
-        // if (resposta) {
-        //     Aviso.success('Informações atualizadas com sucesso', 5000);
-        //     NProgress.done();
-
-        //     // Atualizar os dados que estão em usuarioContext.js/Auth;
-        //     // Atualizar o nome (nome completo) e nomeUsuarioSistema;
-        //     const dadosUsuarioAtualizar = {
-        //         nome: formDadosFluxo.nomeCompleto,
-        //         nomeUsuarioSistema: formDadosFluxo.nomeUsuarioSistema
-        //     };
-        //     Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
-        // } else {
-        //     Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
-        // }
+            // Atualizar os dados que estão em usuarioContext.js/Auth;
+            // Atualizar cidadeId e cidadeNome;
+            const dadosUsuarioAtualizar = {
+                cidadeId: formDadosPessoais.cidadeId,// ????????????????????????
+                cidadeNome: formDadosPessoais.cidadeNome
+            };
+            Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
+        } else {
+            Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
+        }
     }
 
     function verificarDadosPessoais() {
