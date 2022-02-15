@@ -52,7 +52,7 @@ export default function AbaDadosFluxo(props) {
     const [fotoPerfilDinamica, setFotoPerfilDinamica] = useState(prop.foto ? `${UrlImagemApi}/usuario/${prop.foto}` : SemImagem);
 
     function exibirFotoPerfilAlterada(arq, caminhoImagem) {
-        console.log(arq);
+        // console.log(arq);
         setFotoPerfilDinamica(URL.createObjectURL(arq));
 
         // Atualizar os dados que estão em usuarioContext.js/Auth;
