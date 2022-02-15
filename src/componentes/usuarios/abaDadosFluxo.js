@@ -57,22 +57,10 @@ export default function AbaDadosFluxo(props) {
 
         // Atualizar os dados que estão em usuarioContext.js/Auth;
         // Atualizar a foto de perfil;
-        const dadosUsuario = {
-            usuarioId: Auth.getUsuarioLogado().usuarioId,
-            nomeCompleto: Auth.getUsuarioLogado().nome,
-            nomeUsuarioSistema: Auth.getUsuarioLogado().nomeUsuarioSistema,
-            usuarioTipoId: Auth.getUsuarioLogado().usuarioTipoId,
-            foto: caminhoImagem, // Alterar;
-            usuariosInformacoes: {
-                cidadeId: Auth.getUsuarioLogado().cidadeId,
-                cidades: {
-                    nome: Auth.getUsuarioLogado().cidadeNome
-                }
-            },
-            token: Auth.getUsuarioLogado().token
+        const dadosUsuarioAtualizar = {
+            foto: caminhoImagem
         };
-
-        Auth.setUsuarioLogado(dadosUsuario);
+        Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
     }
 
     async function handleSubmitDadosFluxo() {
@@ -121,23 +109,12 @@ export default function AbaDadosFluxo(props) {
             NProgress.done();
 
             // Atualizar os dados que estão em usuarioContext.js/Auth;
-            // Atualizar o nomeCompleto e nomeUsuarioSistema;
-            const dadosUsuario = {
-                usuarioId: Auth.getUsuarioLogado().usuarioId,
-                nomeCompleto: formDadosFluxo.nomeCompleto, // Alterar;
-                nomeUsuarioSistema: formDadosFluxo.nomeUsuarioSistema, // Alterar;
-                usuarioTipoId: Auth.getUsuarioLogado().usuarioTipoId,
-                foto: Auth.getUsuarioLogado().foto,
-                usuariosInformacoes: {
-                    cidadeId: Auth.getUsuarioLogado().cidadeId,
-                    cidades: {
-                        nome: Auth.getUsuarioLogado().cidadeNome
-                    }
-                },
-                token: Auth.getUsuarioLogado().token
+            // Atualizar o nome (nome completo) e nomeUsuarioSistema;
+            const dadosUsuarioAtualizar = {
+                nome: formDadosFluxo.nomeCompleto,
+                nomeUsuarioSistema: formDadosFluxo.nomeUsuarioSistema
             };
-
-            Auth.setUsuarioLogado(dadosUsuario);
+            Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
         } else {
             Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
         }

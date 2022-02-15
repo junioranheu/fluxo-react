@@ -16,9 +16,9 @@ export const UsuarioProvider = props => {
 
 // Funções referentes à autenticação do usuário;
 export const Auth = {
-    // Função para salar o usuário logado (local storage);
+    // Função para salvar/instânciar o usuário logado (local storage);
     setUsuarioLogado(data) {
-        console.log(data);
+        // console.log(data);
         const dadosUsuario = {
             usuarioId: data.usuarioId,
             nome: data.nomeCompleto,
@@ -29,7 +29,7 @@ export const Auth = {
             cidadeNome: data.usuariosInformacoes.cidades.nome,
             token: data.token
         };
-        console.log(dadosUsuario);
+        // console.log(dadosUsuario);
 
         let parsedData = JSON.stringify(dadosUsuario);
         localStorage.setItem('usuarioAutenticado', parsedData);
@@ -53,5 +53,26 @@ export const Auth = {
         localStorage.clear();
         // console.log('deslogado');
         // window.location.reload();
-    }
+    },
+
+    // Função para atualizar as informações do usuário logado (local storage);
+    // Caso a variável venha como parâmetro pelo "data, use-a, senão, usa o que já estava em "Auth.getUsuarioLogado().xxx;
+    updateUsuarioLogado(data) {
+        // console.log(data);
+        const dadosUsuario = {
+            usuarioId: (data.usuarioId ? data.usuarioId : Auth.getUsuarioLogado().usuarioId),
+            nome: (data.nome ? data.nome : Auth.getUsuarioLogado().nome),
+            nomeUsuarioSistema: (data.nomeUsuarioSistema ? data.nomeUsuarioSistema : Auth.getUsuarioLogado().nomeUsuarioSistema),
+            usuarioTipoId: (data.usuarioTipoId ? data.usuarioTipoId : Auth.getUsuarioLogado().usuarioTipoId),
+            foto: (data.foto ? data.foto : Auth.getUsuarioLogado().foto),
+            cidadeId: (data.cidadeId ? data.cidadeId : Auth.getUsuarioLogado().cidadeId),
+            cidadeNome: (data.cidadeNome ? data.cidadeNome : Auth.getUsuarioLogado().cidadeNome),
+            token: (data.token ? data.token : Auth.getUsuarioLogado().token)
+        };
+        // console.log(dadosUsuario);
+
+        let parsedData = JSON.stringify(dadosUsuario);
+        localStorage.setItem('usuarioAutenticado', parsedData);
+    },
+
 }

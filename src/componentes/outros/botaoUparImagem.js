@@ -49,8 +49,8 @@ export default function BotaoUparImagem(props) {
             }
 
             // Atualizar caminho no banco, na tabela de usuários;
-           // const caminhoImagem = (formPastaInfo + '-' + usuarioId.toString() + '.' + arquivo.name.split('.').pop()); // Montar o nome do arquivo atual (igual ao back-end);
-           console.log(caminhoImagem);
+            // const caminhoImagem = (formPastaInfo + '-' + usuarioId.toString() + '.' + arquivo.name.split('.').pop()); // Montar o nome do arquivo atual (igual ao back-end);
+            // console.log(caminhoImagem);
             const url = `${CONSTANTS.API_URL_POST_ATUALIZAR_FOTO_PERFIL}?usuarioId=${usuarioId.toString()}&caminhoImagem=${caminhoImagem}`;
             let resposta = await Fetch.postApi(url, '', token);
             if (resposta) {
@@ -66,7 +66,7 @@ export default function BotaoUparImagem(props) {
             // console.log(file);
             postUparImagem();
         }
-    }, [arquivo, usuarioId, caminhoImagem]);
+    }, [arquivo, usuarioId, formPastaInfo, caminhoImagem]);
 
     return (
         <React.Fragment>
