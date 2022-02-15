@@ -2,6 +2,7 @@ import moment from 'moment';
 import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
+import CONSTANTS_CIDADES from '../../utilidades/const/constCidades';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
@@ -18,6 +19,10 @@ export default function AbaDadosPessoais(props) {
     const refDataAniversario = useRef(null);
     const refCep = useRef(null);
     const refNumeroResidencia = useRef(null);
+    const refRua = useRef(null);
+    const refBairro = useRef(null);
+    const refEstado = useRef(null);
+    const refCidade = useRef(null);
 
     // formDadosPessoais;
     const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format("DD/MM/YYYY") : '');
@@ -64,41 +69,32 @@ export default function AbaDadosPessoais(props) {
             const urlViaCep = `https://viacep.com.br/ws/${cepFormato}/json/`;
             // console.log(urlViaCep);
 
-            let resposta = await Fetch.getApi(urlViaCep);
-            if (resposta) {
-                console.log(resposta);
-            } else {
-                Aviso.warn(`Houve um erro ao encontrar as informações do cep ${cep}!`, 5000);
-            }
-        }
-    }
+            // https://pt.stackoverflow.com/questions/494932/buscar-cep-react
+            fetch(urlViaCep, { mode: 'cors' })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.hasOwnProperty('erro')) {
+                        Aviso.warn(`O cep ${cep} não existe!`, 5000);
 
-    async function handleSubmitDadosPessoais() {
-        NProgress.start();
+                        refRua.current.value = '';
+                        refRua.current.bairro = '';
+                        refRua.current.estado = '';
+                        refRua.current.cidade = '';
+                    } else {
+                        // Ok;
+                        // console.log(data);
+                        formDadosPessoais.rua = data.logradouro;
+                        formDadosPessoais.bairro = data.bairro;
+                        formDadosPessoais.estadoSigla = data.uf;
+                        formDadosPessoais.cidadeNome = data.localidade;
 
-        // Verificações;
-        let isContinuar = verificarDadosPessoais();
-        if (!isContinuar) {
-            return false;
-        }
-
-        // Atualizar informações;
-        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
-        const token = Auth.getUsuarioLogado().token;
-        let resposta = await Fetch.postApi(url, formDadosPessoais, token);
-        if (resposta) {
-            Aviso.success('Informações atualizadas com sucesso', 5000);
-            NProgress.done();
-
-            // Atualizar os dados que estão em usuarioContext.js/Auth;
-            // Atualizar cidadeId e cidadeNome;
-            const dadosUsuarioAtualizar = {
-                cidadeId: formDadosPessoais.cidadeId,// ????????????????????????
-                cidadeNome: formDadosPessoais.cidadeNome
-            };
-            Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
-        } else {
-            Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
+                        refRua.current.value = data.logradouro;
+                        refBairro.current.value = data.bairro;
+                        refEstado.current.value = data.uf;
+                        refCidade.current.value = data.localidade;
+                    }
+                })
+                .catch(err => Aviso.error(`Houve um erro ao encontrar as informações do cep ${cep}!`, 5000));
         }
     }
 
@@ -193,6 +189,47 @@ export default function AbaDadosPessoais(props) {
         }
 
         return true;
+    }
+
+    async function handleSubmitDadosPessoais() {
+        NProgress.start();
+
+        // Verificações;
+        let isContinuar = verificarDadosPessoais();
+        if (!isContinuar) {
+            return false;
+        }
+
+        // Pegar o id da cidade, caso necessário que seja atualizado;
+        const urlCidade = `${CONSTANTS_CIDADES.API_URL_GET_POR_NOME_MAIS_SIGLA_ESTADO}?nomeCidade=${formDadosPessoais.cidadeNome}&siglaEstado=${formDadosPessoais.estadoSigla}`;
+        let respostaCidade = await Fetch.getApi(urlCidade);
+        if (!respostaCidade) {
+            Aviso.error('Houve um erro ao buscar a identicação da sua cidade com base no nome dela e a sigla do seu estado!', 5000);
+            return false;
+        }
+
+        formDadosPessoais.cidadeId = respostaCidade.cidadeId;
+        console.log(formDadosPessoais);
+        return false;
+
+        // Atualizar informações;
+        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
+        const token = Auth.getUsuarioLogado().token;
+        let resposta = await Fetch.postApi(url, formDadosPessoais, token);
+        if (resposta) {
+            Aviso.success('Informações atualizadas com sucesso', 5000);
+            NProgress.done();
+
+            // Atualizar os dados que estão em usuarioContext.js/Auth;
+            // Atualizar cidadeId e cidadeNome;
+            const dadosUsuarioAtualizar = {
+                cidadeId: formDadosPessoais.cidadeId,// ????????????????????????
+                cidadeNome: formDadosPessoais.cidadeNome
+            };
+            Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
+        } else {
+            Aviso.error('Algo deu errado ao atualizar suas informações<br/>Consulte o F12!', 5000);
+        }
     }
 
     if (!prop) {
@@ -300,8 +337,8 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Rua</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='rua' className='input' value={formDadosPessoais.rua} placeholder='A rua em que você vive' disabled
+                            <input ref={refRua}
+                                type='text' className='input' value={formDadosPessoais.rua} placeholder='A rua em que você vive' disabled
                             />
 
                             <span className='icon is-small is-right'>
@@ -315,8 +352,8 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Bairro</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='bairro' className='input' value={formDadosPessoais.bairro} placeholder='O bairro em que você vive' disabled
+                            <input ref={refBairro}
+                                type='text' className='input' value={formDadosPessoais.bairro} placeholder='O bairro em que você vive' disabled
                             />
 
                             <span className='icon is-small is-right'>
@@ -332,8 +369,8 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Estado</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='estadoSigla' className='input' value={formDadosPessoais.estadoSigla} placeholder='O estado em que você vive' disabled
+                            <input ref={refEstado}
+                                type='text' className='input' value={formDadosPessoais.estadoSigla} placeholder='O estado em que você vive' disabled
                             />
 
                             <span className='icon is-small is-right'>
@@ -344,31 +381,11 @@ export default function AbaDadosPessoais(props) {
                 </div>
 
                 <div className='column'>
-                    {/* @*                @{
-                                                var estadosBd = (List<Estado>)ViewData['EstadosBd'];
-                                                    <div className='field'>
-                                                        <label className='label'><i className='fas fa-home'></i> Estado</label>
-                                                        <div className='control'>
-                                                            <div className='select is-fullwidth'>
-                                                                <select id='selectEstado' disabled>
-                                                                    <option>Qual estado você vive?</option>
-                                                                    @{
-                                                                        foreach(var e in estadosBd)
-                                                                    {
-                                                                        <option value='@e.EstadoId'>@e.Sigla</option>
-                                                                    }
-                                                }
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }*@ */}
-
                     <div className='field'>
                         <label className='label'>Cidade</label>
                         <div className='control has-icons-right'>
-                            <input onChange={(e) => handleChangeFormDadosPessoais(e)}
-                                type='text' name='cidadeNome' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
+                            <input ref={refCidade}
+                                type='text' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
                             />
 
                             <span className='icon is-small is-right'>
