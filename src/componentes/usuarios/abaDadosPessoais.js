@@ -19,10 +19,11 @@ export default function AbaDadosPessoais(props) {
     const refDataAniversario = useRef(null);
     const refCep = useRef(null);
     const refNumeroResidencia = useRef(null);
-    const refRua = useRef(null);
-    const refBairro = useRef(null);
-    const refEstado = useRef(null);
-    const refCidade = useRef(null);
+
+    const [rua, setRua] = useState(prop.usuariosInformacoes?.rua);
+    const [bairro, setBairro] = useState(prop.usuariosInformacoes?.bairro);
+    const [estadoSigla, setEstadoSigla] = useState(prop.usuariosInformacoes?.cidades.estados.sigla);
+    const [cidadeNome, setCidadeNome] = useState(prop.usuariosInformacoes?.cidades.nome);
 
     // formDadosPessoais;
     const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format("DD/MM/YYYY") : '');
@@ -76,22 +77,22 @@ export default function AbaDadosPessoais(props) {
                     if (data.hasOwnProperty('erro')) {
                         Aviso.warn(`O cep ${cep} não existe!`, 5000);
 
-                        refRua.current.value = '';
-                        refRua.current.bairro = '';
-                        refRua.current.estado = '';
-                        refRua.current.cidade = '';
+                        setRua('');
+                        setBairro('');
+                        setEstadoSigla('');
+                        setCidadeNome('');
                     } else {
                         // Ok;
                         // console.log(data);
+                        setRua(data.logradouro);
+                        setBairro(data.bairro);
+                        setEstadoSigla(data.uf);
+                        setCidadeNome(data.localidade);
+
                         formDadosPessoais.rua = data.logradouro;
                         formDadosPessoais.bairro = data.bairro;
                         formDadosPessoais.estadoSigla = data.uf;
                         formDadosPessoais.cidadeNome = data.localidade;
-
-                        refRua.current.value = data.logradouro;
-                        refBairro.current.value = data.bairro;
-                        refEstado.current.value = data.uf;
-                        refCidade.current.value = data.localidade;
                     }
                 })
                 .catch(err => Aviso.error(`Houve um erro ao encontrar as informações do cep ${cep}!`, 5000));
@@ -201,16 +202,20 @@ export default function AbaDadosPessoais(props) {
         }
 
         // Pegar o id da cidade, caso necessário que seja atualizado;
-        const urlCidade = `${CONSTANTS_CIDADES.API_URL_GET_POR_NOME_MAIS_SIGLA_ESTADO}?nomeCidade=${formDadosPessoais.cidadeNome}&siglaEstado=${formDadosPessoais.estadoSigla}`;
+        const urlCidade = `${CONSTANTS_CIDADES.API_URL_GET_POR_NOME_MAIS_SIGLA_ESTADO}?nomeCidade=${cidadeNome}&siglaEstado=${estadoSigla}`;
+        // console.log(urlCidade);
         let respostaCidade = await Fetch.getApi(urlCidade);
         if (!respostaCidade) {
             Aviso.error('Houve um erro ao buscar a identicação da sua cidade com base no nome dela e a sigla do seu estado!', 5000);
             return false;
         }
 
+        // Atualizar informações do logradouro com base nos hooks + cidadeId da resposta respostaCidade;
+        formDadosPessoais.rua = rua;
+        formDadosPessoais.bairro = bairro;
+        formDadosPessoais.estadoSigla = estadoSigla;
+        formDadosPessoais.cidadeNome = cidadeNome;
         formDadosPessoais.cidadeId = respostaCidade.cidadeId;
-        console.log(formDadosPessoais);
-        return false;
 
         // Atualizar informações;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
@@ -337,9 +342,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Rua</label>
                         <div className='control has-icons-right'>
-                            <input ref={refRua}
-                                type='text' className='input' value={formDadosPessoais.rua} placeholder='A rua em que você vive' disabled
-                            />
+                            <input type='text' className='input' value={rua} placeholder='A rua em que você vive' disabled />
 
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-road'></i>
@@ -352,9 +355,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Bairro</label>
                         <div className='control has-icons-right'>
-                            <input ref={refBairro}
-                                type='text' className='input' value={formDadosPessoais.bairro} placeholder='O bairro em que você vive' disabled
-                            />
+                            <input type='text' className='input' value={bairro} placeholder='O bairro em que você vive' disabled />
 
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-map-marker-alt'></i>
@@ -369,9 +370,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Estado</label>
                         <div className='control has-icons-right'>
-                            <input ref={refEstado}
-                                type='text' className='input' value={formDadosPessoais.estadoSigla} placeholder='O estado em que você vive' disabled
-                            />
+                            <input type='text' className='input' value={estadoSigla} placeholder='O estado em que você vive' disabled />
 
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-map-marked-alt'></i>
@@ -384,9 +383,7 @@ export default function AbaDadosPessoais(props) {
                     <div className='field'>
                         <label className='label'>Cidade</label>
                         <div className='control has-icons-right'>
-                            <input ref={refCidade}
-                                type='text' className='input' value={formDadosPessoais.cidadeNome} placeholder='A cidade em que você vive' disabled
-                            />
+                            <input type='text' className='input' value={cidadeNome} placeholder='A cidade em que você vive' disabled />
 
                             <span className='icon is-small is-right'>
                                 <i className='fas fa-city'></i>
