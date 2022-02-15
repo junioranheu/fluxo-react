@@ -220,6 +220,17 @@ export default function AbaDadosPessoais(props) {
 
         // Montar o json para atualizar infos;
         const usuarioInformacoesJson = {
+            usuarioId: prop.usuarioId,
+            nomeCompleto: prop.nomeCompleto,
+            email: prop.email,
+            nomeUsuarioSistema: prop.nomeUsuarioSistema,
+            senha: '',
+            dataCriacao: prop.dataCriacao,
+            dataOnline: prop.dataOnline,
+            foto: prop.foto,
+            isAtivo: prop.isAtivo,
+            isPremium: prop.isPremium,
+            usuarioTipoId: prop.usuarioTipoId,
             usuariosInformacoes: {
                 // usuarioInformacaoId: 1,
                 usuarioId: usuarioId,
@@ -235,10 +246,10 @@ export default function AbaDadosPessoais(props) {
                 dataUltimaAlteracao: horarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
             }
         };
-        // console.log(usuarioInformacoesJson);
+        console.log(usuarioInformacoesJson);
   
         // Atualizar informações;
-        const url = CONSTANTS.POST_ATUALIZAR_INFORMACOES;
+        const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
         let resposta = await Fetch.postApi(url, formDadosPessoais, token);
         if (resposta) {
