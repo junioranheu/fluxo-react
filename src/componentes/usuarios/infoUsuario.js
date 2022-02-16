@@ -56,7 +56,7 @@ export default function InfoUsuario() {
                         </div>
                     )}
 
-                    <span class='btn-canto-direito pointer' title='Fechar' onClick={() => fecharDiv()}>
+                    <span className='btn-canto-direito pointer' title='Fechar' onClick={() => fecharDiv()}>
                         <span>&times;</span>
                     </span>
                 </code>

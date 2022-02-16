@@ -126,6 +126,12 @@ export default function AbaDadosFluxo(props) {
         setSubmitAlterarFotoClicado(!submitAlterarFotoClicado);
     }
 
+    function handleAvisoOnClickSenha(e) {
+        if (e.target.value.length === 0) {
+            Aviso.info('A senha será modificada caso você a preencha com algum novo valor', 5000);
+        }
+    }
+
     if (!prop) {
         return null;
     }
@@ -143,7 +149,7 @@ export default function AbaDadosFluxo(props) {
                     <span className='fas fa-camera'></span>
                     <span className='ml-2'>Alterar</span>
                 </div>
- 
+
                 {
                     usuarioId && (
                         <BotaoUparImagem
@@ -197,7 +203,7 @@ export default function AbaDadosFluxo(props) {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input onChange={(e) => handleChangeFormDadosFluxo(e)} ref={refSenha}
+                    <input onChange={(e) => handleChangeFormDadosFluxo(e)} onClick={(e) => handleAvisoOnClickSenha(e)} ref={refSenha}
                         type='password' name='senha' className='input' value={formDadosFluxo.senha} placeholder='Sua senha' autoComplete='weon' />
 
                     <span className='icon is-small is-right'>
