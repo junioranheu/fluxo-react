@@ -8,7 +8,7 @@ import { Aviso } from '../../componentes/outros/aviso';
 import Mapa from '../../componentes/outros/mapa';
 import ModalPost from '../../componentes/posts/modalPost';
 import Post from '../../componentes/posts/post';
-import '../../css/perfilEstabelecimento.css';
+import '../../css/perfil.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
 import ImagemTriste from '../../static/svg/triste-1.svg';
 import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
@@ -16,7 +16,7 @@ import CONSTANTS_AVALIACOES from '../../utilidades/const/constEstabelecimentosAv
 import CONSTANTS_POSTS from '../../utilidades/const/constPosts';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import urlImagemApi from '../../utilidades/utils/urlImagemApi';
+import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 
 export default function Estabelecimento() {
     const navigate = useNavigate();
@@ -139,7 +139,7 @@ export default function Estabelecimento() {
     // Import dinâmico;
     let imagemDinamica = '';
     try {
-        imagemDinamica = `${urlImagemApi}/${estabelecimento.thumbnail}`;
+        imagemDinamica = `${UrlImagemApi}/${estabelecimento.thumbnail}`;
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);
@@ -205,8 +205,8 @@ export default function Estabelecimento() {
 
                                 {/* Direita do perfil */}
                                 {(usuarioId === estabelecimento.usuarioId) && (
-                                    <div className='profile-right flexbox-start'>
-                                        <input type='button' className='button is-small is-primary is-rounded' value='Editar perfil' />
+                                    <div className='profile-right flexbox-start has-text-centered'>
+                                        <a className='button is-small is-primary is-rounded' href='/'>Editar loja</a>
                                     </div>
                                 )}
                             </div>
