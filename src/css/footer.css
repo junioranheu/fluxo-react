@@ -1,4 +1,4 @@
-.divEfeitoFooter{background-color:var(--cor-principal)!important;height: 5px !important;}
+.divEfeitoFooter{background-color:var(--cor-principal)!important;height:5px!important}
 .divEspacoFooter{margin-bottom:200px!important}
 .padding-right-50{padding-right:50px}
 .site-footer{background-color:var(--cor-preto);padding:45px 0 20px;font-size:15px;line-height:24px;color:#737373;z-index:1;position:relative}
@@ -19,6 +19,7 @@
 .copyright-text{margin:0}
 @media (max-width:991px){
 .site-footer [class^=col-]{margin-bottom:30px}
+.site-footer{padding-left:30px;padding-right:30px}
 }
 @media (max-width:767px){
 .site-footer{padding-bottom:0}
