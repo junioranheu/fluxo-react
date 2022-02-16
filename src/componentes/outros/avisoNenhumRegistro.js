@@ -3,7 +3,7 @@ import ImagemErro from '../../static/svg/triste-1.svg';
 
 export default function AvisoNenhumRegistro() {
     return (
-        <div className='mt-4'>
+        <div className='mt-4 animate__animated animate__fadeIn'>
             <div className='has-text-centered'>
                 <span>
                     {/* Nenhum registro foi encontrado com o filtro utilizado */}
