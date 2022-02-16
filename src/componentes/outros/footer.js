@@ -3,6 +3,8 @@ import '../../css/footer.css';
 import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Footer() {
+    const nomeApp = 'Fluxo';
+
     return (
         <React.Fragment>
             {/* Espaço pro footer */}
@@ -16,18 +18,17 @@ export default function Footer() {
                         <div className='column is-6-tablet is-6-desktop padding-right-50'>
                             <h6>SOBRE</h6>
                             <p className='text-justify'>
-                                Fluxo é uma plataforma para você conhecer sua cidade. Descubra todos os fluxos.
+                                {nomeApp} é uma plataforma para você conhecer sua cidade. Descubra todos os fluxos.
                                 At maxime excepturi est incidunt pariatur reprehenderit repellendus est exercitationem atque. Et quaerat perspiciatis ut facere explicabo et minima nesciunt est distinctio esse et dolor dolore.
                             </p>
                         </div>
 
                         <div className='column is-6-mobile is-3-desktop'>
-                            <h6>RECURSOS</h6>
+                            <h6>{nomeApp.toUpperCase()}</h6>
                             <ul className='footer-links'>
-                                <li><a href={() => false}>Isso é um teste</a></li>
-                                <li><a href={() => false}>xxx</a></li>
-                                <li><a href={() => false}>xxx</a></li>
-                                <li><a href={() => false}>xxx</a></li>
+                                <li><a href='/entrar'>Entrar</a></li>
+                                <li><a href='/criar-conta'>Criar conta</a></li>
+                                <li><a href='/'>Lista de estabelecimentos</a></li>
                             </ul>
                         </div>
 
@@ -50,7 +51,7 @@ export default function Footer() {
                             <p className='copyright-text'>
                                 Copyright &copy; {HorarioBrasilia.year()} —
 
-                                Feito com o 💛 por <a href='https://www.instagram.com/junioranheu/' target='_blank' rel='noreferrer'>@junioranheu</a>
+                                Feito com o 💛 por <a href={() => false} target='_blank' rel='noreferrer'>@junioranheu</a>
                             </p>
                         </div>
 
