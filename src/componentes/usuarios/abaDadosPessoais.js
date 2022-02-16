@@ -201,6 +201,13 @@ export default function AbaDadosPessoais(props) {
             return false;
         }
 
+        // Verificar se os campos de logradouro foram preenchidos;
+        if (!rua || !bairro || !estadoSigla || !cidadeNome) {
+            NProgress.done();
+            Aviso.error('Parece que nem todos os campos foram preenchidos...<br/>Confirme seu CEP para que a rua, bairro, estado e cidade sejam preenchidos automaticamente!', 7000);
+            return false;
+        }
+
         // Pegar o id da cidade, caso necessário que seja atualizado;
         const urlCidade = `${CONSTANTS_CIDADES.API_URL_GET_POR_NOME_MAIS_SIGLA_ESTADO}?nomeCidade=${cidadeNome}&siglaEstado=${estadoSigla}`;
         // console.log(urlCidade);
@@ -218,6 +225,9 @@ export default function AbaDadosPessoais(props) {
         formDadosPessoais.cidadeNome = cidadeNome;
         formDadosPessoais.cidadeId = respostaCidade.cidadeId;
 
+        // Ajustar a data de aniversário;
+        const dataAniversarioAjustada = moment(`${formDadosPessoais.dataAniversario} ${'00:00:00'}`, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
+
         // Montar o json para atualizar infos;
         const usuarioInformacoesJson = {
             usuarioId: prop.usuarioId,
@@ -232,10 +242,10 @@ export default function AbaDadosPessoais(props) {
             isPremium: prop.isPremium,
             usuarioTipoId: prop.usuarioTipoId,
             usuariosInformacoes: {
-                // usuarioInformacaoId: 1,
+                usuarioInformacaoId: prop.usuariosInformacoes?.usuarioInformacaoId,
                 usuarioId: usuarioId,
                 genero: formDadosPessoais.genero,
-                dataAniversario: formDadosPessoais.dataAniversario,
+                dataAniversario: dataAniversarioAjustada,
                 cpf: formDadosPessoais.cpf,
                 telefone: formDadosPessoais.telefone,
                 rua: rua,
@@ -246,12 +256,12 @@ export default function AbaDadosPessoais(props) {
                 dataUltimaAlteracao: horarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
             }
         };
-        console.log(usuarioInformacoesJson);
-  
+        // console.log(usuarioInformacoesJson);
+
         // Atualizar informações;
         const url = CONSTANTS.API_URL_POST_ATUALIZAR;
         const token = Auth.getUsuarioLogado().token;
-        let resposta = await Fetch.postApi(url, formDadosPessoais, token);
+        let resposta = await Fetch.postApi(url, usuarioInformacoesJson, token);
         if (resposta) {
             Aviso.success('Informações atualizadas com sucesso', 5000);
             NProgress.done();
@@ -259,8 +269,8 @@ export default function AbaDadosPessoais(props) {
             // Atualizar os dados que estão em usuarioContext.js/Auth;
             // Atualizar cidadeId e cidadeNome;
             const dadosUsuarioAtualizar = {
-                cidadeId: formDadosPessoais.cidadeId,// ????????????????????????
-                cidadeNome: formDadosPessoais.cidadeNome
+                cidadeId: respostaCidade.cidadeId,
+                cidadeNome: cidadeNome
             };
             Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
         } else {
