@@ -91,7 +91,7 @@ export default function Perfil() {
                                                     <p className='profile-bio-inner'>
                                                         <span className='line'>
                                                             Rua {detalhesPerfil.usuariosInformacoes.rua.replace('Rua', '')}, {detalhesPerfil.usuariosInformacoes.numeroResidencia}<br />
-                                                            {detalhesPerfil.usuariosInformacoes.bairro}, {detalhesPerfil.usuariosInformacoes.cidades.nome} — {detalhesPerfil.usuariosInformacoes.cidades.estados.nome}<br />
+                                                            {detalhesPerfil.usuariosInformacoes.bairro}, {detalhesPerfil.usuariosInformacoes.cidades?.nome} — {detalhesPerfil.usuariosInformacoes.cidades?.estados?.nome}<br />
                                                             CEP {detalhesPerfil.usuariosInformacoes.cep}
                                                         </span>
                                                     </p>
