@@ -26,6 +26,5 @@ builder.Services.AddCors();
 Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effects-for-react/
 
 -- WARDS:
-CORRIGIR A LANDING PAGE... ACHAR UMA MANEIRA DE IMPORTAR BOOTSTRAP APENAS LÁ
 CRIAR TELA DE PERFIL
 OPÇÃO "ESQUECI A SENHA"
