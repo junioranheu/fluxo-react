@@ -122,8 +122,8 @@ export default function CriarConta() {
                     <img className='login-logo' src={Logo} alt='Erro...' />
                 </div>
 
-                <h1 className='title'>Crie sua conta no <span className='grifar'>Fluxo</span></h1>
-                <h1 className='subtitle'><span className='efeito-texto'>Feito com React</span></h1>
+                <h1 className='title mt-2'>Crie sua conta no <span className='grifar'>Fluxo</span></h1>
+                <h1 className='subtitle'><span className='efeito-texto'>Feito com React.js</span></h1>
             </div>
 
             <div className='field mt-5'>

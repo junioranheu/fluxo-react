@@ -47,66 +47,59 @@ export default function Fluxo() {
     return (
         <React.Fragment>
             <section className='slider-area pt-100 pb-30'>
-
                 {/* <!-- Primeiro slide --> */}
                 <Slider {...configuracaoSlider}>
-                    <div className='single-sliderxxx'>
-                        <div className='slider-bg'>
-                            <div className='row no-gutters align-items-center'>
-                                <div className='col-lg-4 col-md-5'>
-                                    <div className='slider-product-image d-none d-md-block'>
-                                        <img src={Hamburguer} className='borda' alt='' />
-                                    </div>
+                    <div className='slider-bg'>
+                        <div className='row no-gutters align-items-center'>
+                            <div className='col-lg-4 col-md-5'>
+                                <div className='slider-product-image d-none d-md-block'>
+                                    <img src={Hamburguer} className='borda' alt='' />
                                 </div>
+                            </div>
 
-                                <div className='col-lg-8 col-md-7'>
-                                    <div className='slider-product-content'>
-                                        <h1 className='slider-title mb-25 animate__animated animate__fadeInUp delay03'>Bem-vindo ao <span>{nomeApp}!</span></h1>
-                                        <a className='main-btn mt-2 animate__animated animate__fadeInUp delay15' href='/criar-conta'>Crie sua conta <i className='lni-chevron-right'></i></a>
-                                        <a className='main-btn main-btn-2 mt-2 ml-3 animate__animated animate__fadeInUp delay19' href='/entrar'>Entre agora <i className='lni-chevron-right'></i></a>
-                                    </div>
+                            <div className='col-lg-8 col-md-7'>
+                                <div className='slider-product-content'>
+                                    <h1 className='slider-title mb-25 animate__animated animate__fadeInUp delay03'>Bem-vindo ao <span>{nomeApp}!</span></h1>
+                                    <a className='main-btn mt-2 animate__animated animate__fadeInUp delay15' href='/criar-conta'>Crie sua conta <i className='lni-chevron-right'></i></a>
+                                    <a className='main-btn main-btn-2 mt-2 ml-3 animate__animated animate__fadeInUp delay19' href='/entrar'>Entre agora <i className='lni-chevron-right'></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* <!-- Segundo slide --> */}
-                    <div className='single-sliderxxx'>
-                        <div className='slider-bg'>
-                            <div className='row no-gutters align-items-center'>
-                                <div className='col-lg-4 col-md-5'>
-                                    <div className='slider-product-image d-none d-md-block'>
-                                        <img src={Pikachu} className='borda' alt='' />
-                                    </div>
+                    <div className='slider-bg'>
+                        <div className='row no-gutters align-items-center'>
+                            <div className='col-lg-4 col-md-5'>
+                                <div className='slider-product-image d-none d-md-block'>
+                                    <img src={Pikachu} className='borda' alt='' />
                                 </div>
+                            </div>
 
-                                <div className='col-lg-8 col-md-7'>
-                                    <div className='slider-product-content'>
-                                        <h1 className='slider-title mb-10'>Talvez, <span>você</span>...</h1>
-                                        <p className='mb-25'>queira {gerarTituloAleatorio()}... tá esperando o quê?</p>
-                                        <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
-                                    </div>
+                            <div className='col-lg-8 col-md-7'>
+                                <div className='slider-product-content'>
+                                    <h1 className='slider-title mb-10'>Talvez, <span>você</span>...</h1>
+                                    <p className='mb-25'>queira {gerarTituloAleatorio()}... tá esperando o quê?</p>
+                                    <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* <!-- Terceiro slide --> */}
-                    <div className='single-sliderxxx'>
-                        <div className='slider-bg'>
-                            <div className='row no-gutters align-items-center'>
-                                <div className='col-lg-4 col-md-5'>
-                                    <div className='slider-product-image d-none d-md-block'>
-                                        <img src={Relaxando} className='borda' alt='' />
-                                    </div>
+                    <div className='slider-bg'>
+                        <div className='row no-gutters align-items-center'>
+                            <div className='col-lg-4 col-md-5'>
+                                <div className='slider-product-image d-none d-md-block'>
+                                    <img src={Relaxando} className='borda' alt='' />
                                 </div>
+                            </div>
 
-                                <div className='col-lg-8 col-md-7'>
-                                    <div className='slider-product-content'>
-                                        <h1 className='slider-title mb-10'><span>{nomeApp}</span> & <span>relaxamento</span></h1>
-                                        <p className='mb-25'>Clique aqui embaixo e entre agora mesmo!</p>
-                                        <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
-                                    </div>
+                            <div className='col-lg-8 col-md-7'>
+                                <div className='slider-product-content'>
+                                    <h1 className='slider-title mb-10'><span>{nomeApp}</span> & <span>relaxamento</span></h1>
+                                    <p className='mb-25'>Clique aqui embaixo e entre agora mesmo!</p>
+                                    <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
                                 </div>
                             </div>
                         </div>
