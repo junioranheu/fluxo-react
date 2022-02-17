@@ -9,14 +9,16 @@ import InputFiltroPrincipal from '../../componentes/outros/inputFiltroPrincipal'
 import Item from '../../componentes/outros/item';
 import InfoUsuario from '../../componentes/usuarios/infoUsuario';
 import CONSTANTS_CATEGORIAS from '../../utilidades/const/constCategorias';
+import CONSTANTS_ESTABELECIMENTOS from '../../utilidades/const/constEstabelecimentos';
 import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposEstabelecimentos';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
- 
+
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
+    const [tipoUsuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioTipoId : null);
 
     // Refs;
     const divLoadingTiposEstabelecimentos = useRef(null);
@@ -49,18 +51,6 @@ export default function Index() {
 
         {
             'id': 3,
-            'mostrarApenasAutenticado': true,
-            'usuarioTipoId': null,
-            'imagem': 'static/cards/sobre.webp',
-            'titulo': 'Sobre',
-            'descricao': 'Bla bla bla...<br/>Descubra mais sobre o Fluxo',
-            'url': '/sobre',
-            'mensagemBotao': 'Descobrir',
-            'icone': 'fas fa-book'
-        },
-
-        {
-            'id': 4,
             'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/entrar.webp',
@@ -72,7 +62,7 @@ export default function Index() {
         },
 
         {
-            'id': 5,
+            'id': 4,
             'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/comida.webp',
@@ -81,8 +71,49 @@ export default function Index() {
             'url': '/fluxo',
             'mensagemBotao': 'Ver',
             'icone': 'fas fa-smile-wink'
-        }
+        },
+
+        {
+            'id': 5,
+            'mostrarApenasAutenticado': true,
+            'usuarioTipoId': 2, // Normal;
+            'imagem': 'static/cards/sobre.webp',
+            'titulo': 'Sobre',
+            'descricao': 'Bla bla bla<br />Descubra mais sobre o Fluxo',
+            'url': '/sobre',
+            'mensagemBotao': 'Clique aqui',
+            'icone': 'fas fa-book'
+        },
     ];
+
+    // Se o usuário logado for 3, pegue o nome da sua loja e crie um novo card na listaCards;
+    useEffect(() => {
+        if (tipoUsuarioId === 3) {
+            async function getEstabelecimentoUsuarioTipo3() {
+                const url = `${CONSTANTS_ESTABELECIMENTOS.API_URL_GET_POR_QUERY}?&idUsuario=${usuarioId}`;
+
+                let resposta = await Fetch.getApi(url);
+                if (resposta) {
+                    // console.log(resposta);
+
+                    listaCards.push({
+                        'id': 6,
+                        'mostrarApenasAutenticado': true,
+                        'usuarioTipoId': 3, // Estabelecimento;
+                        'imagem': 'static/cards/loja.webp',
+                        'titulo': `${resposta[0].nome}`,
+                        'descricao': 'Oi, né?<br/>Veja o perfil de seu estabelecimento',
+                        'url': `/estabelecimento/${resposta[0].estabelecimentoId}`,
+                        'mensagemBotao': 'Ver',
+                        'icone': 'fas fa-store'
+                    });
+                }
+            }
+
+            getEstabelecimentoUsuarioTipo3();
+        }
+    }, [usuarioId, tipoUsuarioId]);
+
     const [cards] = useState(listaCards);
 
     // Olá;
