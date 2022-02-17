@@ -13,7 +13,7 @@ import CONSTANTS_TIPOS_ESTABELECIMENTOS from '../../utilidades/const/constTiposE
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
-
+ 
 export default function Index() {
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);

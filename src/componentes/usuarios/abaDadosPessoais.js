@@ -1,4 +1,4 @@
-import moment from 'moment';
+import Moment from 'moment';
 import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
@@ -31,7 +31,7 @@ export default function AbaDadosPessoais(props) {
     const [cidadeNome, setCidadeNome] = useState(prop.usuariosInformacoes?.cidades.nome);
 
     // formDadosPessoais;
-    const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? moment(prop.usuariosInformacoes?.dataAniversario).format('DD/MM/YYYY') : '');
+    const dataAniversarioFormatada = (prop.usuariosInformacoes?.dataAniversario ? Moment(prop.usuariosInformacoes?.dataAniversario).format('DD/MM/YYYY') : '');
     const formDadosPessoaisJsonInicial = {
         cpf: prop.usuariosInformacoes?.cpf,
         telefone: prop.usuariosInformacoes?.telefone,
@@ -226,7 +226,7 @@ export default function AbaDadosPessoais(props) {
         formDadosPessoais.cidadeId = respostaCidade.cidadeId;
 
         // Ajustar a data de aniversário;
-        const dataAniversarioAjustada = moment(`${formDadosPessoais.dataAniversario} ${'00:00:00'}`, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
+        const dataAniversarioAjustada = Moment(`${formDadosPessoais.dataAniversario} ${'00:00:00'}`, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
 
         // Montar o json para atualizar infos;
         const usuarioInformacoesJson = {

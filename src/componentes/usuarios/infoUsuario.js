@@ -53,6 +53,8 @@ export default function InfoUsuario() {
                             <span>Cidade: {Auth.getUsuarioLogado().cidadeNome}</span>
                             <br />
                             <span>Token: {Auth.getUsuarioLogado().token.substring(0, 30)}...</span>
+                            <br />
+                            <span>Data de autenticação: {Auth.getUsuarioLogado().dataAutenticacao}</span>
                         </div>
                     )}
 

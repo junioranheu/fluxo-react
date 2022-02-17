@@ -1,4 +1,4 @@
-import moment from 'moment';
+import Moment from 'moment';
 import React, { useState } from 'react';
 import SemImagemSmile from '../../static/outro/smile.webp';
 import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
@@ -34,7 +34,7 @@ export default function Post(props) {
             </span>
 
             <span className='image-icone-esquerda'>
-                Postado em {moment(prop.dataPost).format('DD/MM/YYYY')}
+                Postado em {Moment(prop.dataPost).format('DD/MM/YYYY')}
             </span>
         </a>
     );

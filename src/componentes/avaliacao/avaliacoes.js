@@ -1,4 +1,4 @@
-import moment from 'moment';
+import Moment from 'moment';
 import React, { useState } from 'react';
 import '../../css/ultimasAvaliacoes.css';
 
@@ -34,9 +34,9 @@ export default function Avaliacao(props) {
         return 'há ' + retorno;
     }
 
-    var currentDate = moment();
+    var currentDate = Moment();
     var dataAjustadaPost = prop.data;
-    var diferencaAgoraEDataComentario = moment.duration(currentDate.diff(dataAjustadaPost));
+    var diferencaAgoraEDataComentario = Moment.duration(currentDate.diff(dataAjustadaPost));
     var diferencaEmSegundos = diferencaAgoraEDataComentario.asSeconds();
     const [dataAvaliacaoFinal] = useState(segundosParaDHMS(diferencaEmSegundos));
 

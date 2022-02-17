@@ -1,4 +1,4 @@
-import moment from 'moment';
+import Moment from 'moment';
 
 export const Validacao = {
     validarCPF(cpf) {
@@ -32,7 +32,7 @@ export const Validacao = {
     },
 
     validarData(data) {
-        let result = moment(data, 'DD/MM/YYYY', true).isValid();
+        let result = Moment(data, 'DD/MM/YYYY', true).isValid();
         return result;
     },
 }

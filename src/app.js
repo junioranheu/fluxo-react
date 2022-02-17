@@ -1,6 +1,10 @@
-import React, { useContext } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { UsuarioContext } from './utilidades/context/usuarioContext';
+import Moment from 'moment';
+import NProgress from 'nprogress';
+import React, { useContext, useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Aviso } from './componentes/outros/aviso';
+import { Auth, UsuarioContext } from './utilidades/context/usuarioContext';
+import horarioBrasilia from './utilidades/utils/horarioBrasilia';
 import Estabelecimento from './views/estabelecimento/estabelecimento';
 import Estabelecimentos from './views/estabelecimento/estabelecimentos';
 import GerenciarEstabelecimento from './views/estabelecimento/gerenciarEstabelecimentos';
@@ -17,7 +21,35 @@ import Entrar from './views/usuario/entrar';
 import Perfil from './views/usuario/perfil';
 
 export default function App() {
-  const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+  const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
+  const [dataAutenticacao] = useState(isAuth ? Auth.getUsuarioLogado()?.dataAutenticacao : null);
+  const navigate = useNavigate();
+
+  // Verificar se o token é válido ainda;
+  useEffect(() => {
+    if (isAuth) {
+      const horaAgora = horarioBrasilia;
+      var duracao = Moment.duration(horaAgora.diff(dataAutenticacao));
+      var diferencaHoras = duracao.asHours();
+      // console.log(diferencaHoras);
+
+      // Foi definido na API, no método ServicoGerarToken() em Services/TokenService.cs, que o token JWT expira em 1 hora...
+      // "Imitar" o mesmo comportamento aqui... caso a diferença seja de uma hora, limpe o token e mostre uma mensagem ao usuário;
+      const limiteExpirarTokenHoras = 1;
+      if (diferencaHoras >= limiteExpirarTokenHoras) {
+        NProgress.start();
+        Aviso.warn('A sua sessão expirou!<br/>Renove sua sessão fazendo login novamente no Fluxo 😎', 15000);
+
+        // Desatribuir autenticação ao contexto de usuário;
+        setIsAuth(false);
+
+        // Deslogar;
+        Auth.deleteUsuarioLogado();
+        navigate('/sem-acesso', { replace: true });
+        NProgress.done();
+      }
+    }
+  }, [isAuth, dataAutenticacao])
 
   return (
     <Routes>
