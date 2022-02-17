@@ -16,6 +16,7 @@ import { Fetch } from '../../utilidades/utils/fetch';
 import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Index() {
+    const nomeApp = 'Fluxo';
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
     const [tipoUsuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioTipoId : null);
@@ -31,7 +32,7 @@ export default function Index() {
             'usuarioTipoId': 2, // Normal;
             'imagem': 'static/cards/loja.webp',
             'titulo': 'Torne-se um parceiro',
-            'descricao': 'Quer fazer parte do Fluxo como uma loja, para ganhar mais visibilidade, bla bla bla...',
+            'descricao': `Quer fazer parte do ${nomeApp} como uma loja, para ganhar mais visibilidade, bla bla bla...`,
             'url': '/',
             'mensagemBotao': 'Clique aqui',
             'icone': 'fas fa-store'
@@ -66,7 +67,7 @@ export default function Index() {
             'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/comida.webp',
-            'titulo': 'Fluxo',
+            'titulo': `${nomeApp}`,
             'descricao': 'Veja nossa página institucional<br />Conheça mais sobre a gente!',
             'url': '/fluxo',
             'mensagemBotao': 'Ver',
@@ -79,7 +80,7 @@ export default function Index() {
             'usuarioTipoId': 2, // Normal;
             'imagem': 'static/cards/sobre.webp',
             'titulo': 'Sobre',
-            'descricao': 'Bla bla bla<br />Descubra mais sobre o Fluxo',
+            'descricao': `Bla bla bla<br />Descubra mais sobre o ${nomeApp}`,
             'url': '/sobre',
             'mensagemBotao': 'Clique aqui',
             'icone': 'fas fa-book'
@@ -132,7 +133,7 @@ export default function Index() {
         if (isAuth) {
             msg += ', <span class="grifar">' + Auth.getUsuarioLogado().nomeUsuarioSistema + '</span>!';
         } else {
-            msg += '!<br/>Bem-vindo ao Fluxo';
+            msg += `!<br/>Bem-vindo ao ${nomeApp}`;
         }
 
         return msg;
@@ -181,7 +182,7 @@ export default function Index() {
 
     // Ao carregar página;
     useEffect(() => {
-        document.title = 'Fluxo — Início'
+        document.title = `${nomeApp} — Início`;
 
         // Pegar todas as categorias;
         getCategorias();
