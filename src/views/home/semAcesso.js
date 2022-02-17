@@ -25,7 +25,9 @@ export default function SemAcesso() {
                             <div className='columns mt-2 is-vcentered'>
                                 <div className='column'>
                                     <p className='subtitle is-3 sem-highlight'>Algo deu errado</p>
-                                    <span className='has-text-weight-semibold is-size-5 cor-principal'>Você provavelmente não tem acesso para a ação requisitada</span>
+                                    <span className='has-text-weight-semibold is-size-5 cor-principal'>
+                                        Você provavelmente não tem acesso para a ação ou a requisição ao servidor estava quebrada
+                                    </span>
                                 </div>
 
                                 <div className='column'>
@@ -48,7 +50,7 @@ export default function SemAcesso() {
                                 <a className='button is-text' href='/reportar-problema'>Reportar problema</a>
                             </div>
 
-                            <p className='mt-3 text-muted small sem-highlight'>Ref: {CodigoAleatorio(15)}{HorarioBrasilia().toString()}</p>
+                            <p className='mt-3 text-muted small sem-highlight'>Ref: {CodigoAleatorio(15)}{HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')}</p>
                         </div>
                     </div>
                 </div>

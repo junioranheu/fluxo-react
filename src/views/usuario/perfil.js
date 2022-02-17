@@ -9,7 +9,7 @@ import CONSTANTS_USUARIOS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
-
+ 
 export default function Perfil() {
     const navigate = useNavigate();
     const [urlPagina] = useState(window.location.pathname);
