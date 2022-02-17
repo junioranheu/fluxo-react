@@ -3,7 +3,9 @@ import NProgress from 'nprogress';
 import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Aviso } from './componentes/outros/aviso';
+import CONSTANTS from './utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from './utilidades/context/usuarioContext';
+import { Fetch } from './utilidades/utils/fetch';
 import HorarioBrasilia from './utilidades/utils/horarioBrasilia';
 import Estabelecimento from './views/estabelecimento/estabelecimento';
 import Estabelecimentos from './views/estabelecimento/estabelecimentos';
@@ -22,6 +24,7 @@ import Perfil from './views/usuario/perfil';
 
 export default function App() {
   const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
+  const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado()?.usuarioId : null);
   const [dataAutenticacao] = useState(isAuth ? Auth.getUsuarioLogado()?.dataAutenticacao : null);
   const navigate = useNavigate();
 
@@ -55,11 +58,33 @@ export default function App() {
     // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
     const intervaloPollMs = 1000;
     const poll = setInterval(() => {
-      console.log(HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'));
+      if (isAuth) {
+        console.log(HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'));
+
+        // Atualizar a data on-line do usuário logado;
+        // atualizarHoraOnline();
+      }
     }, intervaloPollMs);
 
     return () => clearInterval(poll);
-  }, [])
+  }, [isAuth]);
+
+  async function atualizarHoraOnline() {
+    const url = CONSTANTS.API_URL_POST_AVALIAR;
+    console.log(usuarioId);
+    const token = Auth.getUsuarioLogado().token;
+    // console.log(token);
+    const avaliacao = {
+      data: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+    };
+
+    let resposta = await Fetch.postApi(url, avaliacao, token);
+    if (resposta) {
+      Aviso.success('Hora on-line atualizada com sucesso', 5000);
+    } else {
+      Aviso.error('Algo deu errado ao atualizar a última data on-line<br/>Consulte o F12!', 5000);
+    }
+  }
 
   return (
     <Routes>
