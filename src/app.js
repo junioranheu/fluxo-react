@@ -24,14 +24,13 @@ import Perfil from './views/usuario/perfil';
 
 export default function App() {
   const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
-  const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado()?.usuarioId : null);
-  const [dataAutenticacao] = useState(isAuth ? Auth.getUsuarioLogado()?.dataAutenticacao : null);
   const navigate = useNavigate();
 
   // Verificar se o token ainda é válido;
   useEffect(() => {
     if (isAuth) {
       const horaAgora = HorarioBrasilia();
+      const dataAutenticacao = Auth.getUsuarioLogado()?.dataAutenticacao;
       var duracao = Moment.duration(horaAgora.diff(dataAutenticacao));
       var diferencaHoras = duracao.asHours();
       // console.log(diferencaHoras);
@@ -52,8 +51,9 @@ export default function App() {
         NProgress.done();
       }
     }
-  }, [isAuth, dataAutenticacao]);
+  }, [isAuth, navigate, setIsAuth]);
 
+  const [exibirErroAtualizarDataOnline, setExibirErroAtualizarDataOnline] = useState(true);
   useEffect(() => {
     if (isAuth) {
       // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
@@ -66,24 +66,32 @@ export default function App() {
 
       return () => clearInterval(poll);
     }
-  }, [isAuth]);
+  }, [isAuth, exibirErroAtualizarDataOnline]);
 
   async function atualizarHoraOnline() {
     const url = CONSTANTS.API_URL_POST_ATUALIZAR_HORA_ONLINE;
     const token = Auth.getUsuarioLogado().token;
+    const dataAgora = HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss');
     // console.log(token);
     const usuario = {
-      usuarioId: usuarioId,
-      dataOnline: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+      usuarioId: Auth.getUsuarioLogado().usuarioId,
+      dataOnline: dataAgora,
     };
 
     let resposta = await Fetch.postApi(url, usuario, token);
     // console.log(resposta);
     if (resposta) {
-      // console.log('Hora on-line atualizada com sucesso ☑');
-      // Aviso.success('Hora on-line atualizada com sucesso', 5000);
+      // const msg = `Hora on-line atualizada com sucesso para às ${dataAgora}`;
+      // console.log(msg);
+      // Aviso.success(msg, 5000);
     } else {
-      Aviso.error('Algo deu errado ao atualizar a última data on-line<br/>Consulte o F12!', 5000);
+      const msg = `Algo deu errado ao atualizar a última data on-line às ${dataAgora}`;
+      if (exibirErroAtualizarDataOnline) {
+        Aviso.error(msg, 5000);
+        setExibirErroAtualizarDataOnline(false);
+      }
+
+      console.log(msg);
     }
   }
 
