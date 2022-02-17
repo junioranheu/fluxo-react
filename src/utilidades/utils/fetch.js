@@ -21,9 +21,9 @@ export const Fetch = {
             // console.log(respostaJson.status);
 
             // Caso o respostaJson.status seja diferente de nulo, é porque algo deu erro...
-            // Exemplo: erros 404 ou 400, quando um usuário escreve na barra e procura por um ID que não existe;
+            // Exemplo: erros 404, 400 ou 401, quando um usuário escreve na barra e procura por um ID que não existe;
             if (respostaJson.status) {
-                console.log(`Erro ${respostaJson.status} em ${url}`);
+                console.log(`Erro ${respostaJson.status} em ${url}. Tipo de erro: ${respostaJson.title}`);
                 respostaJson = null;
             }
         } catch (erro) {
@@ -58,6 +58,14 @@ export const Fetch = {
 
             respostaJson = await resposta.json();
             // console.log(respostaJson);
+            // console.log(respostaJson.status);
+
+            // Caso o respostaJson.status seja diferente de nulo, é porque algo deu erro...
+            // Exemplo: erros 404, 400 ou 401, quando um usuário escreve na barra e procura por um ID que não existe;
+            if (respostaJson.status) {
+                console.log(`Erro ${respostaJson.status} em ${url}. Tipo de erro: ${respostaJson.title}`);
+                respostaJson = null;
+            }
         } catch (erro) {
             const e = {
                 'url': url,

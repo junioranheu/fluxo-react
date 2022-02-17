@@ -55,14 +55,16 @@ export default function App() {
   }, [isAuth, dataAutenticacao]);
 
   useEffect(() => {
+    atualizarHoraOnline();
+
     // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
-    const intervaloPollMs = 1000;
+    const intervaloPollMs = 3000;
     const poll = setInterval(() => {
       if (isAuth) {
-        console.log(HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'));
+        // console.log(HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'));
 
         // Atualizar a data on-line do usuário logado;
-        // atualizarHoraOnline();
+        atualizarHoraOnline();
       }
     }, intervaloPollMs);
 
@@ -70,17 +72,19 @@ export default function App() {
   }, [isAuth]);
 
   async function atualizarHoraOnline() {
-    const url = CONSTANTS.API_URL_POST_AVALIAR;
-    console.log(usuarioId);
+    const url = CONSTANTS.API_URL_POST_ATUALIZAR_HORA_ONLINE;
     const token = Auth.getUsuarioLogado().token;
     // console.log(token);
-    const avaliacao = {
-      data: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+    const usuario = {
+      usuarioId: usuarioId,
+      dataOnline: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
     };
 
-    let resposta = await Fetch.postApi(url, avaliacao, token);
+    let resposta = await Fetch.postApi(url, usuario, token);
+    // console.log(resposta);
     if (resposta) {
-      Aviso.success('Hora on-line atualizada com sucesso', 5000);
+      // console.log('Hora on-line atualizada com sucesso ☑');
+      // Aviso.success('Hora on-line atualizada com sucesso', 5000);
     } else {
       Aviso.error('Algo deu errado ao atualizar a última data on-line<br/>Consulte o F12!', 5000);
     }
