@@ -1,5 +1,5 @@
 :root{--cor-principal:#FEBA35;--cor-principal-mais-escuro:#B78C44;--cor-branco:#F6F5F5;--cor-cinza:#777;--cor-preto:#211F24;--sombra:0px 8px 12px 0px rgba(0, 0, 0, 0.25);--heading-large:5.6rem;--heading-medium:3.6rem;--heading-small:2.4rem;--rosa:pink}
-body{margin:0;font-family:Poppins;src:local('Poppins');-webkit-font-smoothing:antialiased;scroll-behavior:smooth;background:#fff;background:linear-gradient(180deg,#fff 0,#fff 0,#e2e1e1 100%)}
+body{margin:0;font-family:Poppins!important;src:local('Poppins');-webkit-font-smoothing:antialiased;scroll-behavior:smooth;background:#fff;background:linear-gradient(180deg,#fff 0,#fff 0,#e2e1e1 100%)}
 .titulo{font-size:1.5em;line-height:32px}
 .box{padding:30px;box-shadow:var(--sombra);border-radius:10px}
 .secao-diagonal{position:absolute;top:0;right:0;left:0;height:75vmin;width:100%;z-index:-1;fill:var(--cor-principal)}
@@ -79,3 +79,4 @@ h3,h4,h5,h6{font-weight:800}
 .btn-canto-direito{right:20px;top:28px;position:absolute;border-radius:4px;color:var(--cor-principal);font-weight:bolder;font-size:20px}
 .borda{border-radius:10px!important}
 .centralizar{display:flex;justify-content:center}
+.titulo-gigante{word-break:break-word;font-size:4em;font-weight: bolder;}

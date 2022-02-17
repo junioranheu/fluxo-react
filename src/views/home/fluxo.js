@@ -1,4 +1,3 @@
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -14,6 +13,7 @@ import Relaxando from '../../static/gifs/relaxando.webp';
 import Top from '../../static/gifs/top.webp';
 
 export default function Fluxo() {
+    require('bootstrap/dist/css/bootstrap.min.css'); //Importar CSS apenas para esse componente (scoped);
     const [nomeApp] = useState('Fluxo');
     const [sloganApp] = useState('Conheça sua cidade!');
 
@@ -59,7 +59,7 @@ export default function Fluxo() {
 
                             <div className='col-lg-8 col-md-7'>
                                 <div className='slider-product-content'>
-                                    <h1 className='slider-title mb-25 animate__animated animate__fadeInUp delay03'>Bem-vindo ao <span>{nomeApp}!</span></h1>
+                                    <h1 className='titulo-gigante slider-title mb-25 animate__animated animate__fadeInUp delay03'>Bem-vindo ao <span>{nomeApp}!</span></h1>
                                     <a className='main-btn mt-2 animate__animated animate__fadeInUp delay15' href='/criar-conta'>Crie sua conta <i className='lni-chevron-right'></i></a>
                                     <a className='main-btn main-btn-2 mt-2 ml-3 animate__animated animate__fadeInUp delay19' href='/entrar'>Entre agora <i className='lni-chevron-right'></i></a>
                                 </div>
@@ -78,8 +78,8 @@ export default function Fluxo() {
 
                             <div className='col-lg-8 col-md-7'>
                                 <div className='slider-product-content'>
-                                    <h1 className='slider-title mb-10'>Talvez, <span>você</span>...</h1>
-                                    <p className='mb-25'>queira {gerarTituloAleatorio()}... tá esperando o quê?</p>
+                                    <h1 className='titulo-gigante slider-title mb-10'>Talvez, <span>você</span>...</h1>
+                                    <p className='subtitle is-5 mb-25'>queira {gerarTituloAleatorio()}... tá esperando o quê?</p>
                                     <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
                                 </div>
                             </div>
@@ -97,8 +97,8 @@ export default function Fluxo() {
 
                             <div className='col-lg-8 col-md-7'>
                                 <div className='slider-product-content'>
-                                    <h1 className='slider-title mb-10'><span>{nomeApp}</span> & <span>relaxamento</span></h1>
-                                    <p className='mb-25'>Clique aqui embaixo e entre agora mesmo!</p>
+                                    <h1 className='titulo-gigante slider-title mb-10'><span>{nomeApp}</span> & <span>relaxamento</span></h1>
+                                    <p className='subtitle is-5 mb-25'>Clique aqui embaixo e entre agora mesmo!</p>
                                     <a className='main-btn' href='/'>{sloganApp} <i className='lni-chevron-right'></i></a>
                                 </div>
                             </div>
