@@ -1,3 +1,4 @@
+import Moment from 'moment';
 import NProgress from 'nprogress';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +9,7 @@ import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import horarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Index() {
     const refTxtNomeUsuario = useRef();
@@ -57,6 +59,23 @@ export default function Index() {
         // Verificar se o login e a senha estão corretos;
         let resposta = await Fetch.getApi(url);
         if (resposta) {
+            // Verificar se o usuário já está logado;
+            const horaAgora = horarioBrasilia();
+            const horaOnlineUsuario = resposta.dataOnline;
+            var duracao = Moment.duration(horaAgora.diff(horaOnlineUsuario));
+            var diferencaSegundos = duracao.asSeconds();
+            // console.log(diferencaSegundos);
+            if (diferencaSegundos < 5){
+                NProgress.done();
+                refTxtSenha.current.value = '';
+                formData.senha = '';
+                refTxtNomeUsuario.current.select();
+                refBtnEntrar.current.disabled = false;
+                Aviso.error('Erro ao iniciar sessão<br/>Essa conta já está logada no sistema!', 5000);
+                return false;
+            }
+
+            // Gerar token e autenticar/entrar;
             getToken(formData.usuario, formData.senha, resposta);
         } else {
             NProgress.done();

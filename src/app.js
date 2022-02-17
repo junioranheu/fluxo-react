@@ -55,20 +55,17 @@ export default function App() {
   }, [isAuth, dataAutenticacao]);
 
   useEffect(() => {
-    atualizarHoraOnline();
-
-    // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
-    const intervaloPollMs = 3000;
-    const poll = setInterval(() => {
-      if (isAuth) {
+    if (isAuth) {
+      // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
+      const intervaloPollMs = 3000;
+      const poll = setInterval(() => {
         // console.log(HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'));
-
         // Atualizar a data on-line do usuário logado;
         atualizarHoraOnline();
-      }
-    }, intervaloPollMs);
+      }, intervaloPollMs);
 
-    return () => clearInterval(poll);
+      return () => clearInterval(poll);
+    }
   }, [isAuth]);
 
   async function atualizarHoraOnline() {
