@@ -70,7 +70,7 @@ export default function CriarConta() {
             'nomeUsuarioSistema': formData.nomeUsuarioSistema,
             'senha': formData.senha,
             'usuarioTipoId': 2, // Usuário comum;
-            'dataCriacao': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
+            'dataCriacao': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
             'foto': '',
             'isAtivo': 1,
             'isPremium': 0

@@ -123,7 +123,7 @@ export default function Avaliar(props) {
             'usuarioId': formData.usuarioId,
             'comentario': formData.comentario,
             'avaliacao': formData.avaliacao,
-            'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
+            'data': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
         };
 
         let resposta = await Fetch.postApi(url, avaliacao, token);

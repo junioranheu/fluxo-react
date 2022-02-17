@@ -49,7 +49,7 @@ export default function Footer() {
                     <div className='row columns'>
                         <div className='column'>
                             <p className='copyright-text'>
-                                Copyright &copy; {HorarioBrasilia.year()} —
+                                Copyright &copy; {HorarioBrasilia().year()} —
 
                                 Feito com o 💛 por <a href={() => false} target='_blank' rel='noreferrer'>@junioranheu</a>
                             </p>

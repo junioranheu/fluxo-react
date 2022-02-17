@@ -31,7 +31,7 @@ export const Fetch = {
                 'url': url,
                 'token': token,
                 'erro': erro.message,
-                'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+                'data': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')
             }
 
             console.table(e);
@@ -64,7 +64,7 @@ export const Fetch = {
                 'body': body,
                 'token': token,
                 'erro': erro.message,
-                'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+                'data': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')
             }
 
             console.table(e);
@@ -94,7 +94,7 @@ export const Fetch = {
                 'formData': formData,
                 'token': token,
                 'erro': erro.message,
-                'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+                'data': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')
             }
 
             console.table(e);

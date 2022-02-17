@@ -6,7 +6,7 @@ import CONSTANTS_CIDADES from '../../utilidades/const/constCidades';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import horarioBrasilia from '../../utilidades/utils/horarioBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 import { Validacao } from '../../utilidades/utils/validacao';
 import InputMascara from '../outros/inputMascara';
 
@@ -253,7 +253,7 @@ export default function AbaDadosPessoais(props) {
                 cep: formDadosPessoais.cep,
                 bairro: bairro,
                 cidadeId: respostaCidade.cidadeId,
-                dataUltimaAlteracao: horarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+                dataUltimaAlteracao: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')
             }
         };
         // console.log(usuarioInformacoesJson);

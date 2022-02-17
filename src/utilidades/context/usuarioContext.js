@@ -29,7 +29,7 @@ export const Auth = {
             cidadeId: data.usuariosInformacoes.cidadeId,
             cidadeNome: data.usuariosInformacoes.cidades.nome,
             token: data.token,
-            dataAutenticacao: HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss')
+            dataAutenticacao: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')
         };
         // console.log(dadosUsuario);
 

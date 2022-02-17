@@ -87,7 +87,7 @@ export default function Index() {
 
     // Olá;
     function ola() {
-        var hora = HorarioBrasilia.hour();
+        var hora = HorarioBrasilia().hour();
         var msg = '';
 
         if (hora < 12) {

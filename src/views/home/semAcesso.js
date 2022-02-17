@@ -48,7 +48,7 @@ export default function SemAcesso() {
                                 <a className='button is-text' href='/reportar-problema'>Reportar problema</a>
                             </div>
 
-                            <p className='mt-3 text-muted small sem-highlight'>Ref: {CodigoAleatorio(15)}{HorarioBrasilia.toString()}</p>
+                            <p className='mt-3 text-muted small sem-highlight'>Ref: {CodigoAleatorio(15)}{HorarioBrasilia().toString()}</p>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Aviso } from './componentes/outros/aviso';
 import { Auth, UsuarioContext } from './utilidades/context/usuarioContext';
-import horarioBrasilia from './utilidades/utils/horarioBrasilia';
+import HorarioBrasilia from './utilidades/utils/horarioBrasilia';
 import Estabelecimento from './views/estabelecimento/estabelecimento';
 import Estabelecimentos from './views/estabelecimento/estabelecimentos';
 import GerenciarEstabelecimento from './views/estabelecimento/gerenciarEstabelecimentos';
@@ -25,10 +25,10 @@ export default function App() {
   const [dataAutenticacao] = useState(isAuth ? Auth.getUsuarioLogado()?.dataAutenticacao : null);
   const navigate = useNavigate();
 
-  // Verificar se o token é válido ainda;
+  // Verificar se o token ainda é válido;
   useEffect(() => {
     if (isAuth) {
-      const horaAgora = horarioBrasilia;
+      const horaAgora = HorarioBrasilia();
       var duracao = Moment.duration(horaAgora.diff(dataAutenticacao));
       var diferencaHoras = duracao.asHours();
       // console.log(diferencaHoras);
@@ -49,7 +49,17 @@ export default function App() {
         NProgress.done();
       }
     }
-  }, [isAuth, dataAutenticacao])
+  }, [isAuth, dataAutenticacao]);
+
+  useEffect(() => {
+    // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
+    const intervaloPollMs = 1000;
+    const poll = setInterval(() => {
+      console.log(HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'));
+    }, intervaloPollMs);
+
+    return () => clearInterval(poll);
+  }, [])
 
   return (
     <Routes>

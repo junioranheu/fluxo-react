@@ -28,6 +28,8 @@ export default function Avaliacao(props) {
             retorno = mDisplay;
         } else if (sDisplay) {
             retorno = sDisplay;
+        } else {
+            return 'agora mesmo';
         }
 
         // return seconds + ' - ' + dDisplay + hDisplay + mDisplay + sDisplay;

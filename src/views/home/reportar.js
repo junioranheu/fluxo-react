@@ -50,7 +50,7 @@ export default function Reportar() {
         const usuarioId = isAuth ? Auth.getUsuarioLogado().usuarioId : null;
         const report = {
             'reclamacao': textProblema,
-            'data': HorarioBrasilia.format('YYYY-MM-DD HH:mm:ss'),
+            'data': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
             'usuarioId': usuarioId
         };
 
