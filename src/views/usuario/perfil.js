@@ -1,15 +1,17 @@
 import NProgress from 'nprogress';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShimmerCircularImage } from 'react-shimmer-effects';
+import { ShimmerCircularImage, ShimmerText } from 'react-shimmer-effects';
+import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import { Aviso } from '../../componentes/outros/aviso';
 import '../../css/perfil.css';
 import SemImagem from '../../static/outro/sem-imagem.webp';
+import CONSTANTS_AVALIACOES from '../../utilidades/const/constEstabelecimentosAvaliacoes';
 import CONSTANTS_USUARIOS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
- 
+
 export default function Perfil() {
     const navigate = useNavigate();
     const [urlPagina] = useState(window.location.pathname);
@@ -52,6 +54,33 @@ export default function Perfil() {
         // console.log(err);
     }
 
+    // Avaliações feitas pelo usuário;
+    const [loadingAvaliacoes, setLoadingAvaliacoes] = useState(false);
+    const [avaliacoes, setAvaliacoes] = useState([]);
+    useEffect(() => {
+        async function getAvaliacoes() {
+            setLoadingAvaliacoes(true);
+            NProgress.start();
+
+            // Pegar o parâmetro da URL;
+            const url = `${CONSTANTS_AVALIACOES.API_URL_GET_AVALIACOES_POR_ID_USUARIO}?id=${detalhesPerfil.usuarioId}`;
+
+            let resposta = await Fetch.getApi(url);
+            if (resposta) {
+                setAvaliacoes(resposta);
+                setLoadingAvaliacoes(false);
+                NProgress.done();
+            } else {
+                setLoadingAvaliacoes(false);
+                Aviso.error('Algo deu errado ao consultar as avaliações do estabelecimento em questão!', 5000);
+            }
+        }
+
+        if (detalhesPerfil.usuarioId) {
+            getAvaliacoes();
+        }
+    }, [detalhesPerfil]);
+
     if (detalhesPerfil.length < 1) {
         return null;
     }
@@ -77,7 +106,7 @@ export default function Perfil() {
                                     <div className='profile-username-wrapper flexbox-col-start'>
                                         <h3 className='profile-username flexbox'>
                                             <span className='name'>{detalhesPerfil.nomeCompleto}</span>
-                                            <span className='name-small cor-principal'>@{detalhesPerfil.nomeUsuarioSistema}</span>
+                                            <span className='name-small cor-principal'>/@{detalhesPerfil.nomeUsuarioSistema}</span>
                                         </h3>
 
                                         <div className='profile-followers profile-followers-desk flexbox'>
@@ -90,9 +119,7 @@ export default function Perfil() {
                                                 <div className='profile-bio'>
                                                     <p className='profile-bio-inner'>
                                                         <span className='line'>
-                                                            Rua {detalhesPerfil.usuariosInformacoes.rua.replace('Rua', '')}, {detalhesPerfil.usuariosInformacoes.numeroResidencia}<br />
-                                                            {detalhesPerfil.usuariosInformacoes.bairro}, {detalhesPerfil.usuariosInformacoes.cidades?.nome} — {detalhesPerfil.usuariosInformacoes.cidades?.estados?.nome}<br />
-                                                            CEP {detalhesPerfil.usuariosInformacoes.cep}
+                                                            Oi, né... imagina que aqui tem uma bio
                                                         </span>
                                                     </p>
                                                 </div>
@@ -117,40 +144,59 @@ export default function Perfil() {
                 )
             }
 
-            <div className='mt-4'>
-                <h2>Perfil de @{detalhesPerfil.nomeUsuarioSistema}</h2>
-
-                <code className='mt-2'>
-                    dataCriacao: {detalhesPerfil.dataCriacao}<br />
-                    dataOnline: {detalhesPerfil.dataOnline}<br />
-                    email: {detalhesPerfil.email}<br />
-                    foto: {detalhesPerfil.foto}<br />
-                    isAtivo: {detalhesPerfil.isAtivo}<br />
-                    isPremium: {detalhesPerfil.isPremium}<br />
-                    nomeCompleto: {detalhesPerfil.nomeCompleto}<br />
-                    nomeUsuarioSistema: {detalhesPerfil.nomeUsuarioSistema}<br />
-                    usuarioId: {detalhesPerfil.usuarioId}<br />
-                    usuarioTipoId: {detalhesPerfil.usuarioTipoId}<br />
-                    usuarioTipos.tipo: {detalhesPerfil.usuarioTipos.tipo}<br />
-                    usuarioTipos.descricao: {detalhesPerfil.usuarioTipos.descricao}<br />
+            {/* #02 - Localização*/}
+            <section className='mt-6'>
+                <div className='content-section'>
+                    <div className='titulo-wrapper'>
+                        <h1 className='titulo'>
+                            Localização
+                        </h1>
+                    </div>
 
                     {
-                        detalhesPerfil.usuariosInformacoes && (
-                            <React.Fragment>
-                                usuariosInformacoes.bairro: {detalhesPerfil.usuariosInformacoes.bairro}<br />
-                                usuariosInformacoes.cep: {detalhesPerfil.usuariosInformacoes.cep}<br />
-                                usuariosInformacoes.cidadeId: {detalhesPerfil.usuariosInformacoes.cidadeId}<br />
-                                usuariosInformacoes.cpf: {detalhesPerfil.usuariosInformacoes.cpf}<br />
-                                usuariosInformacoes.dataAniversario: {detalhesPerfil.usuariosInformacoes.dataAniversario}<br />
-                                usuariosInformacoes.genero: {detalhesPerfil.usuariosInformacoes.genero}<br />
-                                usuariosInformacoes.numeroResidencia: {detalhesPerfil.usuariosInformacoes.numeroResidencia}<br />
-                                usuariosInformacoes.rua: {detalhesPerfil.usuariosInformacoes.rua}<br />
-                                usuariosInformacoes.telefone: {detalhesPerfil.usuariosInformacoes.telefone}
-                            </React.Fragment>
+                        detalhesPerfil.usuariosInformacoes ? (
+                            <div>
+                                Rua {detalhesPerfil.usuariosInformacoes.rua.replace('Rua', '')}, {detalhesPerfil.usuariosInformacoes.numeroResidencia}<br />
+                                {detalhesPerfil.usuariosInformacoes.bairro}, {detalhesPerfil.usuariosInformacoes.cidades?.nome} — {detalhesPerfil.usuariosInformacoes.cidades?.estados?.nome}<br />
+                                CEP {detalhesPerfil.usuariosInformacoes.cep}
+                            </div>
+                        ) : (
+                            <div>
+                                Esse usuário ainda não definiu sua localização
+                            </div>
                         )
                     }
-                </code>
-            </div>
+                </div>
+            </section>
+
+            {/* #03 - Avaliações e Avaliar */}
+            <section className='mt-6'>
+                <div className='content-section'>
+                    {/* #03.1 - Avaliações */}
+                    <div className='titulo-wrapper'>
+                        <h1 className='titulo'>
+                            Últimas avaliações de <span className='grifar'>@{detalhesPerfil.nomeUsuarioSistema}</span>
+                        </h1>
+                    </div>
+
+                    {
+                        !loadingAvaliacoes && avaliacoes.length > 0 ? (
+                            avaliacoes.map((avaliacao) => (
+                                <Avaliacao props={avaliacao} key={avaliacao.estabelecimentoAvaliacaoId} />
+                            ))
+                        ) : (
+                            <div className='animate__animated animate__fadeIn animate__delay-1s'>
+                                Esse usuário ainda não fez nenhuma avaliação
+                            </div>
+                        )
+                    }
+
+                    {/* Loading */}
+                    {loadingAvaliacoes && (
+                        <ShimmerText line={5} gap={10} />
+                    )}
+                </div>
+            </section>
         </React.Fragment>
     );
 }
