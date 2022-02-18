@@ -121,7 +121,7 @@ export default function Index() {
                 </div>
 
                 <h1 className='title mt-2'>Entre no <span className='grifar'>Fluxo</span></h1>
-                <h1 className='subtitle'><span className='efeito-texto'>Feito com React.js</span></h1>
+                <h1 className='subtitle'><span className='efeito-texto'>Conheça a sua cidade!</span></h1>
             </div>
 
             <div className='field mt-5'>
