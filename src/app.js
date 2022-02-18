@@ -55,6 +55,33 @@ export default function App() {
 
   const [exibirErroAtualizarDataOnline, setExibirErroAtualizarDataOnline] = useState(true);
   useEffect(() => {
+    async function atualizarHoraOnline() {
+      const url = CONSTANTS.API_URL_POST_ATUALIZAR_HORA_ONLINE;
+      const token = Auth.getUsuarioLogado().token;
+      const dataAgora = HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss');
+      // console.log(token);
+      const usuario = {
+        usuarioId: Auth.getUsuarioLogado().usuarioId,
+        dataOnline: dataAgora,
+      };
+
+      let resposta = await Fetch.postApi(url, usuario, token);
+      // console.log(resposta);
+      if (resposta) {
+        // const msg = `Hora on-line atualizada com sucesso para às ${dataAgora}`;
+        // console.log(msg);
+        // Aviso.success(msg, 5000);
+      } else {
+        const msg = `Algo deu errado ao atualizar a última data on-line às ${dataAgora}`;
+        if (exibirErroAtualizarDataOnline) {
+          Aviso.error(msg, 5000);
+          setExibirErroAtualizarDataOnline(false);
+        }
+
+        console.log(msg);
+      }
+    }
+
     if (isAuth) {
       // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
       const intervaloPollMs = 3000;
@@ -67,33 +94,6 @@ export default function App() {
       return () => clearInterval(poll);
     }
   }, [isAuth, exibirErroAtualizarDataOnline]);
-
-  async function atualizarHoraOnline() {
-    const url = CONSTANTS.API_URL_POST_ATUALIZAR_HORA_ONLINE;
-    const token = Auth.getUsuarioLogado().token;
-    const dataAgora = HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss');
-    // console.log(token);
-    const usuario = {
-      usuarioId: Auth.getUsuarioLogado().usuarioId,
-      dataOnline: dataAgora,
-    };
-
-    let resposta = await Fetch.postApi(url, usuario, token);
-    // console.log(resposta);
-    if (resposta) {
-      // const msg = `Hora on-line atualizada com sucesso para às ${dataAgora}`;
-      // console.log(msg);
-      // Aviso.success(msg, 5000);
-    } else {
-      const msg = `Algo deu errado ao atualizar a última data on-line às ${dataAgora}`;
-      if (exibirErroAtualizarDataOnline) {
-        Aviso.error(msg, 5000);
-        setExibirErroAtualizarDataOnline(false);
-      }
-
-      console.log(msg);
-    }
-  }
 
   return (
     <Routes>
