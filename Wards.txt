@@ -27,3 +27,5 @@ Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effect
 
 -- WARDS:
 OPÇÃO "ESQUECI A SENHA"
+COLOCAR UM INPUT PRA CONFIRMAR SENHA LA NO EDITAR PERFIL
+ENVIAR EMAIL AO CRIAR CONTA
