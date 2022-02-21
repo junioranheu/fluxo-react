@@ -52,7 +52,7 @@ export default function Perfil() {
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);
-    }
+    } 
 
     // Avaliações feitas pelo usuário;
     const [loadingAvaliacoes, setLoadingAvaliacoes] = useState(false);
