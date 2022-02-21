@@ -26,5 +26,4 @@ builder.Services.AddCors();
 Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effects-for-react/
 
 -- WARDS:
-CRIAR TELA DE PERFIL
 OPÇÃO "ESQUECI A SENHA"

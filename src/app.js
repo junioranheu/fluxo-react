@@ -21,6 +21,7 @@ import AtualizarPerfil from './views/usuario/atualizar';
 import CriarConta from './views/usuario/criarConta';
 import Entrar from './views/usuario/entrar';
 import Perfil from './views/usuario/perfil';
+import RecuperarSenha from './views/usuario/recuperarSenha';
 
 export default function App() {
   const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -108,10 +109,10 @@ export default function App() {
       <Route path='/criar-conta' element={!isAuth ? <CriarConta /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/perfil/:nomeUsuarioSistema' element={<Perfil />} />
       <Route path='/perfil/atualizar' element={isAuth ? <AtualizarPerfil /> : <Navigate to={'/sem-acesso'} />} />
+      <Route path='/recuperar-senha' element={!isAuth ? <RecuperarSenha /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimentos />} />
       <Route path='/estabelecimento/:estabelecimentoId' element={<Estabelecimento />} />
     </Routes>
   );
 }
-

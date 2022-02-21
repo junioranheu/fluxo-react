@@ -185,7 +185,7 @@ export default function CriarConta() {
                 <small>
                     <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/politica-e-termos-de-uso'>termos de uso</a></span>
                     <br />
-                    <a className='cor-principal' href='/entrar'>Já tem uma conta? Entre aqui!</a>
+                    <span>Já tem uma conta? <a className='cor-principal' href='/entrar'>Entre aqui!</a></span>
                 </small>
             </div>
         </DivCentralizada>

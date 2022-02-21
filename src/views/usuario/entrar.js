@@ -65,7 +65,7 @@ export default function Index() {
             var duracao = Moment.duration(horaAgora.diff(horaOnlineUsuario));
             var diferencaSegundos = duracao.asSeconds();
             // console.log(diferencaSegundos);
-            if (diferencaSegundos < 5){
+            if (diferencaSegundos < 5) {
                 NProgress.done();
                 refTxtSenha.current.value = '';
                 formData.senha = '';
@@ -155,7 +155,9 @@ export default function Index() {
                 <small>
                     <span>Ao entrar você automaticamente concorda com os <a className='cor-principal' target='_blank' href='/politica-e-termos-de-uso'>termos de uso</a></span>
                     <br />
-                    <a className='cor-principal' href='/criar-conta'>Não tem uma conta? Registre-se agora!</a>
+                    <span>Não tem uma conta? <a className='cor-principal' href='/criar-conta'> Registre-se agora!</a></span>
+                    <br />
+                    <span>Esqueceu sua senha? <a className='cor-principal' href='/recuperar-senha'>clique aqui</a></span>
                 </small>
             </div>
         </DivCentralizada>
