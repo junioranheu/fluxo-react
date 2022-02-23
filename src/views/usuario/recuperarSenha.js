@@ -3,6 +3,7 @@ import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
 import { Aviso } from '../../componentes/outros/aviso';
 import DivCentralizada from '../../componentes/outros/divCentralizada';
+import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Fetch } from '../../utilidades/utils/fetch';
 
@@ -52,6 +53,19 @@ export default function RecuperarSenha() {
             Aviso.error('Esse e-mail/nome de usuário não está registrado na nossa base de dados!', 5000);
             return false;
         }
+
+        // Gerar uma url temporária;
+        const urlTipo = 'Recuperar senha';
+        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA}?urlTipo=${urlTipo}&chaveDinamico=${emailCadastrado}`;
+        let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria);
+        if (!urlTemporaria) {
+            resetarCampos();
+            Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
+            return false;
+        }
+
+        console.log(urlTemporaria);
+        return false;
 
         // Disparar e-mail para o e-mail que está na variavel "resposta";
         const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_RECUPERACAO_SENHA}?email=${emailCadastrado}`;

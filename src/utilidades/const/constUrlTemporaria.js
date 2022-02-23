@@ -1,0 +1,27 @@
+import { API_BASE_URL_DEV, API_BASE_URL_PROD } from '../../utilidades/utils/urlApi';
+
+const ENDPOINTS = {
+    GET_TODOS: 'UrlsTemporariasApi/todos',
+    GET_POR_ID: 'UrlsTemporariasApi',
+    POST_CRIAR: 'UrlsTemporariasApi/criar',
+    GET_POR_TIPO_URL_E_ID_DINAMICA: 'UrlsTemporariasApi/getPorTipoUrlEIdDinamica'
+};
+
+const DEV = {
+    API_URL_GET_TODOS: `${API_BASE_URL_DEV}/${ENDPOINTS.GET_TODOS}`,
+    API_URL_GET_POR_ID: `${API_BASE_URL_DEV}/${ENDPOINTS.GET_POR_ID}`,
+    API_URL_POST_CRIAR: `${API_BASE_URL_DEV}/${ENDPOINTS.POST_CRIAR}`,
+    API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA: `${API_BASE_URL_DEV}/${ENDPOINTS.GET_POR_TIPO_URL_E_ID_DINAMICA}`
+};
+
+const PROD = {
+    API_URL_GET_TODOS: `${API_BASE_URL_PROD}/${ENDPOINTS.GET_TODOS}`,
+    API_URL_GET_POR_ID: `${API_BASE_URL_PROD}/${ENDPOINTS.GET_POR_ID}`,
+    API_URL_POST_CRIAR: `${API_BASE_URL_PROD}/${ENDPOINTS.POST_CRIAR}`,
+    API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA: `${API_BASE_URL_PROD}/${ENDPOINTS.GET_POR_TIPO_URL_E_ID_DINAMICA}`
+};
+
+// Definir se as constantes para a API é DEV ou PROD;
+const CONSTANTS = process.env.NODE_ENV === 'development' ? DEV : PROD;
+
+export default CONSTANTS;
