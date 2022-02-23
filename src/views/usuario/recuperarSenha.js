@@ -55,9 +55,23 @@ export default function RecuperarSenha() {
         }
 
         // Gerar uma url temporária;
+        // const urlTipo = 'Recuperar senha';
+        // const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA}?urlTipo=${urlTipo}&chaveDinamica=${emailCadastrado}`;
+        // let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria);
+        // if (!urlTemporaria) {
+        //     resetarCampos();
+        //     Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
+        //     return false;
+        // }
+
         const urlTipo = 'Recuperar senha';
-        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA}?urlTipo=${urlTipo}&chaveDinamico=${emailCadastrado}`;
-        let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria);
+        const jsonGerarUrlTemporaria = {
+            ChaveDinamica: emailCadastrado,
+            DataGeracaoUrl: x,
+            IsAtivo: 1
+        }
+        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_POST_CRIAR}`;
+        let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria, jsonGerarUrlTemporaria);
         if (!urlTemporaria) {
             resetarCampos();
             Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
