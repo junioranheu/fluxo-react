@@ -1,6 +1,7 @@
 
 import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Aviso } from '../../componentes/outros/aviso';
 import DivCentralizada from '../../componentes/outros/divCentralizada';
 import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
@@ -10,8 +11,22 @@ export default function RecuperandoSenha() {
     const [urlPagina] = useState(window.location.pathname);
     const [urlTemporaria] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
 
+    const navigate = useNavigate();
     const refEmailOuNomeUsuario = useRef();
     const refBtn = useRef();
+
+    const formInicial = {
+        email: '',
+        senha: '',
+        confirmarSenha: ''
+    }
+    const [formData, setFormData] = useState(formInicial);
+    function handleChange(e) {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
     useEffect(() => {
         document.title = 'Fluxo — Recuperar senha';
@@ -23,12 +38,15 @@ export default function RecuperandoSenha() {
             let resposta = await Fetch.getApi(url);
             if (!resposta) {
                 Aviso.error('Solicitação de recuperação de senha inválida!', 5000);
-                NProgress.done();
+                navigate('/sem-acesso', { replace: true });
                 return false;
             }
 
+            console.log(resposta);
             Aviso.success('xxxxxxxxxxxxxxxxxx!', 10000);
             NProgress.done();
+
+            formData.email = resposta.chaveDinamica;
 
             console.log(urlTemporaria);
         }
@@ -57,10 +75,10 @@ export default function RecuperandoSenha() {
             </div>
 
             <div className='field'>
-                <label className='label'>E-mail ou nome de usuário</label>
+                <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input ref={refEmailOuNomeUsuario} onChange={(e) => handleChangeFormDadosFluxo(e)}
-                        type='email' name='email' className='input' placeholder='Seu e-mail ou nome de usuário previamente registrado' />
+                    <input ref={refEmailOuNomeUsuario} value={formData.email}
+                        type='email' name='email' className='input' placeholder='Seu e-mail previamente registrado' disabled />
 
                     <span className='icon is-small is-right'>
                         <i className='fas fa-at'></i>

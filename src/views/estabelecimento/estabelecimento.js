@@ -85,7 +85,7 @@ export default function Estabelecimento() {
                 NProgress.done();
             } else {
                 Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
-                navigate('/sem-acesso', { replace: true });
+                navigate('/sem-acesso', { replace: true }); 
             }
         }
         // Pegar os detalhes do estabelecimento;

@@ -55,15 +55,6 @@ export default function RecuperarSenha() {
             return false;
         }
 
-        // const urlTipo = 'Recuperar senha';
-        // const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA}?urlTipo=${urlTipo}&chaveDinamica=${emailCadastrado}`;
-        // let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria);
-        // if (!urlTemporaria) {
-        //     resetarCampos();
-        //     Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
-        //     return false;
-        // }
-
         // Gerar uma url temporária;
         const urlTipo = 'Recuperar senha';
         const jsonGerarUrlTemporaria = {
