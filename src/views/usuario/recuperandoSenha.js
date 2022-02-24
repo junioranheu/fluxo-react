@@ -43,6 +43,7 @@ export default function RecuperandoSenha() {
             let resposta = await Fetch.getApi(url);
             // console.log(resposta);
             if (!resposta) {
+                NProgress.done();
                 Aviso.error('Solicitação de recuperação de senha inválida ou expirada!', 5000);
                 navigate('/sem-acesso', { replace: true });
                 return false;
@@ -56,6 +57,7 @@ export default function RecuperandoSenha() {
             const diferencaUrlGeradaEHoraExpirar = Moment.duration(Moment().diff(resposta.dataGeracaoUrl));
             const diferencaHoras = diferencaUrlGeradaEHoraExpirar.asHours();
             if (diferencaHoras > horaParaExpirar) {
+                NProgress.done();
                 Aviso.error('Solicitação de recuperação de senha expirada!', 5000);
                 navigate('/sem-acesso', { replace: true });
                 return false;
@@ -194,6 +196,10 @@ export default function RecuperandoSenha() {
                         <i className='fa fa-key'></i>
                     </span>
                 </div>
+            </div>
+
+            <div className='notification mt-5'>
+                <p>Sua senha deve ter pelo menos 06 caracteres — números e letras</p>
             </div>
 
             <div className='has-text-centered mt-5'>

@@ -18,6 +18,7 @@ export default function CriarConta() {
     const refEmail = useRef();
     const refNomeUsuario = useRef();
     const refSenha = useRef();
+    const refConfirmarSenha = useRef();
     const refBtnCriar = useRef();
 
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -46,6 +47,13 @@ export default function CriarConta() {
         const isTrocouSenha = true;
         let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha);
         if (!isContinuarUm) {
+            refBtnCriar.current.disabled = false;
+            return false;
+        }
+
+        // Checar se os dois campos de senha coincidem;
+        if (formData.senha !== formData.confirmarSenha) {
+            Aviso.warn('As senhas não estão idênticas! Tente novamente', 5000);
             refBtnCriar.current.disabled = false;
             return false;
         }
@@ -175,6 +183,22 @@ export default function CriarConta() {
                         <i className='fa fa-key'></i>
                     </span>
                 </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>Confirmar senha</label>
+                <div className='control has-icons-right'>
+                    <input className='input' type='password' name='confirmarSenha' placeholder='Confirme sua senha' autoComplete='weon'
+                        onChange={handleChange} onKeyPress={handleKeyPress} ref={refConfirmarSenha}
+                    />
+                    <span className='icon is-small is-right'>
+                        <i className='fa fa-key'></i>
+                    </span>
+                </div>
+            </div>
+
+            <div className='notification mt-5'>
+                <p>Sua senha deve ter pelo menos 06 caracteres — números e letras</p>
             </div>
 
             <div className='has-text-centered mt-5'>
