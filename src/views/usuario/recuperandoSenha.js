@@ -1,4 +1,5 @@
 
+import Moment from 'moment';
 import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ export default function RecuperandoSenha() {
     const [urlTemporaria] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
 
     const navigate = useNavigate();
-    const refEmailOuNomeUsuario = useRef();
+    const refEmail = useRef();
     const refBtn = useRef();
 
     const formInicial = {
@@ -36,27 +37,33 @@ export default function RecuperandoSenha() {
             const urlTipo = 'Recuperar senha';
             const url = `${CONSTANTS_URL_TEMPORARIA.API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA}?urlTipo=${urlTipo}&urlTemporaria=${urlTemporaria}`;
             let resposta = await Fetch.getApi(url);
+            // console.log(resposta);
             if (!resposta) {
                 Aviso.error('Solicitação de recuperação de senha inválida!', 5000);
                 navigate('/sem-acesso', { replace: true });
                 return false;
             }
 
-            console.log(resposta);
-            Aviso.success('xxxxxxxxxxxxxxxxxx!', 10000);
-            NProgress.done();
+            // Verificar se a url ainda é válida;
+            const horaParaExpirar = 1;
+            const diferencaUrlGeradaEHoraExpirar = Moment.duration(Moment().diff(resposta.dataGeracaoUrl));
+            const diferencaHoras = diferencaUrlGeradaEHoraExpirar.asHours();
+            if (diferencaHoras > horaParaExpirar) {
+                Aviso.error('Solicitação de recuperação de senha expirada!', 5000);
+                navigate('/sem-acesso', { replace: true });
+                return false;
+            }
 
+            // Exibir e-mail na tela;
             formData.email = resposta.chaveDinamica;
+            refEmail.current.value = resposta.chaveDinamica;
 
-            console.log(urlTemporaria);
+            NProgress.done();
         }
 
         verificarUrlTemporaria();
     }, [urlTemporaria]);
 
-    function handleChangeFormDadosFluxo() {
-
-    }
 
     function handleSubmit() {
 
@@ -77,7 +84,7 @@ export default function RecuperandoSenha() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input ref={refEmailOuNomeUsuario} value={formData.email}
+                    <input ref={refEmail} value={formData.email}
                         type='email' name='email' className='input' placeholder='Seu e-mail previamente registrado' disabled />
 
                     <span className='icon is-small is-right'>
@@ -89,7 +96,7 @@ export default function RecuperandoSenha() {
             <div className='field'>
                 <label className='label'>Nova senha</label>
                 <div className='control has-icons-right'>
-                    <input onChange={(e) => handleChangeFormDadosFluxo(e)}
+                    <input onChange={(e) => handleChange(e)}
                         type='password' name='senha' className='input' value='' placeholder='Sua senha' autoComplete='weon' />
 
                     <span className='icon is-small is-right'>
@@ -101,7 +108,7 @@ export default function RecuperandoSenha() {
             <div className='field'>
                 <label className='label'>Confirme sua nova senha</label>
                 <div className='control has-icons-right'>
-                    <input onChange={(e) => handleChangeFormDadosFluxo(e)}
+                    <input onChange={(e) => handleChange(e)}
                         type='password' name='senha' className='input' value='' placeholder='Confirme sua nova senha' autoComplete='weon' />
 
                     <span className='icon is-small is-right'>
