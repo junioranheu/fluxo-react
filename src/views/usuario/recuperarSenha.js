@@ -6,6 +6,7 @@ import DivCentralizada from '../../componentes/outros/divCentralizada';
 import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Fetch } from '../../utilidades/utils/fetch';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function RecuperarSenha() {
     const refEmailOuNomeUsuario = useRef();
@@ -54,7 +55,6 @@ export default function RecuperarSenha() {
             return false;
         }
 
-        // Gerar uma url temporária;
         // const urlTipo = 'Recuperar senha';
         // const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_GET_POR_TIPO_URL_E_ID_DINAMICA}?urlTipo=${urlTipo}&chaveDinamica=${emailCadastrado}`;
         // let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria);
@@ -64,13 +64,14 @@ export default function RecuperarSenha() {
         //     return false;
         // }
 
+        // Gerar uma url temporária;
         const urlTipo = 'Recuperar senha';
         const jsonGerarUrlTemporaria = {
-            ChaveDinamica: emailCadastrado,
-            DataGeracaoUrl: x,
-            IsAtivo: 1
-        }
-        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_POST_CRIAR}`;
+            chaveDinamica: emailCadastrado,
+            dataGeracaoUrl: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+            isAtivo: 1
+        };
+        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_POST_CRIAR}?urlTipo=${urlTipo}`;
         let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria, jsonGerarUrlTemporaria);
         if (!urlTemporaria) {
             resetarCampos();
@@ -78,11 +79,8 @@ export default function RecuperarSenha() {
             return false;
         }
 
-        console.log(urlTemporaria);
-        return false;
-
         // Disparar e-mail para o e-mail que está na variavel "resposta";
-        const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_RECUPERACAO_SENHA}?email=${emailCadastrado}`;
+        const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_RECUPERACAO_SENHA}?email=${emailCadastrado}&urlTemporaria=${urlTemporaria}`;
         let respostaEnviarEmail = await Fetch.postApi(urlEnviarEmail);
         if (!respostaEnviarEmail) {
             resetarCampos();

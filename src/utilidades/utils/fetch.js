@@ -16,6 +16,8 @@ export const Fetch = {
                 headers: headers
             });
 
+            // console.log(resposta);
+
             respostaJson = await resposta.json();
             // console.log(respostaJson);
             // console.log(respostaJson.status);
@@ -55,6 +57,8 @@ export const Fetch = {
                 headers: headers,
                 body: JSON.stringify(body)
             });
+
+            // console.log(resposta);
 
             respostaJson = await resposta.json();
             // console.log(respostaJson);
