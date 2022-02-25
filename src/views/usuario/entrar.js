@@ -157,7 +157,7 @@ export default function Index() {
                     <br />
                     <span>Não tem uma conta? <a className='cor-principal' href='/criar-conta'> Registre-se agora!</a></span>
                     <br />
-                    <span>Esqueceu sua senha? <a className='cor-principal' href='/recuperar-senha'>clique aqui</a></span>
+                    <span>Esqueceu sua senha? <a className='cor-principal' href='/recuperar-senha'>Clique aqui!</a></span>
                 </small>
             </div>
         </DivCentralizada>
