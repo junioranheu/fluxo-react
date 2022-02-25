@@ -96,7 +96,7 @@ export default function App() {
       return () => clearInterval(poll);
     }
   }, [isAuth, exibirErroAtualizarDataOnline]);
-
+ 
   return (
     <Routes>
       <Route path='/' element={<Inicio />} />
