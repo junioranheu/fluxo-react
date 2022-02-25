@@ -137,7 +137,7 @@ export default function CriarConta() {
             <div className='field mt-5'>
                 <label className='label'>Nome completo</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='text' name='nomeCompleto' placeholder='Seu nome completo' autoComplete='weon'
+                    <input className='input' type='text' name='nomeCompleto' placeholder='Seu nome completo' 
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeCompleto}
                     />
                     <span className='icon is-small is-right'>
@@ -149,7 +149,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='email' name='email' placeholder='Seu melhor e-mail' autoComplete='weon'
+                    <input className='input' type='email' name='email' placeholder='Seu melhor e-mail' 
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refEmail}
                     />
                     <span className='icon is-small is-right'>
@@ -164,7 +164,7 @@ export default function CriarConta() {
                     <span className='icon is-small is-left'>
                         <i className='fas fa-at'></i>
                     </span>
-                    <input className='input' type='text' name='nomeUsuarioSistema' placeholder='Seu nome de usuário no Fluxo' autoComplete='weon'
+                    <input className='input' type='text' name='nomeUsuarioSistema' placeholder='Seu nome de usuário no Fluxo' 
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeUsuario}
                     />
                     <span className='icon is-small is-right'>
@@ -176,7 +176,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' name='senha' placeholder='Sua senha' autoComplete='weon'
+                    <input className='input' type='password' name='senha' placeholder='Sua senha' autoComplete='new-password'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refSenha}
                     />
                     <span className='icon is-small is-right'>
@@ -188,7 +188,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Confirmar senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' name='confirmarSenha' placeholder='Confirme sua senha' autoComplete='weon'
+                    <input className='input' type='password' name='confirmarSenha' placeholder='Confirme sua senha' 
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refConfirmarSenha}
                     />
                     <span className='icon is-small is-right'>
