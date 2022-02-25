@@ -13,8 +13,8 @@ import Top from '../../static/gifs/top.webp';
 export default function Fluxo() {
     //Importar CSS apenas para esse componente (scoped);
     // require('../../css/landingPage/bootstrap.css');
-    require('../../css/landingPage/default.css');
-    require('../../css/landingPage/style.css');
+    // require('../../css/landingPage/default.css');
+    // require('../../css/landingPage/style.css');
 
     const [nomeApp] = useState('Fluxo');
     const [sloganApp] = useState('Conheça sua cidade!');
