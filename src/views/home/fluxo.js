@@ -13,7 +13,7 @@ import Relaxando from '../../static/gifs/relaxando.webp';
 import Top from '../../static/gifs/top.webp';
 
 export default function Fluxo() {
-    // require('bootstrap/dist/css/bootstrap.min.css'); //Importar CSS apenas para esse componente (scoped);
+    require('bootstrap/dist/css/bootstrap.min.css'); //Importar CSS apenas para esse componente (scoped);
     const [nomeApp] = useState('Fluxo');
     const [sloganApp] = useState('Conheça sua cidade!');
 
