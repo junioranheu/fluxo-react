@@ -43,7 +43,6 @@ export default function Perfil() {
         // Pegar os detalhes do usuário em questão;
         getDetalhesPerfilUsuario();
     }, [navigate, parametroPerfilUsuario]);
-    // console.log(detalhesPerfil);
 
     // Import dinâmico;
     let imagemDinamica = '';
@@ -52,7 +51,7 @@ export default function Perfil() {
     } catch (err) {
         // console.log('Imagem não existe');        
         // console.log(err);
-    } 
+    }
 
     // Avaliações feitas pelo usuário;
     const [loadingAvaliacoes, setLoadingAvaliacoes] = useState(false);
@@ -79,6 +78,8 @@ export default function Perfil() {
         if (detalhesPerfil.usuarioId) {
             getAvaliacoes();
         }
+
+        // console.log(detalhesPerfil);
     }, [detalhesPerfil]);
 
     if (detalhesPerfil.length < 1) {
@@ -105,8 +106,10 @@ export default function Perfil() {
 
                                     <div className='profile-username-wrapper flexbox-col-start'>
                                         <h3 className='profile-username flexbox'>
-                                            <span className='name'>{detalhesPerfil.nomeCompleto}</span>
-                                            <span className='name-small cor-principal'>/@{detalhesPerfil.nomeUsuarioSistema}</span>
+                                            <span className='name'>@{detalhesPerfil.nomeUsuarioSistema}</span>
+                                            {detalhesPerfil.isVerificado === 1 && (
+                                                <span className='name-small cor-principal'><i className='fa fa-certificate pointer' title='Usuário verificado'></i></span>
+                                            )}
                                         </h3>
 
                                         <div className='profile-followers profile-followers-desk flexbox'>

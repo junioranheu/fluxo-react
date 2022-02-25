@@ -52,6 +52,8 @@ export default function InfoUsuario() {
                             <br />
                             <span>Cidade: {Auth.getUsuarioLogado().cidadeNome}</span>
                             <br />
+                            <span>IsVerificado: {Auth.getUsuarioLogado().isVerificado}</span>
+                            <br />
                             <span>Token: {Auth.getUsuarioLogado().token.substring(0, 30)}...</span>
                             <br />
                             <span>Data de autenticação: {Auth.getUsuarioLogado().dataAutenticacao}</span>

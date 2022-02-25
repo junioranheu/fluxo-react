@@ -73,15 +73,16 @@ export default function CriarConta() {
         // Criar conta;
         const urlCriarConta = CONSTANTS.API_URL_POST_CRIAR;
         const usuario_a_ser_criado = {
-            'nomeCompleto': formData.nomeCompleto,
-            'email': formData.email,
-            'nomeUsuarioSistema': formData.nomeUsuarioSistema,
-            'senha': formData.senha,
-            'usuarioTipoId': 2, // Usuário comum;
-            'dataCriacao': HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
-            'foto': '',
-            'isAtivo': 1,
-            'isPremium': 0
+            nomeCompleto: formData.nomeCompleto,
+            email: formData.email,
+            nomeUsuarioSistema: formData.nomeUsuarioSistema,
+            senha: formData.senha,
+            usuarioTipoId: 2, // Usuário comum;
+            dataCriacao: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+            foto: '',
+            isAtivo: 1,
+            isPremium: 0,
+            IsVerificado: 0
         };
 
         let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
@@ -137,7 +138,7 @@ export default function CriarConta() {
             <div className='field mt-5'>
                 <label className='label'>Nome completo</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='text' name='nomeCompleto' placeholder='Seu nome completo' 
+                    <input className='input' type='text' name='nomeCompleto' placeholder='Seu nome completo'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeCompleto}
                     />
                     <span className='icon is-small is-right'>
@@ -149,7 +150,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>E-mail</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='email' name='email' placeholder='Seu melhor e-mail' 
+                    <input className='input' type='email' name='email' placeholder='Seu melhor e-mail'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refEmail}
                     />
                     <span className='icon is-small is-right'>
@@ -164,7 +165,7 @@ export default function CriarConta() {
                     <span className='icon is-small is-left'>
                         <i className='fas fa-at'></i>
                     </span>
-                    <input className='input' type='text' name='nomeUsuarioSistema' placeholder='Seu nome de usuário no Fluxo' 
+                    <input className='input' type='text' name='nomeUsuarioSistema' placeholder='Seu nome de usuário no Fluxo'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refNomeUsuario}
                     />
                     <span className='icon is-small is-right'>
@@ -188,7 +189,7 @@ export default function CriarConta() {
             <div className='field'>
                 <label className='label'>Confirmar senha</label>
                 <div className='control has-icons-right'>
-                    <input className='input' type='password' name='confirmarSenha' placeholder='Confirme sua senha' 
+                    <input className='input' type='password' name='confirmarSenha' placeholder='Confirme sua senha'
                         onChange={handleChange} onKeyPress={handleKeyPress} ref={refConfirmarSenha}
                     />
                     <span className='icon is-small is-right'>

@@ -28,6 +28,7 @@ export const Auth = {
             foto: data.foto,
             cidadeId: data.usuariosInformacoes.cidadeId,
             cidadeNome: data.usuariosInformacoes.cidades.nome,
+            isVerificado: data.isVerificado,
             token: data.token,
             dataAutenticacao: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss')
         };
@@ -69,7 +70,9 @@ export const Auth = {
             foto: (data.foto ? data.foto : Auth.getUsuarioLogado().foto),
             cidadeId: (data.cidadeId ? data.cidadeId : Auth.getUsuarioLogado().cidadeId),
             cidadeNome: (data.cidadeNome ? data.cidadeNome : Auth.getUsuarioLogado().cidadeNome),
-            token: (data.token ? data.token : Auth.getUsuarioLogado().token)
+            token: (data.token ? data.token : Auth.getUsuarioLogado().token),
+            isVerificado: (data.isVerificado ? data.isVerificado : Auth.getUsuarioLogado().isVerificado),
+            dataAutenticacao: (data.dataAutenticacao ? data.dataAutenticacao : Auth.getUsuarioLogado().dataAutenticacao)
         };
         // console.log(dadosUsuario);
 

@@ -26,5 +26,8 @@ builder.Services.AddCors();
 Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effects-for-react/
 
 -- WARDS:
+MOSTRAR SE O USUARIO É VALIDADO OU NAO NO PERFIL
 ENVIAR EMAIL AO CRIAR CONTA
+URL TEMPORARIA VALIDAR CONTA
+VERIFICAR DOUBLE SENHA AO ATUALIZAR DADOS NO PERFIL
 ARRUMAR BUG QUE APARECE NO F12
