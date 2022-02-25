@@ -18,7 +18,7 @@ export default function Fluxo() {
 
     const [nomeApp] = useState('Fluxo');
     const [sloganApp] = useState('Conheça sua cidade!');
-
+ 
     useEffect(() => {
         document.title = 'Fluxo — Bem-vindo!';
     }, []);
