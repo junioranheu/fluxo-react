@@ -14,7 +14,6 @@
     "moment-timezone": "^0.5.34",
     "nprogress": "^0.2.0",
     "react": "^17.0.2",
-    "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",
     "react-input-mask": "^3.0.0-alpha.2",
     "react-leaflet": "^3.2.5",
