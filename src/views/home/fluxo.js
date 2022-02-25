@@ -12,9 +12,7 @@ import Top from '../../static/gifs/top.webp';
 
 export default function Fluxo() {
     //Importar CSS apenas para esse componente (scoped);
-    // require('../../css/landingPage/bootstrap.css');
-    // require('../../css/landingPage/default.css');
-    // require('../../css/landingPage/style.css');
+
 
     const [nomeApp] = useState('Fluxo');
     const [sloganApp] = useState('Conheça sua cidade!');
@@ -61,7 +59,7 @@ export default function Fluxo() {
 
                             <div className='col-lg-8 col-md-7'>
                                 <div className='slider-product-content'>
-                                    <h1 className='titulo-gigante slider-title mb-25 animate__animated animate__fadeInUp delay03'>Bem-vindo ao <span>{nomeApp}!</span></h1>
+                                    <h1 className='titulo-gigante slider-title mb-25 animate__animated animate__fadeInUp delay03'>TESTEEEE Bem-vindo ao <span>{nomeApp}!</span></h1>
                                     <a className='main-btn mt-2 animate__animated animate__fadeInUp delay15' href='/criar-conta'>Crie sua conta <i className='lni-chevron-right'></i></a>
                                     <a className='main-btn main-btn-2 mt-2 ml-3 animate__animated animate__fadeInUp delay19' href='/entrar'>Entre agora <i className='lni-chevron-right'></i></a>
                                 </div>
