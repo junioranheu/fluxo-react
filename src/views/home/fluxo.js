@@ -3,8 +3,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import Typewriter from 'typewriter-effect';
-import '../../css/landingPage/default.css';
-import '../../css/landingPage/style.css';
 import Hamburguer from '../../static/gifs/hamburguer.webp';
 import Pikachu from '../../static/gifs/pikachu.webp';
 import Poze from '../../static/gifs/poze.webp';
@@ -13,8 +11,12 @@ import Relaxando from '../../static/gifs/relaxando.webp';
 import Top from '../../static/gifs/top.webp';
 
 export default function Fluxo() {
-    // require('bootstrap/dist/css/bootstrap.min.css'); //Importar CSS apenas para esse componente (scoped);
-    const [nomeApp] = useState('Fluxo'); 
+    //Importar CSS apenas para esse componente (scoped);
+    require('../../css/landingPage/bootstrap.css');
+    require('../../css/landingPage/default.css');
+    require('../../css/landingPage/style.css');
+
+    const [nomeApp] = useState('Fluxo');
     const [sloganApp] = useState('Conheça sua cidade!');
 
     useEffect(() => {
