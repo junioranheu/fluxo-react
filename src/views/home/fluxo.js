@@ -12,6 +12,7 @@ import Top from '../../static/gifs/top.webp';
 
 export default function Fluxo() {
     //Importar CSS apenas para esse componente (scoped);
+    require('../../css/landingPage/bootstrapEditado.css');
     require('../../css/landingPage/default.css');
     require('../../css/landingPage/style.css');
 
@@ -51,7 +52,7 @@ export default function Fluxo() {
                 {/* <!-- Primeiro slide --> */}
                 <Slider {...configuracaoSlider}>
                     <div className='slider-bg'>
-                        <div className='row no-gutters align-items-center'>
+                        <div className='row align-items-center'>
                             <div className='col-lg-4 col-md-5'>
                                 <div className='slider-product-image d-none d-md-block'>
                                     <img src={Hamburguer} className='borda' alt='' />
@@ -70,7 +71,7 @@ export default function Fluxo() {
 
                     {/* <!-- Segundo slide --> */}
                     <div className='slider-bg'>
-                        <div className='row no-gutters align-items-center'>
+                        <div className='row align-items-center'>
                             <div className='col-lg-4 col-md-5'>
                                 <div className='slider-product-image d-none d-md-block'>
                                     <img src={Pikachu} className='borda' alt='' />
@@ -89,7 +90,7 @@ export default function Fluxo() {
 
                     {/* <!-- Terceiro slide --> */}
                     <div className='slider-bg'>
-                        <div className='row no-gutters align-items-center'>
+                        <div className='row align-items-center'>
                             <div className='col-lg-4 col-md-5'>
                                 <div className='slider-product-image d-none d-md-block'>
                                     <img src={Relaxando} className='borda' alt='' />
