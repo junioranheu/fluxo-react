@@ -5,6 +5,7 @@ import { Aviso } from '../../componentes/outros/aviso';
 import DivCentralizada from '../../componentes/outros/divCentralizada';
 import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
+import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
@@ -88,14 +89,14 @@ export default function CriarConta() {
         let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
         if (resposta) {
             // console.log('Ok: ' + resposta);
-            await getToken(formData.nomeUsuarioSistema, formData.senha);
+            await getToken(formData.nomeUsuarioSistema, formData.senha, formData.email, formData.nomeCompleto);
         } else {
             refBtnCriar.current.disabled = false;
             Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
         }
     };
 
-    async function getToken(nomeUsuarioSistema, senha) {
+    async function getToken(nomeUsuarioSistema, senha, email, nomeCompleto) {
         const urlDados = `${CONSTANTS.API_URL_GET_VERIFICAR_EMAIL_E_SENHA}?nomeUsuarioSistema=${nomeUsuarioSistema}&senha=${senha}`;
         let dadosUsuarioVerificado = await Fetch.getApi(urlDados);
 
@@ -108,6 +109,13 @@ export default function CriarConta() {
             dadosUsuarioVerificado.token = resposta;
             Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
+            // Enviar e-mail de "bem-vindo";
+            const isEmailEnviado = await enviarEmail(nomeUsuarioSistema, email, nomeCompleto);
+            if (!isEmailEnviado) {
+                Aviso.error('Houve um erro ao disparar um e-mail para você! Tente logar no sistema novamente mais tarde', 5000);
+                return false;
+            }
+
             // Voltar à tela principal;
             navigate('/', { replace: true });
 
@@ -116,6 +124,32 @@ export default function CriarConta() {
         } else {
             Aviso.error('Algo deu errado ao se autenticar!', 5000);
         }
+    }
+
+    async function enviarEmail(email, nomeCompleto) {
+        // Gerar uma url temporária;
+        const urlTipo = 'Criar conta';
+        const jsonGerarUrlTemporaria = {
+            chaveDinamica: email,
+            dataGeracaoUrl: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+            isAtivo: 1
+        };
+        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_POST_CRIAR}?urlTipo=${urlTipo}`;
+        let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria, jsonGerarUrlTemporaria);
+        if (!urlTemporaria) {
+            // Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
+            return false;
+        }
+
+        // Disparar e-mail;
+        const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_BEM_VINDO}?email=${email}&nomeUsuario=${nomeCompleto}&urlTemporaria=${urlTemporaria}`;
+        const enviarEmail = await Fetch.postApi(urlEnviarEmail);
+        if (!enviarEmail) {
+            // Aviso.error('Houve um erro ao disparar um e-mail para você!', 5000);
+            return false;
+        }
+
+        return true;
     }
 
     function handleKeyPress(e) {

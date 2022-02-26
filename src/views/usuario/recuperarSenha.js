@@ -70,7 +70,7 @@ export default function RecuperarSenha() {
             return false;
         }
 
-        // Disparar e-mail para o e-mail que está na variavel "resposta";
+        // Disparar e-mail;
         const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_RECUPERACAO_SENHA}?email=${emailCadastrado}&urlTemporaria=${urlTemporaria}`;
         let respostaEnviarEmail = await Fetch.postApi(urlEnviarEmail);
         if (!respostaEnviarEmail) {
