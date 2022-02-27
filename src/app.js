@@ -23,6 +23,7 @@ import Entrar from './views/usuario/entrar';
 import Perfil from './views/usuario/perfil';
 import RecuperandoSenha from './views/usuario/recuperandoSenha';
 import RecuperarSenha from './views/usuario/recuperarSenha';
+import VerificarConta from './views/usuario/verificarConta';
 
 export default function App() {
   const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
@@ -96,7 +97,7 @@ export default function App() {
       return () => clearInterval(poll);
     }
   }, [isAuth, exibirErroAtualizarDataOnline]);
- 
+
   return (
     <Routes>
       <Route path='/' element={<Inicio />} />
@@ -113,6 +114,7 @@ export default function App() {
       <Route path='/perfil/atualizar' element={isAuth ? <AtualizarPerfil /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/recuperar-senha' element={!isAuth ? <RecuperarSenha /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/recuperar-senha/:urlTemporaria' element={!isAuth ? <RecuperandoSenha /> : <Navigate to={'/sem-acesso'} />} />
+      <Route path='/verificar-conta/:urlTemporaria' element={isAuth ? <VerificarConta /> : <Navigate to={'/sem-acesso'} />} />
 
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimentos />} />
