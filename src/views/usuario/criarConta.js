@@ -110,7 +110,7 @@ export default function CriarConta() {
             Auth.setUsuarioLogado(dadosUsuarioVerificado);
 
             // Enviar e-mail de "bem-vindo";
-            const isEmailEnviado = await enviarEmail(nomeUsuarioSistema, email, nomeCompleto);
+            const isEmailEnviado = await enviarEmail(email, nomeCompleto);
             if (!isEmailEnviado) {
                 Aviso.error('Houve um erro ao disparar um e-mail para você! Tente logar no sistema novamente mais tarde', 5000);
                 return false;
@@ -140,7 +140,7 @@ export default function CriarConta() {
             // Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
             return false;
         }
-
+        
         // Disparar e-mail;
         const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_BEM_VINDO}?email=${email}&nomeUsuario=${nomeCompleto}&urlTemporaria=${urlTemporaria}`;
         const enviarEmail = await Fetch.postApi(urlEnviarEmail);
