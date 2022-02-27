@@ -24,6 +24,7 @@ export default function AbaDadosFluxo(props) {
     const refEmail = useRef(null);
     const refNomeUsuario = useRef(null);
     const refSenha = useRef(null);
+    const refConfirmarSenha = useRef();
 
     // formDadosFluxo;
     const formDadosFluxoJsonInicial = {
@@ -68,7 +69,7 @@ export default function AbaDadosFluxo(props) {
 
         // Verificações;
         const isTrocouSenha = prop.senha !== formDadosFluxo.senha;
-        let isContinuarUm = VerificarDadosFluxo(formDadosFluxo, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha);
+        let isContinuarUm = VerificarDadosFluxo(formDadosFluxo, refNomeCompleto, refEmail, refNomeUsuario, refSenha, refConfirmarSenha, isTrocouSenha);
         if (!isContinuarUm) {
             return false;
         }
@@ -206,6 +207,18 @@ export default function AbaDadosFluxo(props) {
                     <input onChange={(e) => handleChangeFormDadosFluxo(e)} onClick={(e) => handleAvisoOnClickSenha(e)} ref={refSenha}
                         type='password' name='senha' className='input' value={formDadosFluxo.senha} placeholder='Sua senha' autoComplete='weon' />
 
+                    <span className='icon is-small is-right'>
+                        <i className='fa fa-key'></i>
+                    </span>
+                </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>Confirmar senha</label>
+                <div className='control has-icons-right'>
+                    <input className='input' type='password' name='confirmarSenha' placeholder='Confirme sua senha'
+                        onChange={(e) => handleChangeFormDadosFluxo(e)} ref={refConfirmarSenha}
+                    />
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
                     </span>

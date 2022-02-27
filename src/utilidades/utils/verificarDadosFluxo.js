@@ -1,7 +1,7 @@
 import NProgress from 'nprogress';
 import { Aviso } from '../../componentes/outros/aviso';
 
-function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha) {
+function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, refSenha, refConfirmarSenha, isTrocouSenha) {
     // console.log(form);
 
     // Verificação 0;
@@ -80,7 +80,18 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         }
 
         // Verificação da senha #2: realizar uma série de verificações, se alguma retornar falso, aborte;
-        if (checarSenha(form.senha, form, refSenha) === false) {
+        if (checarSenha(form.senha, form, refSenha, refConfirmarSenha) === false) {
+            NProgress.done();
+            return false;
+        }
+
+        // Checar se os dois campos de senha coincidem;
+        if (form.senha !== form.confirmarSenha) {
+            NProgress.done();
+            Aviso.warn('As senhas não estão idênticas! Tente novamente', 5000);
+            refSenha.current.select();
+            refSenha.current.value = '';
+            refConfirmarSenha.current.value = '';
             return false;
         }
     }
@@ -88,7 +99,7 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
     return true;
 }
 
-function checarSenha(senha, form, refSenha) {
+function checarSenha(senha, form, refSenha, refConfirmarSenha) {
     var number = /([0-9])/;
     var alphabets = /([a-zA-Z])/;
     // var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
@@ -97,6 +108,7 @@ function checarSenha(senha, form, refSenha) {
         Aviso.warn('Sua senha deve ter pelo menos 06 caracteres', 6000);
         refSenha.current.select();
         refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         form.senha = '';
         return false;
     } else {
@@ -107,6 +119,7 @@ function checarSenha(senha, form, refSenha) {
             Aviso.warn('Sua senha não é forte o suficiente<br/>Lembre-se de usar: letras e números!', 6000);
             refSenha.current.select();
             refSenha.current.value = '';
+            refConfirmarSenha.current.value = '';
             form.senha = '';
             return false;
         }

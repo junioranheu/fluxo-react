@@ -46,15 +46,8 @@ export default function CriarConta() {
 
         // Verificações;
         const isTrocouSenha = true;
-        let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha, isTrocouSenha);
+        let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha, refConfirmarSenha, isTrocouSenha);
         if (!isContinuarUm) {
-            refBtnCriar.current.disabled = false;
-            return false;
-        }
-
-        // Checar se os dois campos de senha coincidem;
-        if (formData.senha !== formData.confirmarSenha) {
-            Aviso.warn('As senhas não estão idênticas! Tente novamente', 5000);
             refBtnCriar.current.disabled = false;
             return false;
         }
