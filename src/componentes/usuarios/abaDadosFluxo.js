@@ -63,6 +63,9 @@ export default function AbaDadosFluxo(props) {
             foto: caminhoImagem
         };
         Auth.updateUsuarioLogado(dadosUsuarioAtualizar);
+
+        // Atualizar a foto no formDadosFluxo;
+        formDadosFluxo.foto = caminhoImagem;
     }
 
     async function handleSubmitDadosFluxo() {
