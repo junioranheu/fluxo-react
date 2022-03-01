@@ -109,6 +109,8 @@ export default function CriarConta() {
                 return false;
             }
 
+            Aviso.success('Um e-mail de verificação de conta foi enviado para você!', 7000);
+
             // Voltar à tela principal;
             navigate('/', { replace: true });
 
@@ -133,7 +135,7 @@ export default function CriarConta() {
             // Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
             return false;
         }
-        
+
         // Disparar e-mail;
         const urlEnviarEmail = `${CONSTANTS.API_URL_POST_ENVIAR_EMAIL_BEM_VINDO}?email=${email}&nomeUsuario=${nomeCompleto}&urlTemporaria=${urlTemporaria}`;
         const enviarEmail = await Fetch.postApi(urlEnviarEmail);

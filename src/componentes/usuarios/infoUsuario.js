@@ -44,6 +44,8 @@ export default function InfoUsuario() {
                             <br />
                             <span>Usuário: {Auth.getUsuarioLogado().nomeUsuarioSistema}</span>
                             <br />
+                            <span>E-mail: {Auth.getUsuarioLogado().email}</span>
+                            <br />
                             <span>Tipo: {Auth.getUsuarioLogado().usuarioTipoId}</span>
                             <br />
                             <span>Foto de perfil: {Auth.getUsuarioLogado().foto}</span>

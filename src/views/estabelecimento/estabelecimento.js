@@ -205,8 +205,8 @@ export default function Estabelecimento() {
 
                                 {/* Direita do perfil */}
                                 {(usuarioId === estabelecimento.usuarioId) && (
-                                    <div className='profile-right flexbox-start has-text-centered'>
-                                        <a className='button is-small is-primary is-rounded' href='/'>Editar loja</a>
+                                    <div className='mt-3'>
+                                        <a className='button is-small is-rounded' href='/'>Editar loja</a>
                                     </div>
                                 )}
                             </div>

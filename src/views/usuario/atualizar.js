@@ -6,16 +6,18 @@ import HeroZika from '../../componentes/outros/heroZika';
 import AbaDadosFluxo from '../../componentes/usuarios/abaDadosFluxo';
 import AbaDadosPessoais from '../../componentes/usuarios/abaDadosPessoais';
 import '../../css/perfilAtualizar.css';
+import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
 import CONSTANTS_USUARIOS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import horarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Atualizar() {
+    const nomeApp = 'Fluxo';
     const navigate = useNavigate();
     const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
     const [nomeUsuarioSistema] = useState(isAuth ? Auth.getUsuarioLogado().nomeUsuarioSistema : null);
-    const nomeApp = 'Fluxo';
 
     const [detalhesPerfil, setDetalhesPerfil] = useState([]);
     useEffect(() => {
@@ -69,6 +71,37 @@ export default function Atualizar() {
         setIsAbaDadosFluxoSelecionada(false);
     }
 
+    const [isEnviouSolicitacaoVerificarConta, setIsEnviouSolicitacaoVerificarConta] = useState(false);
+    async function enviarEmailVerificarConta() {
+        const email = Auth.getUsuarioLogado().email;
+        const nomeCompleto = Auth.getUsuarioLogado().nome;
+
+        // Gerar uma url temporária;
+        const urlTipo = 'Verificar conta';
+        const jsonGerarUrlTemporaria = {
+            chaveDinamica: email,
+            dataGeracaoUrl: horarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+            isAtivo: 1
+        };
+        const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_POST_CRIAR}?urlTipo=${urlTipo}`;
+        let urlTemporaria = await Fetch.postApi(urlGerarUrlTemporaria, jsonGerarUrlTemporaria);
+        if (!urlTemporaria) {
+            Aviso.error('Houve um erro ao gerar uma url temporária!', 5000);
+            return false;
+        }
+
+        // Disparar e-mail;
+        const urlEnviarEmail = `${CONSTANTS_USUARIOS.API_URL_POST_ENVIAR_EMAIL_BEM_VINDO}?email=${email}&nomeUsuario=${nomeCompleto}&urlTemporaria=${urlTemporaria}`;
+        const enviarEmail = await Fetch.postApi(urlEnviarEmail);
+        if (!enviarEmail) {
+            Aviso.error('Houve um erro ao disparar um e-mail para você!', 5000);
+            return false;
+        }
+
+        Aviso.success('Um novo e-mail de verificação de conta foi enviado para você!', 7000);
+        setIsEnviouSolicitacaoVerificarConta(true);
+    }
+
     if (detalhesPerfil.length < 1) {
         return null;
     }
@@ -94,7 +127,16 @@ export default function Atualizar() {
                                             <div className='notification mt-4'>
                                                 <p>Ei, {nomeUsuarioSistema}, <span className='grifar'>parado aí</span> ✋</p>
                                                 <p>Preencha seus dados antes de sair por aí usando o sistema 😎</p>
-                                                <p>Juramos que manteremos sua privacidade 🤠</p>
+                                                <p>Juramos que manteremos sua privacidade!</p>
+                                            </div>
+                                        )
+                                    }
+
+                                    {
+                                        detalhesPerfil.isVerificado === 0 && !isEnviouSolicitacaoVerificarConta && (
+                                            <div className='notification mt-4'>
+                                                <p><span className='pointer grifar' onClick={enviarEmailVerificarConta}>Clique aqui</span>
+                                                    &nbsp;para enviar uma nova solicitação de verificação de conta para o seu e-mail!</p>
                                             </div>
                                         )
                                     }

@@ -39,6 +39,7 @@ export default function AbaDadosFluxo(props) {
         foto: prop.foto,
         isAtivo: prop.isAtivo,
         isPremium: prop.isPremium,
+        isVerificado: prop.isVerificado,
         usuarioTipoId: prop.usuarioTipoId
     }
     const [formDadosFluxo, setFormDadosFluxo] = useState(formDadosFluxoJsonInicial);

@@ -108,7 +108,7 @@ export default function Perfil() {
                                         <h3 className='profile-username flexbox'>
                                             <span className='name'>@{detalhesPerfil.nomeUsuarioSistema}</span>
                                             {detalhesPerfil.isVerificado === 1 && (
-                                                <span className='name-small cor-principal'><i className='fa fa-certificate pointer' title='Usuário verificado'></i></span>
+                                                <span className='name-small cor-principal'><i className='fa fa-check pointer' title='Usuário verificado'></i></span>
                                             )}
                                         </h3>
 
@@ -133,8 +133,8 @@ export default function Perfil() {
 
                                 {/* Direita do perfil */}
                                 {(usuarioId === detalhesPerfil.usuarioId) && (
-                                    <div className='profile-right flexbox-start'>
-                                        <a className='button is-small is-primary is-rounded' href='/perfil/atualizar'>Editar perfil</a>
+                                    <div className='mt-3'>
+                                        <a className='button is-small is-rounded' href='/perfil/atualizar'>Editar perfil</a>
                                     </div>
                                 )}
                             </div>
