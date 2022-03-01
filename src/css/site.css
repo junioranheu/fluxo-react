@@ -42,7 +42,7 @@ section.hero-zika{background-position:65% 0;background-repeat:no-repeat;backgrou
 }
 .navbar-item,.navbar-link,a.navbar-link::after{color:#777!important;font-weight:600;border-color:silver!important;border-radius:7px}
 .navbar-item:hover{color:var(--cor-principal-mais-escuro)!important;transition:.3s ease-in}
-.ajustar-imagem-navbar{height:30px!important;width:30px!important;border-radius:50%}
+.ajustar-imagem-navbar{height:30px!important;width:30px!important;object-fit: contain;border-radius:50%}
 .ajustar-div-imagem-navbar{margin-top:9px;padding-left:7px!important;padding-right:7px!important}
 .site{flex:1}
 .conteudo{display:flex;min-height:100vh;flex-direction:column}
