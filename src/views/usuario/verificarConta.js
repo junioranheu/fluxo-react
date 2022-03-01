@@ -79,16 +79,16 @@ export default function VerificarConta() {
         <DivCentralizada isCentralizar={true}>
             <div className='has-text-centered'>
                 <h1 className='title mt-2'>Verifique sua <span className='grifar'>conta</span>!</h1>
-                {/* <h1 className='subtitle'><span className='efeito-texto'>Verifique-a aqui</span></h1> */}
+                {/* <h1 className='subtitle'><span className='efeito-texto'>xxx</span></h1> */}
             </div>
 
             <div className='notification mt-5'>
-                <p>Verificar sua conta é um passo importante para nos mostrar que você realmente é uma pessoa</p>
+                <p>Verificar sua conta é um passo importante para nos mostrar que você é uma pessoa de verdade, e não um... robô 🤖</p>
             </div>
 
             <div className='has-text-centered mt-5'>
                 <input ref={refBtn} onClick={handleSubmit} disabled={(infoUrl === null)}
-                    type='button' className='button is-vcentered is-primary is-fullwidth' value='Recuperar senha' />
+                    type='button' className='button is-vcentered is-primary is-fullwidth' value='Verificar conta' />
             </div>
         </DivCentralizada>
     );
