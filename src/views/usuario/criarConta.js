@@ -121,7 +121,7 @@ export default function CriarConta() {
 
     async function enviarEmail(email, nomeCompleto) {
         // Gerar uma url temporária;
-        const urlTipo = 'Criar conta';
+        const urlTipo = 'Verificar conta';
         const jsonGerarUrlTemporaria = {
             chaveDinamica: email,
             dataGeracaoUrl: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
