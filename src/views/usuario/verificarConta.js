@@ -1,15 +1,20 @@
 import Moment from 'moment';
 import NProgress from 'nprogress';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Aviso } from '../../componentes/outros/aviso';
 import DivCentralizada from '../../componentes/outros/divCentralizada';
 import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
+import CONSTANTS from '../../utilidades/const/constUsuarios';
+import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
 
 export default function VerificarConta() {
     const [urlPagina] = useState(window.location.pathname);
     const [urlTemporaria] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
+
+    const [isAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
 
     const navigate = useNavigate();
     const refBtn = useRef();
@@ -26,7 +31,7 @@ export default function VerificarConta() {
             // console.log(resposta);
             if (!resposta) {
                 NProgress.done();
-                Aviso.error('Solicitação de recuperação de senha inválida ou expirada!', 5000);
+                Aviso.error('Solicitação de verificação de conta inválida ou expirada!', 5000);
                 navigate('/sem-acesso', { replace: true });
                 return false;
             }
@@ -40,7 +45,7 @@ export default function VerificarConta() {
             const diferencaHoras = diferencaUrlGeradaEHoraExpirar.asHours();
             if (diferencaHoras > horaParaExpirar) {
                 NProgress.done();
-                Aviso.error('Solicitação de recuperação de senha expirada!', 5000);
+                Aviso.error('Solicitação de verificação de conta expirada!', 5000);
                 navigate('/sem-acesso', { replace: true });
                 return false;
             }
@@ -48,8 +53,7 @@ export default function VerificarConta() {
             NProgress.done();
         }
 
-        console.log(urlTemporaria);
-        // verificarUrlTemporaria();
+        verificarUrlTemporaria();
     }, [urlTemporaria, navigate]);
 
     async function handleSubmit(e) {
@@ -57,22 +61,25 @@ export default function VerificarConta() {
         refBtn.current.disabled = true;
         e.preventDefault();
 
-        let resposta = await Fetch.postApi(url, jsonVerificarConta);
+        // Verificar conta;
+        const url = `${CONSTANTS.API_URL_POST_VERIFICAR_CONTA}?usuarioId=${usuarioId}`;
+        const token = Auth.getUsuarioLogado().token;
+        let resposta = await Fetch.postApi(url, '', token);
         if (!resposta) {
             Aviso.error('Algo deu errado ao verificar sua conta!', 5000);
             return false;
         }
 
         NProgress.done();
-        Aviso.success('Senha alterada com sucesso!', 10000);
-        navigate('/entrar', { replace: true });
+        Aviso.success('Conta verificada com sucesso!', 10000);
+        navigate('/', { replace: true });
     }
 
     return (
         <DivCentralizada isCentralizar={true}>
             <div className='has-text-centered'>
-                <h1 className='title mt-2'>Esqueceu sua <span className='grifar'>senha?</span></h1>
-                <h1 className='subtitle'><span className='efeito-texto'>Recupere-a aqui</span></h1>
+                <h1 className='title mt-2'>Verifique sua <span className='grifar'>conta</span>!</h1>
+                {/* <h1 className='subtitle'><span className='efeito-texto'>Verifique-a aqui</span></h1> */}
             </div>
 
             <div className='notification mt-5'>

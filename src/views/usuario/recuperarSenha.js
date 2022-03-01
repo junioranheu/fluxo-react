@@ -94,7 +94,7 @@ export default function RecuperarSenha() {
     return (
         <DivCentralizada isCentralizar={true}>
             <div className='has-text-centered'>
-                <h1 className='title mt-2'>Esqueceu sua <span className='grifar'>senha?</span></h1>
+                <h1 className='title mt-2'>Esqueceu sua <span className='grifar'>senha</span>?</h1>
                 <h1 className='subtitle'><span className='efeito-texto'>Recupere-a aqui</span></h1>
             </div>
 
