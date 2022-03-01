@@ -73,6 +73,18 @@ export default function Index() {
             'mensagemBotao': 'Clique aqui',
             'icone': 'fas fa-book'
         },
+
+        {
+            'id': 5,
+            'mostrarApenasAutenticado': true,
+            'usuarioTipoId': 1, // Adm;
+            'imagem': 'static/cards/sobre.webp',
+            'titulo': 'Reports',
+            'descricao': 'Visualize os reports feitos pelos usuários do sistema',
+            'url': 'adm/gerenciar-reports',
+            'mensagemBotao': 'Gerenciar',
+            'icone': 'fas fa-book'
+        }
     ];
 
     // Se o usuário logado for 3, pegue o nome da sua loja e crie um novo card na listaCards;
@@ -86,7 +98,7 @@ export default function Index() {
                     // console.log(resposta);
 
                     listaCards.push({
-                        'id': 5,
+                        'id': 100,
                         'mostrarApenasAutenticado': true,
                         'usuarioTipoId': 3, // Estabelecimento;
                         'imagem': 'static/cards/loja.webp',
@@ -268,13 +280,13 @@ export default function Index() {
             )}
 
             {/* Cards */}
-            <section className='content-section mt-6'>
-                <div className='card-ui-wrapper'>
-                    {cards.map((card) => (
-                        <Card props={card} key={card.id} />
-                    ))}
-                </div>
-            </section>
+                <section className='content-section mt-6'>
+                    <div className='card-ui-wrapper'>
+                        {cards.map((card) => (
+                            <Card props={card} key={card.id} />
+                        ))}
+                    </div>
+                </section>
 
             {/* Outros conteúdos */}
             <section className='mt-6'>

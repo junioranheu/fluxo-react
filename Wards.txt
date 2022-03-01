@@ -26,4 +26,7 @@ builder.Services.AddCors();
 Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effects-for-react/
 
 -- WARDS:
+CRIAR TELA PARA EDITAR PERFIL DA LOJA
+CRIAR OPÇÃO PARA CRIAR NOVO POST
+CRIAR TELA DE VISUALIZAR REPORTS COMO ADM
 ARRUMAR BUG QUE APARECE NO F12

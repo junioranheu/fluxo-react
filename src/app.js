@@ -7,6 +7,7 @@ import CONSTANTS from './utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from './utilidades/context/usuarioContext';
 import { Fetch } from './utilidades/utils/fetch';
 import HorarioBrasilia from './utilidades/utils/horarioBrasilia';
+import GerenciarReports from './views/adm/gerenciarReports';
 import Estabelecimento from './views/estabelecimento/estabelecimento';
 import Estabelecimentos from './views/estabelecimento/estabelecimentos';
 import GerenciarEstabelecimento from './views/estabelecimento/gerenciarEstabelecimentos';
@@ -109,6 +110,8 @@ export default function App() {
       <Route path='/sem-acesso' element={<SemAcesso />} />
       <Route path='/entrar' element={<Entrar />} />
       <Route path='/criar-conta' element={!isAuth ? <CriarConta /> : <Navigate to={'/sem-acesso'} />} />
+
+      <Route path='/adm/gerenciar-reports' element={(isAuth && Auth.getUsuarioLogado().usuarioTipoId === 1) ? <GerenciarReports /> : <Navigate to={'/sem-acesso'} />} />
 
       <Route path='/perfil/:nomeUsuarioSistema' element={<Perfil />} />
       <Route path='/perfil/atualizar' element={isAuth ? <AtualizarPerfil /> : <Navigate to={'/sem-acesso'} />} />

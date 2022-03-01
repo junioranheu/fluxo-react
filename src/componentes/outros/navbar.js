@@ -79,7 +79,7 @@ export default function Navbar() {
                             </a>
 
                             <div className='navbar-dropdown is-boxed'>
-                                <a className='navbar-item' href='/'>
+                                <a className='navbar-item' href='/adm/gerenciar-reports'>
                                     Gerenciar reports
                                 </a>
 
