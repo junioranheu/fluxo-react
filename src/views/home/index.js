@@ -122,7 +122,7 @@ export default function Index() {
         var hora = HorarioBrasilia().hour();
         var msg = '';
 
-        if (hora < 12) {
+        if (hora > 5 && hora < 12) {
             msg = 'Bom dia';
         } else if (hora < 18) {
             msg = 'Boa tarde';
