@@ -40,18 +40,6 @@ export default function Index() {
 
         {
             'id': 2,
-            'mostrarApenasAutenticado': true,
-            'usuarioTipoId': 3, // Estabelecimento;
-            'imagem': 'static/cards/loja.webp',
-            'titulo': 'Perfil',
-            'descricao': 'Oi, né?<br/>Veja o perfil de seu estabelecimento',
-            'url': 'aaaaaaaaa',
-            'mensagemBotao': 'Ver',
-            'icone': 'fas fa-store'
-        },
-
-        {
-            'id': 3,
             'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/entrar.webp',
@@ -63,7 +51,7 @@ export default function Index() {
         },
 
         {
-            'id': 4,
+            'id': 3,
             'mostrarApenasAutenticado': false,
             'usuarioTipoId': null,
             'imagem': 'static/cards/comida.webp',
@@ -75,7 +63,7 @@ export default function Index() {
         },
 
         {
-            'id': 5,
+            'id': 4,
             'mostrarApenasAutenticado': true,
             'usuarioTipoId': 2, // Normal;
             'imagem': 'static/cards/sobre.webp',
@@ -98,7 +86,7 @@ export default function Index() {
                     // console.log(resposta);
 
                     listaCards.push({
-                        'id': 6,
+                        'id': 5,
                         'mostrarApenasAutenticado': true,
                         'usuarioTipoId': 3, // Estabelecimento;
                         'imagem': 'static/cards/loja.webp',
@@ -108,6 +96,8 @@ export default function Index() {
                         'mensagemBotao': 'Ver',
                         'icone': 'fas fa-store'
                     });
+
+                    setCards(listaCards);
                 }
             }
 
@@ -115,7 +105,7 @@ export default function Index() {
         }
     }, [usuarioId, tipoUsuarioId]);
 
-    const [cards] = useState(listaCards);
+    const [cards, setCards] = useState(listaCards);
 
     // Olá;
     function ola() {
