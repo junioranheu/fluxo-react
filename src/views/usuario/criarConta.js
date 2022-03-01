@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Aviso } from '../../componentes/outros/aviso';
 import DivCentralizada from '../../componentes/outros/divCentralizada';
+import LoadingFullScreen from '../../componentes/outros/loadingFullscreen';
 import '../../css/entrar.css';
 import Logo from '../../static/outro/fluxo.webp';
 import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria';
@@ -23,6 +24,7 @@ export default function CriarConta() {
     const refBtnCriar = useRef();
 
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
 
@@ -41,6 +43,7 @@ export default function CriarConta() {
     // Ao clicar no botão para entrar;
     async function handleSubmit(e) {
         NProgress.start();
+        setIsLoading(true);
         refBtnCriar.current.disabled = true;
         e.preventDefault();
 
@@ -49,6 +52,7 @@ export default function CriarConta() {
         let isContinuarUm = VerificarDadosFluxo(formData, refNomeCompleto, refEmail, refNomeUsuario, refSenha, refConfirmarSenha, isTrocouSenha);
         if (!isContinuarUm) {
             refBtnCriar.current.disabled = false;
+            setIsLoading(false);
             return false;
         }
 
@@ -58,9 +62,10 @@ export default function CriarConta() {
         // Verificar se o processo deve continuar, caso e-mail e senha estejam disponíveis para uso;
         const isNovoEmail = true;
         const isNovoNomeUsuario = true;
-        let isContinuarDois = await VerificarEmailENomeUsuario(formData, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
+        let isContinuarDois = await VerificarEmailENomeUsuario(formData, refEmail, refNomeUsuario, refSenha, refConfirmarSenha, isNovoEmail, isNovoNomeUsuario);
         if (!isContinuarDois) {
             refBtnCriar.current.disabled = false;
+            setIsLoading(false);
             return false;
         }
 
@@ -80,13 +85,14 @@ export default function CriarConta() {
         };
 
         let resposta = await Fetch.postApi(urlCriarConta, usuario_a_ser_criado);
-        if (resposta) {
-            // console.log('Ok: ' + resposta);
-            await getToken(formData.nomeUsuarioSistema, formData.senha, formData.email, formData.nomeCompleto);
-        } else {
+        if (!resposta) {
             refBtnCriar.current.disabled = false;
+            setIsLoading(false);
             Aviso.error('Algo deu errado ao criar sua nova conta<br/>Consulte o F12!', 5000);
+            return false;
         }
+
+        await getToken(formData.nomeUsuarioSistema, formData.senha, formData.email, formData.nomeCompleto);
     };
 
     async function getToken(nomeUsuarioSistema, senha, email, nomeCompleto) {
@@ -97,28 +103,30 @@ export default function CriarConta() {
         const urlAutenticar = `${CONSTANTS.API_URL_GET_AUTENTICAR}?nomeUsuarioSistema=${nomeUsuarioSistema}&senha=${senha}`;
         let resposta = await Fetch.getApi(urlAutenticar);
 
-        if (resposta) {
-            // Inserir o token no json final para gravar localmente a sessão do login;
-            dadosUsuarioVerificado.token = resposta;
-            Auth.setUsuarioLogado(dadosUsuarioVerificado);
-
-            // Enviar e-mail de "bem-vindo";
-            const isEmailEnviado = await enviarEmail(email, nomeCompleto);
-            if (!isEmailEnviado) {
-                Aviso.error('Houve um erro ao disparar um e-mail para você! Tente logar no sistema novamente mais tarde', 5000);
-                return false;
-            }
-
-            Aviso.success('Um e-mail de verificação de conta foi enviado para você!', 7000);
-
-            // Voltar à tela principal;
-            navigate('/', { replace: true });
-
-            // Atribuir autenticação ao contexto de usuário;
-            setIsAuth(true);
-        } else {
+        if (!resposta) {
             Aviso.error('Algo deu errado ao se autenticar!', 5000);
+            setIsLoading(false);
+            return false;
         }
+
+        // Inserir o token no json final para gravar localmente a sessão do login;
+        dadosUsuarioVerificado.token = resposta;
+        Auth.setUsuarioLogado(dadosUsuarioVerificado);
+
+        // Enviar e-mail de "bem-vindo";
+        const isEmailEnviado = await enviarEmail(email, nomeCompleto);
+        if (!isEmailEnviado) {
+            Aviso.error('Houve um erro ao disparar um e-mail para você! Tente logar no sistema novamente mais tarde', 5000);
+            return false;
+        }
+
+        Aviso.success('Um e-mail de verificação de conta foi enviado para você!', 7000);
+
+        // Voltar à tela principal;
+        navigate('/', { replace: true });
+
+        // Atribuir autenticação ao contexto de usuário;
+        setIsAuth(true);
     }
 
     async function enviarEmail(email, nomeCompleto) {
@@ -155,6 +163,8 @@ export default function CriarConta() {
 
     return (
         <DivCentralizada isCentralizar={false}>
+            <LoadingFullScreen isLoading={isLoading} />
+
             <div className='has-text-centered mb-6'>
                 <div>
                     <img className='login-logo' src={Logo} alt='Erro...' />

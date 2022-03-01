@@ -82,7 +82,7 @@ export default function AbaDadosFluxo(props) {
         if (prop.email !== formDadosFluxo.email || prop.nomeUsuarioSistema !== formDadosFluxo.nomeUsuarioSistema) {
             const isNovoEmail = (prop.email !== formDadosFluxo.email);
             const isNovoNomeUsuario = (prop.nomeUsuarioSistema !== formDadosFluxo.nomeUsuarioSistema);
-            let isContinuarDois = await VerificarEmailENomeUsuario(formDadosFluxo, refEmail, refNomeUsuario, refSenha, isNovoEmail, isNovoNomeUsuario);
+            let isContinuarDois = await VerificarEmailENomeUsuario(formDadosFluxo, refEmail, refNomeUsuario, refSenha, refConfirmarSenha, isNovoEmail, isNovoNomeUsuario);
             if (!isContinuarDois) {
                 return false;
             }
@@ -129,12 +129,6 @@ export default function AbaDadosFluxo(props) {
     const [submitAlterarFotoClicado, setSubmitAlterarFotoClicado] = useState(false);
     function handleClickAlterarFoto() {
         setSubmitAlterarFotoClicado(!submitAlterarFotoClicado);
-    }
-
-    function handleAvisoOnClickSenha(e) {
-        if (e.target.value.length === 0) {
-            Aviso.info('A senha será modificada caso você a preencha com algum novo valor', 5000);
-        }
     }
 
     if (!prop) {
@@ -208,8 +202,8 @@ export default function AbaDadosFluxo(props) {
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>
-                    <input onChange={(e) => handleChangeFormDadosFluxo(e)} onClick={(e) => handleAvisoOnClickSenha(e)} ref={refSenha}
-                        type='password' name='senha' className='input' value={formDadosFluxo.senha} placeholder='Sua senha' autoComplete='weon' />
+                    <input onChange={(e) => handleChangeFormDadosFluxo(e)} ref={refSenha}
+                        type='password' name='senha' className='input' value={formDadosFluxo.senha} placeholder='Sua senha' autoComplete='new-password' />
 
                     <span className='icon is-small is-right'>
                         <i className='fa fa-key'></i>
@@ -227,6 +221,10 @@ export default function AbaDadosFluxo(props) {
                         <i className='fa fa-key'></i>
                     </span>
                 </div>
+            </div>
+
+            <div className='notification mt-5'>
+                <p>A senha será modificada <span className='grifar'>apenas</span> caso você a preencha com algum novo valor</p>
             </div>
 
             <hr className='mt-4' />

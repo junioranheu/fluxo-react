@@ -27,4 +27,3 @@ Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effect
 
 -- WARDS:
 ARRUMAR BUG QUE APARECE NO F12
-CRIAR UM LOADING MELHOR AO FAZER COISAS DEMORADAS COMO CRIAR UMA CONTA, POR EX
