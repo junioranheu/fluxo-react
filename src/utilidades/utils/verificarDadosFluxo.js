@@ -9,6 +9,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('Preencha os dados para continuar', 5000);
         refNomeCompleto.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -17,6 +19,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('Parece que você esqueceu de colocar o seu nome', 5000);
         refNomeCompleto.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -25,6 +29,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('Seu nome não pode ter menos de 03 caracteres!', 5000);
         refNomeCompleto.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -34,6 +40,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn(form.nomeCompleto + ' é um belo nome, mas cadê seu sobrenome?', 5000);
         refNomeCompleto.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -42,6 +50,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('Parece que você esqueceu de colocar o seu e-mail', 5000);
         refEmail.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -50,6 +60,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('Parece que esse e-mail não é válido...', 5000);
         refEmail.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -58,6 +70,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('Parece que você esqueceu de colocar um nome de usuário (apelido que será utilizado no sistema)', 5000);
         refNomeUsuario.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
@@ -66,6 +80,8 @@ function verificarDadosFluxo(form, refNomeCompleto, refEmail, refNomeUsuario, re
         NProgress.done();
         Aviso.warn('O nome de usuário não pode ter não pode ter menos de 4 e nem mais de 10 caracteres, e agora está com ' + form.nomeUsuarioSistema.length + '!', 5000);
         refNomeUsuario.current.select();
+        refSenha.current.value = '';
+        refConfirmarSenha.current.value = '';
         return false;
     }
 
