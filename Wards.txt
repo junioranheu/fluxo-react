@@ -26,7 +26,6 @@ builder.Services.AddCors();
 Loading ShimmerThumbnail: https://reactjsexample.com/customizable-shimmer-effects-for-react/
 
 -- WARDS:
-CORRIGIR BUG AO CLICAR NUM POST: TA SEM FOTO!
 SE A PESSOA TIVER DESLOGADA NAO TEM COMO VERIFICAR A CONTA, FAZER LOGICA PARA PEGAR A URL E VER O ID E BOA!!!
 CRIAR TELA PARA EDITAR PERFIL DA LOJA
 CRIAR OPÇÃO PARA CRIAR NOVO POST
