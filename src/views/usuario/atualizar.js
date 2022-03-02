@@ -10,7 +10,7 @@ import CONSTANTS_URL_TEMPORARIA from '../../utilidades/const/constUrlTemporaria'
 import CONSTANTS_USUARIOS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import horarioBrasilia from '../../utilidades/utils/horarioBrasilia';
+import HorarioBrasilia from '../../utilidades/utils/horarioBrasilia';
 
 export default function Atualizar() {
     const nomeApp = 'Fluxo';
@@ -80,7 +80,7 @@ export default function Atualizar() {
         const urlTipo = 'Verificar conta';
         const jsonGerarUrlTemporaria = {
             chaveDinamica: email,
-            dataGeracaoUrl: horarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
+            dataGeracaoUrl: HorarioBrasilia().format('YYYY-MM-DD HH:mm:ss'),
             isAtivo: 1
         };
         const urlGerarUrlTemporaria = `${CONSTANTS_URL_TEMPORARIA.API_URL_POST_CRIAR}?urlTipo=${urlTipo}`;

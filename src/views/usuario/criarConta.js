@@ -24,8 +24,8 @@ export default function CriarConta() {
     const refBtnCriar = useRef();
 
     const [isAuth, setIsAuth] = useContext(UsuarioContext); // Contexto do usuário;
-    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -212,7 +212,7 @@ export default function CriarConta() {
                     </span>
                 </div>
             </div>
-
+ 
             <div className='field'>
                 <label className='label'>Senha</label>
                 <div className='control has-icons-right'>

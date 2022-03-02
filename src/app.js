@@ -51,7 +51,8 @@ export default function App() {
 
         // Deslogar;
         Auth.deleteUsuarioLogado();
-        navigate('/sem-acesso', { replace: true });
+        // navigate('/sem-acesso', { replace: true });
+        navigate('/', { replace: true });
         NProgress.done();
       }
     }
