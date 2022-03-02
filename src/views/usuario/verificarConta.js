@@ -50,9 +50,16 @@ export default function VerificarConta() {
                 return false;
             }
 
+            // Se o usuário estiver deslogado, avise e desabilite o botão;
+            if (!usuarioId) {
+                refBtn.current.disabled = true;
+                Aviso.error('Você deve iniciar sua sessão antes de validar sua conta!<br/>Tente novamente mais tarde, assim que estiver logado!', 20000);
+            }
+
             NProgress.done();
         }
 
+        // Verificar se a URL é válida;
         verificarUrlTemporaria();
     }, [urlTemporaria, navigate]);
 
