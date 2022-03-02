@@ -118,7 +118,7 @@ export default function App() {
       <Route path='/perfil/atualizar' element={isAuth ? <AtualizarPerfil /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/recuperar-senha' element={!isAuth ? <RecuperarSenha /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/recuperar-senha/:urlTemporaria' element={!isAuth ? <RecuperandoSenha /> : <Navigate to={'/sem-acesso'} />} />
-      <Route path='/verificar-conta/:urlTemporaria' element={isAuth ? <VerificarConta /> : <Navigate to={'/sem-acesso'} />} />
+      <Route path='/verificar-conta/:urlTemporaria' element={<VerificarConta />} />
 
       <Route path='/gerenciar-estabelecimentos' element={isAuth ? <GerenciarEstabelecimento /> : <Navigate to={'/sem-acesso'} />} />
       <Route path='/estabelecimento/tipo/:tipoEstabelecimentoId' element={<Estabelecimentos />} />
