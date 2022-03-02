@@ -72,12 +72,8 @@ export default function Index() {
         const horaAgora = horarioBrasilia();
         const horaOnlineUsuario = resposta.dataOnline;
         var duracao = Moment.duration(horaAgora.diff(horaOnlineUsuario));
-        var diferencaSegundos = duracao.asSeconds();
-        
-        console.log(horaAgora);
-        console.log(horaOnlineUsuario);
-        console.log(diferencaSegundos);
-
+        var diferencaSegundos = duracao.asSeconds();     
+        // console.log(diferencaSegundos);
         if (diferencaSegundos < 5) {
             NProgress.done();
             refTxtSenha.current.value = '';
