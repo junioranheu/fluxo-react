@@ -2,7 +2,8 @@ import Moment from 'moment-timezone';
 
 function horarioBrasilia() {
     const timezone = 'America/Sao_Paulo';
-    const horarioBrasilia = Moment.tz(Moment(), timezone);
+    Moment.tz.setDefault(timezone);
+    const horarioBrasilia = moment().tz();
     // console.log(horarioBrasilia);
     return horarioBrasilia;
 }
