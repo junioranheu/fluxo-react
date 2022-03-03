@@ -1,13 +1,13 @@
 import NProgress from 'nprogress';
 import React, { useEffect, useRef, useState } from 'react';
-import { Aviso } from '../../componentes/outros/aviso';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
+import { Aviso } from './aviso';
 
 // https://sankhadip.medium.com/how-to-upload-files-in-net-core-web-api-and-react-36a8fbf5c9e8
 // https://thewebdev.info/2021/11/07/how-to-read-and-upload-a-file-in-react-using-custom-button/
-export default function BotaoUparImagem(props) {
+export default function BotaoUparImagemPerfil(props) {
     console.log(props);
     const [usuarioId] = useState(props['props']);
 
@@ -22,7 +22,7 @@ export default function BotaoUparImagem(props) {
             refBtnUpar.current.click();
             props.handleClickAlterarFoto(false);
         }
-    }, [props.submitAlterarFotoClicado]);
+    }, [props]);
 
     function salvarTemporariamenteArquivo(e) {
         const arq = e.target.files[0];

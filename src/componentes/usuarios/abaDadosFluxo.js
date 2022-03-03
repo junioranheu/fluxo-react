@@ -5,11 +5,11 @@ import SemImagem from '../../static/outro/sem-imagem.webp';
 import CONSTANTS from '../../utilidades/const/constUsuarios';
 import { Auth, UsuarioContext } from '../../utilidades/context/usuarioContext';
 import { Fetch } from '../../utilidades/utils/fetch';
-import padronizarNomeCompletoUsuario from '../../utilidades/utils/padronizarNomeCompletoUsuario';
+import PadronizarNomeCompletoUsuario from '../../utilidades/utils/padronizarNomeCompletoUsuario';
 import UrlImagemApi from '../../utilidades/utils/urlImagemApi';
 import VerificarDadosFluxo from '../../utilidades/utils/verificarDadosFluxo';
 import VerificarEmailENomeUsuario from '../../utilidades/utils/verificarEmailENomeUsuario';
-import BotaoUparImagem from '../outros/botaoUparImagem';
+import BotaoUparImagemPerfil from '../outros/botaoUparImagemPerfil';
 
 export default function AbaDadosFluxo(props) {
     const nomeApp = 'Fluxo';
@@ -89,7 +89,7 @@ export default function AbaDadosFluxo(props) {
         }
 
         // Atribuir o nome formatado para a variavel nome, novamente;
-        formDadosFluxo.nomeCompleto = padronizarNomeCompletoUsuario(formDadosFluxo.nomeCompleto);
+        formDadosFluxo.nomeCompleto = PadronizarNomeCompletoUsuario(formDadosFluxo.nomeCompleto);
 
         // Criptografar a senha;
         if (formDadosFluxo.senha) {
@@ -151,7 +151,7 @@ export default function AbaDadosFluxo(props) {
 
                 {
                     usuarioId && (
-                        <BotaoUparImagem
+                        <BotaoUparImagemPerfil
                             props={usuarioId}
                             onAlterar={exibirFotoPerfilAlterada}
                             className={'esconder'}
