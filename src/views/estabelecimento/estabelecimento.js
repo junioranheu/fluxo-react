@@ -6,6 +6,7 @@ import Avaliacao from '../../componentes/avaliacao/avaliacoes';
 import Avaliar from '../../componentes/avaliacao/avaliar';
 import { Aviso } from '../../componentes/outros/aviso';
 import Mapa from '../../componentes/outros/mapa';
+import ModalNovoPost from '../../componentes/posts/modalNovoPost';
 import ModalPost from '../../componentes/posts/modalPost';
 import Post from '../../componentes/posts/post';
 import '../../css/perfil.css';
@@ -24,7 +25,7 @@ export default function Estabelecimento() {
     const [usuarioId] = useState(isAuth ? Auth.getUsuarioLogado().usuarioId : null);
     const [urlPagina] = useState(window.location.pathname);
     const [parametroTipoEstabelecimentoId] = useState(urlPagina.substring(urlPagina.lastIndexOf('/') + 1));
-    
+
     // Ao carregar página;
     const padraoEstabelecimento = {
         'estabelecimentoId': parametroTipoEstabelecimentoId,
@@ -85,7 +86,7 @@ export default function Estabelecimento() {
                 NProgress.done();
             } else {
                 Aviso.error('Algo deu errado ao consultar o estabelecimento em questão!', 5000);
-                navigate('/sem-acesso', { replace: true }); 
+                navigate('/sem-acesso', { replace: true });
             }
         }
         // Pegar os detalhes do estabelecimento;
@@ -165,8 +166,14 @@ export default function Estabelecimento() {
         setPropsModalDetalhamentoPost(prop);
     }
 
+    // Novo post;
+    const [isModalNovoPostAberto, setIsModalNovoPostAberto] = useState(false);
+    function abrirModalNovoPost() {
+        setIsModalNovoPostAberto(true);
+    }
+
     return (
-        <div className='animate__animated animate__fadeIn animate__delay-1sxxx'>
+        <React.Fragment>
             {/* #01 - Perfil */}
             {
                 estabelecimento.usuarioId > 0 ? (
@@ -199,16 +206,22 @@ export default function Estabelecimento() {
                                             <p className='profile-bio-inner'>
                                                 <span className='line'>{estabelecimento.descricao}</span>
                                             </p>
+
+                                            {/* Opções para o dono do estabelecimento */}
+                                            {(usuarioId === estabelecimento.usuarioId) && (
+                                                <div className='mt-3'>
+                                                    <a className='button is-small is-rounded' onClick={() => abrirModalNovoPost()} href={() => false}>Criar novo post</a>
+                                                    <a className='button is-small is-rounded ml-2' href='/'>Editar loja</a>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Direita do perfil */}
-                                {(usuarioId === estabelecimento.usuarioId) && (
-                                    <div className='mt-3'>
-                                        <a className='button is-small is-rounded' href='/'>Editar loja</a>
-                                    </div>
-                                )}
+                                {/* <div className='mt-3'>
+                                        <span>Direita</span>
+                                    </div>*/}
                             </div>
                         </div>
                     </div>
@@ -352,7 +365,12 @@ export default function Estabelecimento() {
             {propsModalDetalhamentoPost.postId > 0 && (
                 <ModalPost props={propsModalDetalhamentoPost} propsModalAberto={setPropsModalDetalhamentoPost} />
             )}
-        </div >
+
+            {/* Quando a opção de novo post for clicada */}
+            {isModalNovoPostAberto && (
+                 <ModalNovoPost propsModalAberto={setIsModalNovoPostAberto} />
+            )}
+        </React.Fragment>
     );
 }
 
