@@ -8,7 +8,7 @@ import { Fetch } from '../../utilidades/utils/fetch';
 // https://sankhadip.medium.com/how-to-upload-files-in-net-core-web-api-and-react-36a8fbf5c9e8
 // https://thewebdev.info/2021/11/07/how-to-read-and-upload-a-file-in-react-using-custom-button/
 export default function BotaoUparImagem(props) {
-    // console.log(props);
+    console.log(props);
     const [usuarioId] = useState(props['props']);
 
     const refBtnUpar = useRef();

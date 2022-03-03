@@ -33,6 +33,15 @@ export default function ModalNovoPost(props) {
         }
     }
 
+    function exibirFotoPerfilAlterada(arq, caminhoImagem) {
+        console.log(arq);
+        console.log(caminhoImagem);
+        // setFotoPerfilDinamica(URL.createObjectURL(arq));
+
+        // Atualizar a foto (midia) no formData;
+        formData.midia = caminhoImagem;
+    }
+
     return ReactDOM.createPortal(
         <div className='modal is-active sem-highlight'>
             {/* <div className='modal-background' onClick={() => fecharModal()}></div> */}
@@ -48,7 +57,7 @@ export default function ModalNovoPost(props) {
                                 <div className='field'>
                                     <label className='label'>Título</label>
                                     <div className='control has-icons-right'>
-                                        <input className='input' type='text' name='titulo' placeholder='Título'
+                                        <input className='input' type='text' name='titulo' placeholder='Título do novo post'
                                             onChange={handleChange} onKeyPress={handleKeyPress} ref={refTitulo}
                                         />
                                         <span className='icon is-small is-right'>
@@ -59,26 +68,27 @@ export default function ModalNovoPost(props) {
 
                                 <div className='field'>
                                     <label className='label'>Conteúdo</label>
-                                    <div className='control has-icons-right'>
-                                        <input className='input' type='email' name='conteudo' placeholder='Conteúdo'
-                                            onChange={handleChange} onKeyPress={handleKeyPress} ref={refConteudo}
-                                        />
-                                        <span className='icon is-small is-right'>
-                                            <i className='fas fa-comment-dots'></i>
-                                        </span>
-                                    </div>
+                                    <textarea ref={refConteudo} name='conteudo' onChange={handleChange}
+                                        className='textarea' placeholder={'Conteúdo do novo post'}
+                                        style={{ resize: 'none', borderRadius: '10px' }}></textarea>
                                 </div>
 
                                 <div className='field'>
                                     <label className='label'>Mídia</label>
-                                    <div className='control has-icons-right'>
-                                        <input className='input' type='text' name='midia' placeholder='Mídia'
+                                    {/* <div className='control has-icons-right'>
+                                        <input className='input' type='text' name='midia' placeholder='Mídia do novo post'
                                             onChange={handleChange} onKeyPress={handleKeyPress} ref={refImagem}
                                         />
                                         <span className='icon is-small is-right'>
                                             <i className='fa fa-play'></i>
                                         </span>
-                                    </div>
+                                    </div> */}
+
+                                    {/* <BotaoUparImagem
+                                        props={props.estabelecimentoId}
+                                        onAlterar={exibirFotoPerfilAlterada}
+                                        className={''}
+                                    /> */}
                                 </div>
 
                                 <div className='has-text-centered mt-5'>

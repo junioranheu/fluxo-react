@@ -368,7 +368,7 @@ export default function Estabelecimento() {
 
             {/* Quando a opção de novo post for clicada */}
             {isModalNovoPostAberto && (
-                 <ModalNovoPost propsModalAberto={setIsModalNovoPostAberto} />
+                 <ModalNovoPost props={estabelecimento} propsModalAberto={setIsModalNovoPostAberto} />
             )}
         </React.Fragment>
     );
