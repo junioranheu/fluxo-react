@@ -96,8 +96,7 @@ export default function Index() {
                 let resposta = await Fetch.getApi(url);
                 if (resposta) {
                     // console.log(resposta);
-
-                    listaCards.push({
+                    const cardEstabelecimento = {
                         'id': 100,
                         'mostrarApenasAutenticado': true,
                         'usuarioTipoId': 3, // Estabelecimento;
@@ -107,9 +106,10 @@ export default function Index() {
                         'url': `/estabelecimento/${resposta[0].estabelecimentoId}`,
                         'mensagemBotao': 'Ver',
                         'icone': 'fas fa-store'
-                    });
+                    }
 
-                    setCards(listaCards);
+                    // Inserir novo estabelecimento na lista existente (sem bugs agora :D);
+                    setCards([...cards, cardEstabelecimento]);
                 }
             }
 
@@ -120,7 +120,7 @@ export default function Index() {
     const [cards, setCards] = useState(listaCards);
 
     // Olá;
-    function ola() {
+    function gerarOla() {
         var hora = HorarioBrasilia().hour();
         var msg = '';
 
@@ -140,7 +140,7 @@ export default function Index() {
 
         return msg;
     }
-    const [msgOla] = useState(ola());
+    const [msgOla] = useState(gerarOla());
 
     // Get categorias;
     const [categorias, setCategorias] = useState([]);
@@ -280,13 +280,13 @@ export default function Index() {
             )}
 
             {/* Cards */}
-                <section className='content-section mt-6'>
-                    <div className='card-ui-wrapper'>
-                        {cards.map((card) => (
-                            <Card props={card} key={card.id} />
-                        ))}
-                    </div>
-                </section>
+            <section className='content-section mt-6'>
+                <div className='card-ui-wrapper'>
+                    {cards.map((card) => (
+                        <Card props={card} key={card.id} />
+                    ))}
+                </div>
+            </section>
 
             {/* Outros conteúdos */}
             <section className='mt-6'>
