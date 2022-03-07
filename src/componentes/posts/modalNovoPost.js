@@ -1,12 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import BotaoUparMidia from '../outros/botaoUparMidia';
 
 export default function ModalNovoPost(props) {
     // console.log(props);
-
     const refTitulo = useRef();
     const refConteudo = useRef();
-    const refImagem = useRef();
     const refBtn = useRef();
 
     function fecharModal() {
@@ -33,14 +32,14 @@ export default function ModalNovoPost(props) {
         }
     }
 
-    function exibirFotoPerfilAlterada(arq, caminhoImagem) {
-        console.log(arq);
-        console.log(caminhoImagem);
-        // setFotoPerfilDinamica(URL.createObjectURL(arq));
-
-        // Atualizar a foto (midia) no formData;
-        formData.midia = caminhoImagem;
+    const [arquivo, setArquivo] = useState();
+    function salvarTemporariamenteArquivo(arq) {
+        setArquivo(arq);
     }
+
+    useEffect(() => {
+      console.log(arquivo);
+    }, [arquivo]);
 
     return ReactDOM.createPortal(
         <div className='modal is-active sem-highlight'>
@@ -75,20 +74,7 @@ export default function ModalNovoPost(props) {
 
                                 <div className='field'>
                                     <label className='label'>Mídia</label>
-                                    {/* <div className='control has-icons-right'>
-                                        <input className='input' type='text' name='midia' placeholder='Mídia do novo post'
-                                            onChange={handleChange} onKeyPress={handleKeyPress} ref={refImagem}
-                                        />
-                                        <span className='icon is-small is-right'>
-                                            <i className='fa fa-play'></i>
-                                        </span>
-                                    </div> */}
-
-                                    {/* <BotaoUparImagem
-                                        props={props.estabelecimentoId}
-                                        onAlterar={exibirFotoPerfilAlterada}
-                                        className={''}
-                                    /> */}
+                                    <BotaoUparMidia handleArquivo={salvarTemporariamenteArquivo} />
                                 </div>
 
                                 <div className='has-text-centered mt-5'>
