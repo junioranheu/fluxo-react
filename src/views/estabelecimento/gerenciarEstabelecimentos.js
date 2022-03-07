@@ -10,7 +10,7 @@ export default function Index() {
     const [estabelecimentos, setEstabelecimentos] = useState([]);
     const [showFormularioNovoEstabelecimento, setShowFormularioNovoEstabelecimento] = useState(false);
     const [estabelecimentoSendoAtualizado, setEstabelecimentoSendoAtualizado] = useState(null);
-
+ 
     async function getEstabelecimentos() {
         const url = CONSTANTS_ESTABELECIMENTOS.API_URL_GET_TODOS;
 
