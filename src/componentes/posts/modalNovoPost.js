@@ -1,5 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import NProgress from 'nprogress';
+import React, { useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import CONSTANTS from '../../utilidades/const/constPosts';
+import { Auth } from '../../utilidades/context/usuarioContext';
+import { Fetch } from '../../utilidades/utils/fetch';
+import { Aviso } from '../outros/aviso';
 import BotaoUparMidia from '../outros/botaoUparMidia';
 
 export default function ModalNovoPost(props) {
@@ -13,7 +18,11 @@ export default function ModalNovoPost(props) {
     }
 
     // Ao alterar os valores dos inputs, insira os valores nas variaveis do formData;
-    const [formData, setFormData] = useState(null);
+    const formIniciar = {
+        titulo: '',
+        conteudo: ''
+    }
+    const [formData, setFormData] = useState(formIniciar);
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -21,9 +30,42 @@ export default function ModalNovoPost(props) {
         });
     };
 
-    // Ao clicar no botão para entrar;
-    async function handleSubmit(e) {
+    const [arquivo, setArquivo] = useState();
+    function salvarTemporariamenteArquivo(arq) {
+        setArquivo(arq);
+    }
 
+    // Ao clicar no botão para criar post;
+    async function handleSubmit(e) {
+        NProgress.start();
+        refBtn.current.disabled = true;
+        e.preventDefault();
+
+        if (!formData || !formData.titulo || !formData.conteudo) {
+            NProgress.done();
+            Aviso.error('Você deve preencher o título e o conteúdo do seu novo post!', 5000);
+            refBtn.current.disabled = false;
+            return false;
+        }
+
+        // console.log(arquivo);
+        const formNovoPost = new FormData();
+        formNovoPost.append('formPasta', 'posts');
+        formNovoPost.append('formUsuarioId', props['props'].usuarioId.toString());
+        formNovoPost.append('formFile', arquivo);
+
+        // Upar imagem;
+        const urlNovoPost = CONSTANTS.API_URL_POST_NOVO_POST;
+        const token = Auth.getUsuarioLogado().token;
+        let respostaNovoCaminho = await Fetch.postUparImagemApi(urlNovoPost, formNovoPost, token);
+        if (!respostaNovoCaminho) {
+            Aviso.error('Algo deu errado ao criar seu novo post!', 5000);
+            NProgress.done();
+            return false;
+        }
+
+        Aviso.success('Novo post criado com sucesso', 5000);
+        NProgress.done();
     };
 
     function handleKeyPress(e) {
@@ -31,15 +73,6 @@ export default function ModalNovoPost(props) {
             refBtn.current.click();
         }
     }
-
-    const [arquivo, setArquivo] = useState();
-    function salvarTemporariamenteArquivo(arq) {
-        setArquivo(arq);
-    }
-
-    useEffect(() => {
-      console.log(arquivo);
-    }, [arquivo]);
 
     return ReactDOM.createPortal(
         <div className='modal is-active sem-highlight'>
@@ -67,8 +100,8 @@ export default function ModalNovoPost(props) {
 
                                 <div className='field'>
                                     <label className='label'>Conteúdo</label>
-                                    <textarea ref={refConteudo} name='conteudo' onChange={handleChange}
-                                        className='textarea' placeholder={'Conteúdo do novo post'}
+                                    <textarea className='textarea' name='conteudo' placeholder={'Conteúdo do novo post'}
+                                        ref={refConteudo} onChange={handleChange}
                                         style={{ resize: 'none', borderRadius: '10px' }}></textarea>
                                 </div>
 
