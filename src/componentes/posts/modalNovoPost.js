@@ -50,9 +50,14 @@ export default function ModalNovoPost(props) {
 
         // console.log(arquivo);
         const formNovoPost = new FormData();
+        formNovoPost.append('titulo', formData.titulo);
+        formNovoPost.append('conteudo', formData.conteudo.replace(/\r\n|\r|\n/g, '<br />'));
         formNovoPost.append('formPasta', 'posts');
         formNovoPost.append('formUsuarioId', props['props'].usuarioId.toString());
-        formNovoPost.append('formFile', arquivo);
+
+        if (arquivo) {
+            formNovoPost.append('formFile', arquivo);
+        }
 
         // Upar imagem;
         const urlNovoPost = CONSTANTS.API_URL_POST_NOVO_POST;
@@ -66,6 +71,9 @@ export default function ModalNovoPost(props) {
 
         Aviso.success('Novo post criado com sucesso', 5000);
         NProgress.done();
+        
+        fecharModal();
+        props.getPosts();
     };
 
     function handleKeyPress(e) {

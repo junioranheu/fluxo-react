@@ -96,28 +96,29 @@ export default function Estabelecimento() {
         getAvaliacoes();
     }, [navigate, parametroTipoEstabelecimentoId]);
 
+    // Posts;
+    async function getPosts() {
+        setLoadingPosts(true);
+        NProgress.start();
+
+        // Pegar o parâmetro da URL;
+        const donoEstabelecimentoUsuarioId = estabelecimento.usuarioId;
+        const tipoPostId = 2; // 2 = Estabelecimento;
+        const url = `${CONSTANTS_POSTS.API_URL_GET_POR_USUARIO_E_TIPO_POST_ID}?usuarioId=${donoEstabelecimentoUsuarioId}&tipoPostId=${tipoPostId}`;
+        // console.log(url);
+
+        let resposta = await Fetch.getApi(url);
+        if (resposta) {
+            setPosts(resposta);
+            NProgress.done();
+        } else {
+            Aviso.error('Algo deu errado ao consultar os posts do estabelecimento em questão!', 5000);
+        }
+    }
+
     // Ao carregar página, e depois que ter o valor em estabelecimento;
     const [posts, setPosts] = useState([]);
     useEffect(() => {
-        async function getPosts() {
-            setLoadingPosts(true);
-            NProgress.start();
-
-            // Pegar o parâmetro da URL;
-            const donoEstabelecimentoUsuarioId = estabelecimento.usuarioId;
-            const tipoPostId = 2; // 2 = Estabelecimento;
-            const url = `${CONSTANTS_POSTS.API_URL_GET_POR_USUARIO_E_TIPO_POST_ID}?usuarioId=${donoEstabelecimentoUsuarioId}&tipoPostId=${tipoPostId}`;
-            // console.log(url);
-
-            let resposta = await Fetch.getApi(url);
-            if (resposta) {
-                setPosts(resposta);
-                NProgress.done();
-            } else {
-                Aviso.error('Algo deu errado ao consultar os posts do estabelecimento em questão!', 5000);
-            }
-        }
-
         // Pegar os posts do estabelecimento;
         getPosts();
 
@@ -368,7 +369,7 @@ export default function Estabelecimento() {
 
             {/* Quando a opção de novo post for clicada */}
             {isModalNovoPostAberto && (
-                 <ModalNovoPost props={estabelecimento} propsModalAberto={setIsModalNovoPostAberto} />
+                <ModalNovoPost props={estabelecimento} propsModalAberto={setIsModalNovoPostAberto} getPosts={getPosts} />
             )}
         </React.Fragment>
     );

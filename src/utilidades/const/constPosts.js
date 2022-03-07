@@ -3,7 +3,7 @@ import { API_BASE_URL_DEV, API_BASE_URL_PROD } from '../../utilidades/utils/urlA
 const ENDPOINTS = {
     GET_POR_ID: 'PostsApi',
     GET_POR_USUARIO_E_TIPO_POST_ID: 'PostsApi/getTodosPorUsuarioIdTipoPostId',
-    POST_NOVO_POST: 'PostsApi/criar'
+    POST_NOVO_POST: 'PostsApi/criarComImagem'
 };
 
 const DEV = {

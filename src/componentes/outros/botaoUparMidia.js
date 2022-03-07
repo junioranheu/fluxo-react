@@ -11,20 +11,20 @@ export default function BotaoUparMidia(props) {
     }
 
     return (
-        <div class='file has-name is-fullwidth'>
-            <label class='file-label'>
-                <input class='file-input' type='file' accept='image/*' multiple={false} onChange={salvarTemporariamenteArquivo} />
+        <div className='file has-name is-fullwidth'>
+            <label className='file-label'>
+                <input className='file-input' type='file' accept='image/*' multiple={false} onChange={salvarTemporariamenteArquivo} />
 
-                <span class='file-cta'>
-                    <span class='file-icon'>
-                        <i class='fas fa-upload'></i>
+                <span className='file-cta'>
+                    <span className='file-icon'>
+                        <i className='fas fa-upload'></i>
                     </span>
 
-                    <span class='file-label'>
+                    <span className='file-label'>
                         Subir imagem
                     </span>
                 </span>
-                <span class='file-name'>
+                <span className='file-name'>
                     {nomeArquivo ? nomeArquivo : '...'}
                 </span>
             </label>
